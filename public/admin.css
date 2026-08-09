@@ -1,0 +1,6 @@
+.admin-header { padding: 1.5rem 5%; background: #0b0f17; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-chrome); }
+.admin-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; padding: 3rem 0; }
+.admin-card { background: var(--bg-card); padding: 2rem; border-radius: 8px; border: 1px solid var(--glass-border); }
+.admin-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+.admin-table th, .admin-table td { padding: 0.75rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); text-align: left; font-size: 0.85rem; }
+.admin-table th { color: var(--accent-gold); }

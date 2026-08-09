@@ -1,0 +1,38 @@
+{
+  "company": {
+    "name": "IDHIKA GROUP",
+    "tagline": "Architectural Excellence, Township ^& Infrastructure Development",
+    "description": "IT IS A COMPANY HAVING EXPERTISE IN TOWNSHIP, GROUP HOUSING, APARTMENTS, COMMERCIAL TOWERS, AT DIFFERENT MAJOR TOWNS ACROSS INDIA.",
+    "directors": [
+      { "name": "Ar. ANKUR SRIVASTAVA", "title": "Director ^& Principal Architect", "qualifications": "M.ARCH., AIID, AIIA", "experience": "10+ Yrs Experience" },
+      { "name": "Ar. PRATEEK SRIVASTAVA", "title": "Director ^& Lead Designer", "qualifications": "B.ARCH, AIID, AIIA", "experience": "6+ Yrs Experience" }
+    ]
+  },
+  "team": [
+    { "name": "Ar. PRATIMA PANDEY", "role": "Urban Design Consultant", "exp": "10+ Yr Exp" },
+    { "name": "Ar. SOUMAYA SAXENA", "role": "Senior Architect", "exp": "9+ Yr Exp" },
+    { "name": "Ar. MALVIKA SRIVASTAVA", "role": "Senior Interior Designer", "exp": "5+ Yr Exp" },
+    { "name": "Ar. ANANYA MAURYA", "role": "Junior Architect", "exp": "Architect" },
+    { "name": "Mr. VIVEK SRIVASTAVA", "role": "Senior Draftsman", "exp": "15+ Yr Exp" },
+    { "name": "Er. RABISH KUMAR", "role": "Civil Engineer", "exp": "5+ Yr Exp" },
+    { "name": "Mr. ANUPAM KATIYAR", "role": "Project Manager", "exp": "20+ Yr Exp" },
+    { "name": "Mr. RAMBABU", "role": "Draftsman", "exp": "10+ Yr Exp" },
+    { "name": "Mr. VIKRAM VERMA", "role": "Draftsman", "exp": "7+ Yr Exp" },
+    { "name": "Miss. AARTI PANDEY", "role": "Intern", "exp": "Architectural Intern" },
+    { "name": "Miss. KRITIKA PANDEY", "role": "Intern", "exp": "Architectural Intern" },
+    { "name": "Mr. SHIV KUMAR", "role": "Site Supervisor", "exp": "20+ Yr Exp" }
+  ],
+  "consultants": [
+    { "type": "Structural Consultant", "name": "ATS STRUCTURAL CONSULTANTS (Er. AKHILESK KUMAR SINGH - B.Tech, M.Tech IIT BHU, 18+ Yrs Exp)" },
+    { "type": "Estimation Consultant", "name": "Er. RAGHVENDRA VERMA (AMICE Civil)" },
+    { "type": "MEP Consultant", "name": "Er. ANKUR BAIPAI" }
+  ],
+  "associates": ["ASTRE DESIGN STUDIO LLP", "PLATINUM ARCHITECTS", "DEVKINANDAN ARCHITECTS"],
+  "services": [
+    { "id": "design", "title": "1. DESIGN", "desc": "Great Architectural Design emerges from careful analysis of requirements and budgets.", "items": ["Programming", "Preliminary Design", "3-D Presentations", "CADD"] },
+    { "id": "engineering", "title": "2. ENGINEERING", "desc": "Structural Engineering forms an integral part of building design.", "items": ["Steel Design", "Reinforced Concrete", "Soil Mechanics", "Foundations"] },
+    { "id": "planning", "title": "3. PLANNING", "desc": "Land Planning services cover project integration.", "items": ["Master Planning", "Site Feasibility", "Layout Design"] },
+    { "id": "interior", "title": "4. INTERIOR DESIGN", "desc": "Innovative and practical interior solutions.", "items": ["Renovation", "Adaptive Re-use", "Space Planning"] },
+    { "id": "landscaping", "title": "5. LANDSCAPING", "desc": "Enhances exterior aesthetics and functionality.", "items": ["Master Landscape", "Exterior Lighting", "Ecosystem Integration"] }
+  ]
+}

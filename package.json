@@ -1,0 +1,12 @@
+{
+  "name": "idhika-group-portal",
+  "version": "1.0.0",
+  "description": "Corporate ^& Portal Web Application for IDHIKA GROUP",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
