@@ -24,6 +24,20 @@ function showPage(pageId) {
   }
 }
 
+function toggleMobileMenu() {
+  const menu = document.getElementById('nav-links-menu');
+  if (menu) {
+    menu.classList.toggle('active');
+  }
+}
+
+function closeMobileMenu() {
+  const menu = document.getElementById('nav-links-menu');
+  if (menu) {
+    menu.classList.remove('active');
+  }
+}
+
 function openRoleModal() { document.getElementById('role-modal').style.display = 'flex'; }
 function closeRoleModal() { document.getElementById('role-modal').style.display = 'none'; }
 function closeProjectModal() { document.getElementById('project-detail-modal').style.display = 'none'; }
@@ -35,7 +49,6 @@ function openVideoModal() {
   const modal = document.getElementById('youtube-video-modal');
   const iframe = document.getElementById('youtube-iframe');
   if (modal && iframe) {
-    // Adding &rel=0 hides external recommended videos at the end
     iframe.src = "https://www.youtube.com/embed/ECLLSN3Nqkc?autoplay=1&rel=0";
     modal.style.display = 'flex';
   }
@@ -165,12 +178,12 @@ function renderDetailedServices() {
   if (container) {
     container.innerHTML = detailedServicesData.map((s, idx) => `
       <div class="service-card">
-        <div class="service-icon-head"><div class="service-icon-badge">${s.num}</div><h3 class="gold-text" style="font-size:1.25rem; margin-bottom:0;">${s.title}</h3></div>
+        <div class="service-icon-head"><div class="service-icon-badge">${s.num}</div><h3 class="gold-text" style="font-size:1.2rem; margin-bottom:0;">${s.title}</h3></div>
         <p class="service-short-summary">${s.clientSummary}</p>
         <button id="service-btn-${idx}" onclick="toggleServiceDrawer(${idx})" class="expand-details-btn">Explore Deliverables & Scope ↓</button>
         <div id="service-drawer-${idx}" class="service-drawer-content">
           <p class="drawer-tech-desc">${s.description}</p>
-          <h4 style="font-size:0.82rem; color:var(--accent-gold); margin-bottom:0.6rem; text-transform:uppercase;">Included Technical Deliverables:</h4>
+          <h4 style="font-size:0.8rem; color:var(--accent-gold); margin-bottom:0.5rem; text-transform:uppercase;">Included Technical Deliverables:</h4>
           <div class="deliverables-grid">${s.deliverables.map(item => `<div class="deliverable-item">✓ ${item}</div>`).join('')}</div>
         </div>
       </div>
@@ -193,9 +206,9 @@ function renderArchitecturalWonders() {
     container.innerHTML = architecturalWonders.map(w => `
       <div class="portfolio-card">
         <img src="${w.image}" alt="${w.name}" class="wonder-card-img" onerror="this.style.display='none';">
-        <h3 class="gold-text" style="font-size:1.15rem; margin-bottom:0.2rem;">${w.name}</h3>
-        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.6rem;"><strong>${w.location}</strong> — ${w.archetype}</p>
-        <p style="font-size:0.82rem; line-height:1.6; margin-bottom:1rem;">${w.description}</p>
+        <h3 class="gold-text" style="font-size:1.1rem; margin-bottom:0.2rem;">${w.name}</h3>
+        <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:0.5rem;"><strong>${w.location}</strong> — ${w.archetype}</p>
+        <p style="font-size:0.8rem; line-height:1.5; margin-bottom:0.8rem;">${w.description}</p>
         <a href="${w.googleUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary wonder-link-btn">Explore on Google Search ↗</a>
       </div>
     `).join('');
@@ -223,9 +236,9 @@ function renderPortfolio(projects) {
     container.innerHTML = projects.map(p => `
       <div class="portfolio-card">
         <h3 style="color:var(--accent-gold);margin-bottom:0.4rem;">${p.name}</h3>
-        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.6rem;"><strong>${p.type}</strong> — ${p.location}</p>
-        <p style="font-size:0.85rem; margin-bottom:1.2rem;">${p.description}</p>
-        <button onclick="viewProjectDetails(${p.id})" class="btn btn-primary" style="padding:0.5rem 1rem; font-size:0.75rem; width:100%;">View Architectural Floor Plans & Renders</button>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.5rem;"><strong>${p.type}</strong> — ${p.location}</p>
+        <p style="font-size:0.82rem; margin-bottom:1rem;">${p.description}</p>
+        <button onclick="viewProjectDetails(${p.id})" class="btn btn-primary" style="padding:0.5rem 1rem; font-size:0.72rem; width:100%;">View Architectural Floor Plans & Renders</button>
       </div>
     `).join('');
   }
@@ -247,14 +260,14 @@ function viewProjectDetails(id) {
   document.getElementById('modal-proj-content').innerHTML = `
     <p><strong>Project Type:</strong> ${p.type}</p>
     <p><strong>Location:</strong> ${p.location}</p>
-    <p style="margin-top:0.5rem; color:var(--text-muted);">${p.description}</p>
+    <p style="margin-top:0.4rem; color:var(--text-muted);">${p.description}</p>
     <div class="modal-spec-box">
       <div>
-        <h4 class="gold-text" style="font-size:1rem; margin-bottom:0.5rem;">Architectural Specifications</h4>
-        <ul>${p.specs.map(s => `<li style="font-size:0.85rem; margin-bottom:0.3rem;">${s}</li>`).join('')}</ul>
+        <h4 class="gold-text" style="font-size:0.95rem; margin-bottom:0.4rem;">Architectural Specifications</h4>
+        <ul>${p.specs.map(s => `<li style="font-size:0.82rem; margin-bottom:0.25rem;">${s}</li>`).join('')}</ul>
       </div>
       <div>
-        <h4 class="gold-text" style="font-size:1rem; margin-bottom:0.5rem;">Renders & Floor Layouts (Click to Zoom)</h4>
+        <h4 class="gold-text" style="font-size:0.95rem; margin-bottom:0.4rem;">Renders & Floor Layouts (Click to Zoom)</h4>
         <div class="modal-image-container">${imagesHtml}</div>
       </div>
     </div>
@@ -272,7 +285,7 @@ function searchClientProject() {
         <h3 class="gold-text">${proj.name} (Project ID: #${proj.id})</h3>
         <p><strong>Location:</strong> ${proj.location}</p>
         <p><strong>Project Type:</strong> ${proj.type}</p>
-        <h4 style="margin-top:1.5rem;" class="gold-text">Signed-off Architectural Stages</h4>
+        <h4 style="margin-top:1.2rem;" class="gold-text">Signed-off Architectural Stages</h4>
         <div class="stage-timeline">
           <div class="stage-item">✓ Stage 1: Masterplan & Programming (100%)</div>
           <div class="stage-item">✓ Stage 2: Structural Engineering & Foundations (100%)</div>
@@ -287,9 +300,9 @@ function renderEmployeeSpace(projects) {
   const container = document.getElementById('employee-assigned-projects');
   if (container) {
     container.innerHTML = projects.map(p => `
-      <div style="margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.1);">
+      <div style="margin-bottom:0.8rem; padding-bottom:0.8rem; border-bottom:1px solid rgba(255,255,255,0.1);">
         <h4>${p.name}</h4>
-        <p style="font-size:0.85rem;">${p.type}</p>
+        <p style="font-size:0.82rem;">${p.type}</p>
       </div>
     `).join('');
   }
@@ -299,9 +312,9 @@ function renderAdminControls(projects) {
   const container = document.getElementById('admin-project-controls');
   if (container) {
     container.innerHTML = projects.map(p => `
-      <div style="margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.1);">
+      <div style="margin-bottom:0.8rem; padding-bottom:0.8rem; border-bottom:1px solid rgba(255,255,255,0.1);">
         <p><strong>${p.name}</strong> (${p.type})</p>
-        <div style="display:flex; gap:1rem; margin-top:0.5rem;">
+        <div style="display:flex; gap:0.8rem; margin-top:0.4rem;">
           <input type="text" class="form-control" value="Stage 3 In Progress">
           <button onclick="alert('Progress updated!')" class="btn btn-primary">Save</button>
         </div>

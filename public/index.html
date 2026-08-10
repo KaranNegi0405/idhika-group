@@ -24,15 +24,18 @@
       </div>
     </div>
 
-    <ul class="nav-links">
-      <li><a href="#" onclick="showPage('home')" class="nav-link active" id="nav-home">Home</a></li>
-      <li><a href="#" onclick="showPage('portfolio')" class="nav-link" id="nav-portfolio">Portfolio</a></li>
-      <li><a href="#" onclick="showPage('services')" class="nav-link" id="nav-services">Services</a></li>
-      <li><a href="#" onclick="showPage('wonders')" class="nav-link" id="nav-wonders">Architectural Wonders</a></li>
-      <li id="nav-client-link" style="display:none;"><a href="#" onclick="showPage('client-portal')" class="nav-link gold-link">My Project Tracker</a></li>
-      <li id="nav-employee-link" style="display:none;"><a href="#" onclick="showPage('employee-portal')" class="nav-link gold-link">Employee Space</a></li>
-      <li id="nav-admin-link" style="display:none;"><a href="#" onclick="showPage('admin-portal')" class="nav-link gold-link">Director Console</a></li>
-      <li><button id="login-nav-btn" onclick="openRoleModal()" class="portal-btn">Portal Login</button></li>
+    <!-- Mobile Hamburger Toggle Button -->
+    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+
+    <ul class="nav-links" id="nav-links-menu">
+      <li><a href="#" onclick="showPage('home'); closeMobileMenu();" class="nav-link active" id="nav-home">Home</a></li>
+      <li><a href="#" onclick="showPage('portfolio'); closeMobileMenu();" class="nav-link" id="nav-portfolio">Portfolio</a></li>
+      <li><a href="#" onclick="showPage('services'); closeMobileMenu();" class="nav-link" id="nav-services">Services</a></li>
+      <li><a href="#" onclick="showPage('wonders'); closeMobileMenu();" class="nav-link" id="nav-wonders">Architectural Wonders</a></li>
+      <li id="nav-client-link" style="display:none;"><a href="#" onclick="showPage('client-portal'); closeMobileMenu();" class="nav-link gold-link">My Project Tracker</a></li>
+      <li id="nav-employee-link" style="display:none;"><a href="#" onclick="showPage('employee-portal'); closeMobileMenu();" class="nav-link gold-link">Employee Space</a></li>
+      <li id="nav-admin-link" style="display:none;"><a href="#" onclick="showPage('admin-portal'); closeMobileMenu();" class="nav-link gold-link">Director Console</a></li>
+      <li><button id="login-nav-btn" onclick="openRoleModal(); closeMobileMenu();" class="portal-btn">Portal Login</button></li>
     </ul>
   </nav>
 
@@ -41,7 +44,7 @@
     <div class="hero-viewport">
       <div class="hero-center-box">
         
-        <!-- MASTER LOGO CONTAINER -->
+        <!-- STRIKING, PROMINENT LOGO -->
         <div class="brand-logo-wrapper">
           <img src="logo-master.png" alt="IDHIKA GROUP Master Logo" class="master-hero-logo" onerror="this.style.display='none';">
         </div>
@@ -57,7 +60,7 @@
           <div class="trust-badge"><span class="trust-val">100% SAFE</span><span class="trust-lbl">Structural Guarantee</span></div>
         </div>
 
-        <!-- Hero Actions with Working Buttons -->
+        <!-- Hero Actions -->
         <div class="hero-actions">
           <button onclick="showPage('portfolio')" class="btn btn-primary">Portfolio Showcase</button>
           <button onclick="openVideoModal()" class="btn btn-secondary">▶ Watch Brand Intro</button>
