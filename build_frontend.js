@@ -54,8 +54,8 @@ const indexHtml = `<!DOCTYPE html>
     <div class="hero-viewport">
       <div class="hero-center-box">
         
-        <!-- STRIKING, PROMINENT LOGO -->
-        <div class="brand-logo-wrapper">
+        <!-- REALISTIC STATIONARY METALLIC LOGO WITH LIGHT SHEEN -->
+        <div class="brand-logo-wrapper real-logo-plaque">
           <img src="logo-master.png" alt="IDHIKA GROUP Master Logo" class="master-hero-logo" onerror="this.style.display='none';">
         </div>
 
@@ -258,7 +258,7 @@ body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1
 
 .navbar { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 5%; background: rgba(7, 9, 14, 0.98); backdrop-filter: blur(20px); position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 1px solid var(--border-chrome); height: 65px; }
 .logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-.nav-master-logo { height: 34px; width: auto; background: transparent; mix-blend-mode: screen; }
+.nav-master-logo { height: 34px; width: auto; background: transparent; mix-blend-mode: normal; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.9)); }
 .nav-brand-text { display: flex; align-items: baseline; gap: 6px; }
 .brand-main { font-family: 'Cinzel', serif; font-size: 1.15rem; font-weight: 800; letter-spacing: 2px; background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .brand-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; color: var(--accent-gold); }
@@ -271,14 +271,66 @@ body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1
 .gold-link { color: var(--accent-gold) !important; font-weight: 700; }
 .portal-btn { background: linear-gradient(135deg, var(--accent-gold) 0%, #997a15 100%); color: #000; padding: 0.4rem 1rem; border-radius: 3px; font-weight: 700; border: none; cursor: pointer; font-size: 0.72rem; text-transform: uppercase; }
 
-.page-section { display: none; min-height: calc(100vh - 65px); padding-top: 75px; position: relative; z-index: 10; opacity: 0; transition: opacity 0.3s ease; }
-.page-section.active { display: block; opacity: 1; }
+/* ULTRA-SLOW, LUXURIOUS 2.4s ARCHITECTURAL REVEAL */
+.page-section { 
+  display: none; 
+  min-height: calc(100vh - 65px); 
+  padding-top: 75px; 
+  position: relative; 
+  z-index: 10; 
+  opacity: 0; 
+}
+.page-section.active { 
+  display: block; 
+  animation: archRevealUltraSlow 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+}
 
-/* OPTIMAL FIT-PER-PAGE HERO VIEWPORT: Striking bold logo size with perfect vertical breathing room */
+@keyframes archRevealUltraSlow {
+  0% { opacity: 0; transform: translateY(60px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Staggered card animation sequence for graceful drafting flow */
+.page-section.active .portfolio-card, 
+.page-section.active .service-card, 
+.page-section.active .glass-card {
+  animation: cardStaggerUltraSlow 2.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.page-section.active .portfolio-card:nth-child(1), .page-section.active .service-card:nth-child(1) { animation-delay: 0.2s; }
+.page-section.active .portfolio-card:nth-child(2), .page-section.active .service-card:nth-child(2) { animation-delay: 0.4s; }
+.page-section.active .portfolio-card:nth-child(3), .page-section.active .service-card:nth-child(3) { animation-delay: 0.6s; }
+.page-section.active .portfolio-card:nth-child(4), .page-section.active .service-card:nth-child(4) { animation-delay: 0.8s; }
+.page-section.active .portfolio-card:nth-child(5), .page-section.active .service-card:nth-child(5) { animation-delay: 1.0s; }
+.page-section.active .portfolio-card:nth-child(6), .page-section.active .service-card:nth-child(6) { animation-delay: 1.2s; }
+
+@keyframes cardStaggerUltraSlow {
+  0% { opacity: 0; transform: translateY(70px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* CINEMATIC HERO VIEWPORT */
 .hero-viewport { min-height: calc(100vh - 65px); display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.2rem 5% 1.5rem; }
 .hero-center-box { text-align: center; width: 100%; max-width: 900px; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; margin: auto 0; }
-.brand-logo-wrapper { width: 100%; max-width: 340px; display: flex; justify-content: center; align-items: center; }
-.master-hero-logo { width: 100%; height: auto; display: block; background: transparent; mix-blend-mode: screen; filter: drop-shadow(0 12px 30px rgba(0,0,0,0.95)); }
+
+.brand-logo-wrapper { width: 100%; max-width: 320px; display: flex; justify-content: center; align-items: center; }
+
+/* STATIONARY REALISTIC METALLIC PLAQUE LOOK (Grounded, crisp, with subtle initial light sheen) */
+.master-hero-logo { 
+  width: 100%; height: auto; display: block; 
+  background: transparent; 
+  mix-blend-mode: normal; 
+  filter: drop-shadow(0 20px 45px rgba(0,0,0,0.98)) drop-shadow(0 0 10px rgba(255,255,255,0.12)); 
+}
+
+.real-logo-plaque {
+  animation: logoPlaqueEntrance 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes logoPlaqueEntrance {
+  0% { opacity: 0; transform: scale(0.85) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
 
 .hero-tagline { max-width: 720px; color: var(--text-muted); font-size: 0.78rem; letter-spacing: 1.3px; text-align: center; line-height: 1.4; }
 .trust-metrics-strip { display: flex; justify-content: center; align-items: center; gap: 1.5rem; padding: 0.5rem 1.4rem; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 20px; width: 100%; max-width: 580px; }
@@ -702,4 +754,4 @@ fs.writeFileSync(path.join(publicDir, 'index.html'), indexHtml);
 fs.writeFileSync(path.join(publicDir, 'styles.css'), stylesCss);
 fs.writeFileSync(path.join(publicDir, 'app.js'), appJs);
 
-console.log('IDHIKA GROUP Prominent Balanced Hero Layout Deployed Successfully!');
+console.log('IDHIKA GROUP Stationary Realistic Plaque & 2.4s Slow Reveal Deployed!');
