@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 
 const publicDir = path.join(__dirname, 'public');
-
 if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
 }
@@ -41,10 +40,11 @@ const indexHtml = `<!DOCTYPE html>
       <li><a href="#" onclick="showPage('home'); closeMobileMenu();" class="nav-link active" id="nav-home">Home</a></li>
       <li><a href="#" onclick="showPage('portfolio'); closeMobileMenu();" class="nav-link" id="nav-portfolio">Portfolio</a></li>
       <li><a href="#" onclick="showPage('services'); closeMobileMenu();" class="nav-link" id="nav-services">Services</a></li>
+      <li><a href="#" onclick="showPage('team'); closeMobileMenu();" class="nav-link" id="nav-team">Leadership & Team</a></li>
       <li><a href="#" onclick="showPage('wonders'); closeMobileMenu();" class="nav-link" id="nav-wonders">Architectural Wonders</a></li>
-      <li id="nav-client-link" style="display:none;"><a href="#" onclick="showPage('client-portal'); closeMobileMenu();" class="nav-link gold-link">My Project Tracker</a></li>
+      <li id="nav-client-link" style="display:none;"><a href="#" onclick="showPage('client-portal'); closeMobileMenu();" class="nav-link gold-link">Customer Dashboard</a></li>
       <li id="nav-employee-link" style="display:none;"><a href="#" onclick="showPage('employee-portal'); closeMobileMenu();" class="nav-link gold-link">Employee Space</a></li>
-      <li id="nav-admin-link" style="display:none;"><a href="#" onclick="showPage('admin-portal'); closeMobileMenu();" class="nav-link gold-link">Director Console</a></li>
+      <li id="nav-admin-link" style="display:none;"><a href="#" onclick="showPage('admin-portal'); closeMobileMenu();" class="nav-link gold-link">Director / Admin Console</a></li>
       <li><button id="login-nav-btn" onclick="openRoleModal(); closeMobileMenu();" class="portal-btn">Portal Login</button></li>
     </ul>
   </nav>
@@ -53,15 +53,10 @@ const indexHtml = `<!DOCTYPE html>
   <div id="page-home" class="page-section active">
     <div class="hero-viewport">
       <div class="hero-center-box">
-        
-        <!-- REALISTIC STATIONARY METALLIC LOGO WITH LIGHT SHEEN -->
         <div class="brand-logo-wrapper real-logo-plaque">
           <img src="logo-master.png" alt="IDHIKA GROUP Master Logo" class="master-hero-logo" onerror="this.style.display='none';">
         </div>
-
         <p class="hero-tagline">EXPERTISE IN TOWNSHIP, GROUP HOUSING, APARTMENTS & COMMERCIAL TOWERS ACROSS INDIA</p>
-
-        <!-- Trust Badges -->
         <div class="trust-metrics-strip">
           <div class="trust-badge"><span class="trust-val">10+ YRS</span><span class="trust-lbl">Architectural Excellence</span></div>
           <div class="trust-divider"></div>
@@ -69,14 +64,11 @@ const indexHtml = `<!DOCTYPE html>
           <div class="trust-divider"></div>
           <div class="trust-badge"><span class="trust-val">100% SAFE</span><span class="trust-lbl">Structural Guarantee</span></div>
         </div>
-
-        <!-- Hero Actions -->
         <div class="hero-actions">
           <button onclick="showPage('portfolio')" class="btn btn-primary">Portfolio Showcase</button>
-          <button onclick="openVideoModal()" class="btn btn-secondary">▶ Watch Brand Intro</button>
+          <button onclick="showPage('team')" class="btn btn-secondary">Meet Our Leadership</button>
         </div>
       </div>
-
       <div class="compact-philosophy-bar glass-card">
         <h3>OUR PHILOSOPHY</h3>
         <p>"We believe that quality of our surroundings—their design and construction—deeply influence the way we work, relax and live."</p>
@@ -84,7 +76,7 @@ const indexHtml = `<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- PAGE 2: PUBLIC ARCHITECTURAL PORTFOLIO -->
+  <!-- PAGE 2: PORTFOLIO -->
   <div id="page-portfolio" class="page-section">
     <div class="container section-padding">
       <h2 class="section-title">Architectural Achievements & Signature Projects</h2>
@@ -102,7 +94,23 @@ const indexHtml = `<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- PAGE 4: ARCHITECTURAL WONDERS & TRIBUTE -->
+  <!-- PAGE 4: LEADERSHIP & TEAM DIRECTORY -->
+  <div id="page-team" class="page-section">
+    <div class="container section-padding">
+      <h2 class="section-title">Leadership & Professional Engineering Team</h2>
+      <p style="text-align:center; color:var(--text-muted); max-width:800px; margin:0 auto 2.5rem; line-height:1.7;">IDHIKA GROUP is a young experienced firm headed by seasoned architects specializing in urban design, housing projects, and advanced structural engineering.</p>
+      
+      <!-- DIRECTORS SECTION -->
+      <h3 class="gold-text" style="font-size:1.2rem; margin-bottom:1rem; border-bottom:1px solid rgba(212,175,55,0.2); padding-bottom:0.5rem;">Managing Directors & Principal Architects</h3>
+      <div class="directors-grid" id="directors-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem; margin-bottom:2.5rem;"></div>
+
+      <!-- TEAM MEMBERS & CONSULTANTS SECTION -->
+      <h3 class="gold-text" style="font-size:1.2rem; margin-bottom:1rem; border-bottom:1px solid rgba(212,175,55,0.2); padding-bottom:0.5rem;">Specialized Consultants & Team Members</h3>
+      <div class="team-grid" id="team-members-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1.2rem;"></div>
+    </div>
+  </div>
+
+  <!-- PAGE 5: WONDERS -->
   <div id="page-wonders" class="page-section">
     <div class="container section-padding">
       <h2 class="section-title">Wonders of Architecture: A Tribute to Human Ingenuity</h2>
@@ -111,129 +119,316 @@ const indexHtml = `<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- PAGE 5: CLIENT STAGE TRACKER -->
+  <!-- PAGE 6: CUSTOMER DASHBOARD -->
   <div id="page-client-portal" class="page-section">
     <div class="container section-padding">
-      <h2 class="section-title">Client Signed-off Project Progress</h2>
-      <div class="glass-card client-search-card">
-        <p>Enter your assigned Project Reference ID to monitor active stage progress:</p>
-        <div class="search-box">
-          <input type="number" id="client-project-id" placeholder="e.g. 101" value="101">
-          <button onclick="searchClientProject()" class="btn btn-primary">Track Stage</button>
-        </div>
+      <h2 class="section-title">Customer Work-in-Progress Dashboard</h2>
+      <div id="customer-profile-greeting" class="glass-card" style="margin-bottom: 1.5rem; border-left: 3px solid var(--accent-gold);">
+        <h3 class="gold-text" id="cust-welcome-title">Welcome, Valued Client</h3>
+        <p id="cust-details-text" style="font-size:0.85rem; color:var(--text-muted);">Please log in or submit a project inquiry via the contact bubble.</p>
       </div>
-      <div id="client-project-display" class="client-display-grid"></div>
+      <div id="client-project-display"></div>
     </div>
   </div>
 
-  <!-- PAGE 6: EMPLOYEE SPACE -->
+  <!-- PAGE 6.5: EMPLOYEE INTERNAL SPACE -->
   <div id="page-employee-portal" class="page-section">
     <div class="container section-padding">
-      <h2 class="section-title">Employee Portal & Site Calendar</h2>
-      <div class="employee-layout">
-        <div class="employee-card glass-card">
-          <h3 class="gold-text">My Assigned Site Projects</h3>
-          <div id="employee-assigned-projects"></div>
-        </div>
-        <div class="employee-card glass-card">
-          <h3 class="gold-text">Working Dates & Leave Calendar</h3>
-          <div class="calendar-grid">
-            <div class="cal-day head">M</div><div class="cal-day head">T</div><div class="cal-day head">W</div><div class="cal-day head">T</div><div class="cal-day head">F</div><div class="cal-day head">S</div><div class="cal-day head">S</div>
-            <div class="cal-day"></div><div class="cal-day"></div><div class="cal-day"></div><div class="cal-day"></div><div class="cal-day"></div><div class="cal-day">1</div><div class="cal-day sunday">2</div>
-            <div class="cal-day">3</div><div class="cal-day site-work">4</div><div class="cal-day site-work">5</div><div class="cal-day">6</div><div class="cal-day">7</div><div class="cal-day">8</div><div class="cal-day sunday">9</div>
-            <div class="cal-day leave">10</div><div class="cal-day leave">11</div><div class="cal-day">12</div><div class="cal-day site-work">13</div><div class="cal-day">14</div><div class="cal-day">15</div><div class="cal-day sunday">16</div>
-            <div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day">21</div><div class="cal-day">22</div><div class="cal-day sunday">23</div>
-            <div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div><div class="cal-day">29</div><div class="cal-day sunday">30</div>
-          </div>
-          <div class="calendar-legend">
-            <span><span class="legend-box site-work"></span> Assigned Site Visit</span>
-            <span><span class="legend-box leave"></span> Approved Leave</span>
-          </div>
-        </div>
-      </div>
+      <h2 class="section-title">Internal Employee Profile & Career Tracker</h2>
+      <div id="employee-profile-card" class="glass-card" style="max-width:700px; margin:0 auto; border-left:3px solid var(--accent-gold);"></div>
     </div>
   </div>
 
-  <!-- PAGE 7: DIRECTOR / ADMIN CMS CONSOLE -->
+  <!-- PAGE 7: DIRECTOR / ADMIN CONSOLE -->
   <div id="page-admin-portal" class="page-section">
     <div class="container section-padding">
-      <h2 class="section-title">Director Management & Feedback Console</h2>
-      <div class="admin-grid">
-        <div class="glass-card">
-          <h3 class="gold-text">Submitted Client Phase 1 Feedback</h3>
-          <div id="admin-feedback-list"><p style="color:var(--text-muted); font-size:0.85rem;">No client feedback submitted yet.</p></div>
+      <h2 class="section-title">Director / Admin Console</h2>
+      
+      <!-- Admin Tab Switcher -->
+      <div style="display:flex; justify-content:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap;">
+        <button onclick="switchAdminTab('crm')" id="admin-tab-btn-crm" class="btn btn-primary" style="font-size:0.75rem;">Client CRM & Contracts</button>
+        <button onclick="switchAdminTab('team')" id="admin-tab-btn-team" class="btn btn-secondary" style="font-size:0.75rem;">Staff & Experience Directory</button>
+      </div>
+
+      <!-- VIEW 1: CLIENT CRM -->
+      <div id="admin-view-crm" class="admin-tab-view">
+        <div class="glass-card" style="margin-bottom: 2rem;">
+          
+          <!-- NATIVE IN-PAGE NOTIFICATION BANNER -->
+          <div id="admin-inpage-banner" style="display:none; padding:0.75rem 1rem; margin-bottom:1rem; border-radius:4px; font-size:0.8rem; background:rgba(16, 185, 129, 0.2); border:1px solid #34d399; color:#34d399;"></div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:12px;">
+            <div style="display:flex; gap:10px; align-items:center;">
+              <h3 class="gold-text" style="margin-bottom:0;">Incoming Leads & Task Allocation Table</h3>
+              <button onclick="openManualLeadModal()" class="btn btn-secondary" style="padding:0.4rem 0.9rem; font-size:0.7rem; border-color:var(--accent-gold); color:var(--accent-gold);">+ Manual Add Lead</button>
+            </div>
+            <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+              <input type="text" id="crm-search-input" class="form-control" placeholder="Search name, phone, location, manager..." onkeyup="filterCrmTable()" style="padding:0.4rem 0.8rem; font-size:0.8rem; min-width:260px; margin-top:0;">
+              <!-- PROFESSIONAL BLUE SAVE BUTTON -->
+              <button onclick="saveAllCrmChanges()" class="admin-save-global-btn">SAVE</button>
+            </div>
+          </div>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1rem;">Manage lead lifecycles across the table. Changes remain in draft until you click **SAVE**.</p>
+          <div style="overflow-x: auto;">
+            <table class="crm-table" id="admin-leads-table">
+              <thead>
+                <tr>
+                  <th>Client Name & Contact</th>
+                  <th>Site Location</th>
+                  <th>Requested Service</th>
+                  <th>Assigned Manager</th>
+                  <th>Status</th>
+                  <th>Comments / Notes</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-leads-tbody"></tbody>
+            </table>
+          </div>
         </div>
+      </div>
+
+      <!-- VIEW 2: STAFF & DIRECTOR CMS EDITOR -->
+      <div id="admin-view-team" class="admin-tab-view" style="display:none;">
         <div class="glass-card">
-          <h3 class="gold-text">All Projects Milestone Controls</h3>
-          <div id="admin-project-controls"></div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:10px;">
+            <h3 class="gold-text" style="margin-bottom:0;">Staff Directory, Tenure & Public Visibility Control</h3>
+            <button onclick="openStaffModal()" class="btn btn-primary" style="font-size:0.7rem; padding:0.4rem 1rem;">+ Add New Employee / Consultant</button>
+          </div>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1.5rem;">Control visibility, upload profile pictures from local drive, manage director biographies, and track tenures.</p>
+          <div style="overflow-x: auto;">
+            <table class="crm-table">
+              <thead>
+                <tr>
+                  <th>Staff Name & Role</th>
+                  <th>Public Visibility</th>
+                  <th>Tenure Tracking</th>
+                  <th>Experience & Details</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-team-table-tbody"></tbody>
+            </table>
+          </div>
         </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GUARANTEED CLICKABLE FLOATING ACTION BUTTONS -->
+  <div id="persistent-contact-bubble" class="floating-contact-bubble" onclick="openLeadModal()">
+    💬 Quick Inquiry
+  </div>
+  <button class="feedback-badge-btn" onclick="openFeedbackModal()">
+    ● Customer Feedback
+  </button>
+
+  <!-- MODALS -->
+  <div id="lead-modal" class="modal-overlay">
+    <div class="modal-card glass-card">
+      <h3 class="gold-text">Customer Inquiry & Consultation</h3>
+      <form onsubmit="handleCustomerLeadSubmit(event)">
+        <!-- STRICT NAME VALIDATION (Spaces & dots valid) -->
+        <div style="text-align:left; margin-bottom:0.75rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Full Name (Letters and dots only):</label>
+          <input type="text" id="lead-name" class="form-control" required placeholder="e.g. A.K. shama" oninput="validateFormGlobally()">
+          <span id="name-error-msg" style="font-size:0.7rem; color:#f87171; display:none; margin-top:2px;">Numbers and special symbols are not allowed in names.</span>
+        </div>
+
+        <!-- STRICT PHONE VALIDATION -->
+        <div style="text-align:left; margin-bottom:0.75rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Phone Number (Numbers only):</label>
+          <div style="display:flex; gap:6px; margin-top:0.3rem;">
+            <select id="lead-country-code" class="form-control" style="width:110px; margin-top:0;">
+              <option value="+91" selected>India (+91)</option>
+              <option value="+1">USA/Canada (+1)</option>
+              <option value="+44">UK (+44)</option>
+              <option value="+971">UAE (+971)</option>
+              <option value="+61">Australia (+61)</option>
+              <option value="+65">Singapore (+65)</option>
+            </select>
+            <input type="tel" id="lead-phone" class="form-control" required placeholder="9876543210" oninput="validateFormGlobally()" style="margin-top:0; flex:1;">
+          </div>
+          <span id="phone-error-msg" style="font-size:0.7rem; color:#f87171; display:none; margin-top:2px;">Only numbers are permitted in phone numbers.</span>
+        </div>
+
+        <!-- STRICT EMAIL VALIDATION -->
+        <div style="text-align:left; margin-bottom:0.75rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Email Address (Gmail, Yahoo, Outlook, Yopmail):</label>
+          <input type="email" id="lead-email" class="form-control" placeholder="idhikiatest@yopmail.com" required oninput="validateFormGlobally()">
+          <span id="email-error-msg" style="font-size:0.7rem; color:#f87171; display:none; margin-top:2px;">Allowed domains: Gmail, Yahoo, Outlook, Yopmail.</span>
+        </div>
+
+        <div style="text-align:left; margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Site Location:</label><input type="text" id="lead-location" class="form-control" required oninput="validateFormGlobally()"></div>
+        <div style="text-align:left; margin-bottom:0.9rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Select Service:</label>
+          <select id="lead-service" class="form-control" required>
+            <option value="Architectural Design">Architectural Design & Master Blueprints</option>
+            <option value="Structural Engineering">Structural Engineering & Safety Analysis</option>
+            <option value="Master & Land Planning">Master & Land Planning / Feasibility</option>
+            <option value="Interior Architecture">Interior Architecture & Space Planning</option>
+            <option value="Landscape Architecture">Landscape Architecture & Site Greenery</option>
+          </select>
+        </div>
+        <button type="submit" id="submit-inquiry-btn" class="btn btn-primary" style="width:100%;">Submit Inquiry</button>
+      </form>
+      <button onclick="closeLeadModal()" class="close-modal-btn" style="margin-top:1rem;">✕ Close</button>
+    </div>
+  </div>
+
+  <!-- DIRECTOR MANUAL LEAD ADDITION MODAL -->
+  <div id="manual-lead-modal" class="modal-overlay">
+    <div class="modal-card glass-card" style="text-align:left;">
+      <h3 class="gold-text" style="text-align:center;">Director Manual Lead Entry</h3>
+      <form onsubmit="handleManualLeadSubmit(event)">
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Client Full Name:</label><input type="text" id="manual-name" class="form-control" required></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Phone Number:</label><input type="text" id="manual-phone" class="form-control" required></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Email Address:</label><input type="email" id="manual-email" class="form-control" required></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">New Site Location:</label><input type="text" id="manual-location" class="form-control" required></div>
+        <div style="margin-bottom:0.9rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Select Service:</label>
+          <select id="manual-service" class="form-control" required>
+            <option value="Architectural Design">Architectural Design</option>
+            <option value="Structural Engineering">Structural Engineering</option>
+            <option value="Master & Land Planning">Master & Land Planning</option>
+            <option value="Interior Architecture">Interior Architecture</option>
+            <option value="Landscape Architecture">Landscape Architecture</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Create Manual Entry</button>
+      </form>
+      <button onclick="closeManualLeadModal()" class="close-modal-btn" style="margin-top:1rem; display:block; margin-left:auto; margin-right:auto;">✕ Close</button>
+    </div>
+  </div>
+
+  <!-- CUSTOM POPUP MODAL -->
+  <div id="success-popup-modal" class="modal-overlay">
+    <div class="modal-card glass-card" style="text-align:center; max-width:480px;">
+      <div id="popup-company-icon" style="font-size:2.2rem; margin-bottom:0.5rem;"><img src="logo-master.png" alt="IDHIKA" style="height:38px; width:auto; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.9);"></div>
+      <h3 class="gold-text" id="popup-title-text">Notification</h3>
+      <div id="success-popup-content" style="font-size:0.85rem; color:var(--text-muted); margin:1rem 0; line-height:1.6; text-align:left; background:rgba(0,0,0,0.3); padding:1rem; border-radius:6px; border:1px solid rgba(212,175,55,0.2);"></div>
+      <button onclick="closeSuccessPopup()" class="btn btn-primary" style="width:100%;">Okay / Continue</button>
+    </div>
+  </div>
+
+  <!-- CUSTOM IN-PAGE DELETE CONFIRMATION MODAL -->
+  <div id="custom-confirm-modal" class="modal-overlay">
+    <div class="modal-card glass-card" style="text-align:center; max-width:400px;">
+      <h3 class="gold-text">Confirm Deletion</h3>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin:1rem 0;">Are you sure you want to delete this lead entry?</p>
+      <div style="display:flex; gap:10px; justify-content:center;">
+        <button id="confirm-delete-yes-btn" class="btn btn-primary" style="background:#ef4444; color:#fff; padding:0.5rem 1.2rem;">Yes, Delete</button>
+        <button onclick="closeCustomConfirm()" class="btn btn-secondary" style="padding:0.5rem 1.2rem;">Cancel</button>
       </div>
     </div>
   </div>
 
-  <!-- YouTube Video Modal Overlay -->
-  <div id="youtube-video-modal" class="modal-overlay" onclick="closeVideoModal()">
-    <div class="modal-card glass-card video-modal-container" onclick="event.stopPropagation()">
-      <h3 class="gold-text" style="margin-bottom:1rem;">IDHIKA GROUP Brand Experience</h3>
-      <div class="video-responsive-wrapper">
-        <iframe id="youtube-iframe" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      </div>
-      <button onclick="closeVideoModal()" class="close-modal-btn" style="margin-top:1.2rem; font-size:0.9rem;">✕ Close Video</button>
+  <!-- ADD / EDIT STAFF MODAL -->
+  <div id="staff-modal" class="modal-overlay">
+    <div class="modal-card glass-card" style="text-align:left;">
+      <h3 class="gold-text" id="staff-modal-title" style="text-align:center;">Staff / Director Record</h3>
+      <form onsubmit="handleStaffFormSubmit(event)">
+        <input type="hidden" id="staff-edit-id">
+        <div style="margin-bottom:0.75rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Staff Type:</label>
+          <select id="staff-type" class="form-control" onchange="toggleDirectorFields(this.value)">
+            <option value="member">Team Member / Consultant</option>
+            <option value="director">Managing Director (Enables Picture & Bio Section)</option>
+          </select>
+        </div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Full Name:</label><input type="text" id="staff-name" class="form-control" required></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Role / Title:</label><input type="text" id="staff-role" class="form-control" required></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Experience / Details:</label><input type="text" id="staff-details" class="form-control" placeholder="e.g. 10+ Yr Experience" required></div>
+        
+        <div id="director-extra-fields" style="display:none; border-top:1px dashed rgba(212,175,55,0.3); padding-top:0.75rem; margin-top:0.75rem;">
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem; color:var(--accent-gold);">Upload Profile Picture from Local Drive:</label>
+            <input type="file" id="staff-file-input" class="form-control" accept="image/*" onchange="previewLocalImage(event)" style="padding:0.4rem;">
+            <input type="hidden" id="staff-imgurl">
+            <div id="image-preview-box" style="margin-top:8px; font-size:0.75rem; color:#34d399;"></div>
+          </div>
+          <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Detailed Information & Bio (Director Only):</label><textarea id="staff-bio" class="form-control" rows="3" placeholder="Enter professional director background and accomplishments..."></textarea></div>
+        </div>
+
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Email (For Employee Login):</label><input type="email" id="staff-email" class="form-control" placeholder="staff@idhika.com"></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Joining Date:</label><input type="date" id="staff-joining" class="form-control"></div>
+        <div style="margin-bottom:0.75rem; display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="staff-current" onchange="toggleStaffEndDate(this.checked)" checked style="cursor:pointer;">
+          <label for="staff-current" style="font-size:0.75rem; color:var(--text-muted); cursor:pointer;">Currently Working Here</label>
+        </div>
+        <div style="margin-bottom:0.75rem;" id="staff-end-date-wrapper" style="display:none;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">End Date:</label><input type="date" id="staff-end" class="form-control">
+        </div>
+        <div style="margin-bottom:0.9rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Public Website Visibility:</label>
+          <select id="staff-visible" class="form-control">
+            <option value="true">Show on Website</option>
+            <option value="false">Hide from Website (Experience Tracking Only)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Save Record</button>
+      </form>
+      <button onclick="closeStaffModal()" class="close-modal-btn" style="margin-top:1rem; display:block; margin-left:auto; margin-right:auto;">✕ Close</button>
     </div>
   </div>
 
-  <!-- Floating Feedback Button -->
-  <button onclick="openFeedbackModal()" class="floating-feedback-btn">💬 Phase 1 Feedback</button>
-
-  <!-- Feedback Submission Modal -->
   <div id="feedback-modal" class="modal-overlay">
     <div class="modal-card glass-card">
-      <h3 class="gold-text">Submit Phase 1 Client Feedback</h3>
-      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">We value your thoughts! Let us know your suggestions or observations on Phase 1:</p>
-      <div style="text-align:left; margin-bottom:1rem;">
-        <label style="font-size:0.80rem; color:var(--accent-gold);">Feedback Category:</label>
-        <select id="feedback-category" class="form-control" style="margin-top:0.3rem;">
-          <option value="General Review">General Review & Overall Impression</option>
-          <option value="Design & Layout">Logo / Visual Design & Page Layout</option>
-          <option value="Services & Portfolio">Services & Portfolio Content</option>
-        </select>
-      </div>
-      <div style="text-align:left; margin-bottom:1rem;">
-        <label style="font-size:0.80rem; color:var(--accent-gold);">Your Feedback / Notes:</label>
-        <textarea id="feedback-text" class="form-control" rows="4" placeholder="Enter your suggestions here..." style="margin-top:0.3rem; resize:vertical;"></textarea>
-      </div>
-      <div class="modal-actions"><button onclick="submitClientFeedback()" class="btn btn-primary">Submit Feedback</button></div>
-      <button onclick="closeFeedbackModal()" class="close-modal-btn">✕ Close</button>
+      <h3 class="gold-text">Pre-Finalization Customer Feedback</h3>
+      <form onsubmit="handleFeedbackSubmit(event)">
+        <div style="text-align:left; margin-bottom:0.75rem;"><input type="text" id="fb-name" class="form-control" placeholder="Your Name" required></div>
+        <div style="text-align:left; margin-bottom:0.75rem;"><textarea id="fb-msg" class="form-control" placeholder="Describe feedback..." rows="4" required></textarea></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Send Feedback</button>
+      </form>
+      <button onclick="closeFeedbackModal()" class="close-modal-btn" style="margin-top:1rem;">✕ Close</button>
     </div>
   </div>
 
-  <!-- Role Switcher Modal -->
+  <div id="customer-login-modal" class="modal-overlay">
+    <div class="modal-card glass-card">
+      <h3 class="gold-text">Portal Login</h3>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Enter your registered Client or Employee email & password:</p>
+      <form onsubmit="handlePortalLoginSubmit(event)">
+        <div style="text-align:left; margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Email ID:</label><input type="email" id="portal-login-email" class="form-control" required></div>
+        <div style="text-align:left; margin-bottom:0.9rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Password:</label><input type="password" id="portal-login-pass" class="form-control" required></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Log In</button>
+      </form>
+      <button onclick="closeCustomerLoginModal()" class="close-modal-btn" style="margin-top:1rem;">✕ Close</button>
+    </div>
+  </div>
+
   <div id="role-modal" class="modal-overlay">
     <div class="modal-card glass-card">
       <h3 class="gold-text">Portal Authentication</h3>
-      <p>Log in to view restricted company environments:</p>
-      <div class="modal-actions">
-        <button onclick="switchRole('client')" class="btn btn-secondary">Client Access Portal</button>
-        <button onclick="switchRole('employee')" class="btn btn-secondary">Employee Space Login</button>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Log in to view restricted company environments:</p>
+      <div class="modal-actions" style="display:flex; flex-direction:column; gap:0.8rem;">
+        <button onclick="openCustomerLoginModal(); closeRoleModal();" class="btn btn-secondary">Client Access Portal / Employee Login</button>
         <button onclick="switchRole('admin')" class="btn btn-primary">Director / Admin Console</button>
         <button onclick="switchRole('public')" class="btn btn-secondary" style="border-color:rgba(255,255,255,0.2);">Log Out / Public Mode</button>
       </div>
-      <button onclick="closeRoleModal()" class="close-modal-btn">✕ Close</button>
+      <button onclick="closeRoleModal()" class="close-modal-btn" style="margin-top:1rem;">✕ Close</button>
     </div>
   </div>
 
-  <!-- Project Detail Lightbox Modal -->
   <div id="project-detail-modal" class="modal-overlay">
     <div class="modal-card glass-card project-modal-wide">
-      <h3 id="modal-proj-name" class="gold-text" style="font-size:1.6rem;">Project Name</h3>
+      <h3 id="modal-proj-name" class="gold-text">Project</h3>
       <div id="modal-proj-content"></div>
-      <button onclick="closeProjectModal()" class="close-modal-btn" style="margin-top:1.5rem; font-size:0.9rem;">✕ Close Project Details</button>
+      <button onclick="closeProjectModal()" class="close-modal-btn" style="margin-top:1rem;">✕ Close</button>
     </div>
   </div>
 
-  <!-- Interactive Image Zoom Overlay -->
+  <div id="youtube-video-modal" class="modal-overlay" onclick="closeVideoModal()">
+    <div class="modal-card glass-card video-modal-container" onclick="event.stopPropagation()">
+      <h3 class="gold-text">IDHIKA GROUP Brand Experience</h3>
+      <div class="video-responsive-wrapper"><iframe id="youtube-iframe" src="" frameborder="0" allowfullscreen></iframe></div>
+      <button onclick="closeVideoModal()" class="close-modal-btn" style="margin-top:1rem;">✕ Close</button>
+    </div>
+  </div>
+
   <div id="image-zoom-overlay" class="zoom-modal-overlay" onclick="closeZoomModal()">
-    <img id="zoomed-image-target" class="zoomed-image" src="" alt="Zoomed View">
+    <img id="zoomed-image-target" class="zoomed-image" src="" alt="Zoom">
     <div class="zoom-close-hint">Click anywhere to exit zoom</div>
   </div>
 
@@ -258,84 +453,65 @@ body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1
 
 .navbar { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 5%; background: rgba(7, 9, 14, 0.98); backdrop-filter: blur(20px); position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 1px solid var(--border-chrome); height: 65px; }
 .logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-.nav-master-logo { height: 34px; width: auto; background: transparent; mix-blend-mode: normal; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.9)); }
+.nav-master-logo { height: 34px; width: auto; background: transparent; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.9)); }
 .nav-brand-text { display: flex; align-items: baseline; gap: 6px; }
-.brand-main { font-family: 'Cinzel', serif; font-size: 1.15rem; font-weight: 800; letter-spacing: 2px; background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.brand-main { font-family: 'Cinzel', serif; font-size: 1.15rem; font-weight: 800; letter-spacing: 2px; color: #fff; }
 .brand-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; color: var(--accent-gold); }
 
 .mobile-menu-toggle { display: none; background: none; border: none; color: var(--accent-gold); font-size: 1.6rem; cursor: pointer; }
-
 .nav-links { display: flex; list-style: none; gap: 1.2rem; align-items: center; }
-.nav-link { color: var(--text-main); text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: 0.3s; letter-spacing: 0.5px; }
-.nav-link.active, .nav-link:hover { color: var(--accent-gold); }
+.nav-link { color: var(--text-main); text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: color 0.3s ease, text-shadow 0.3s ease; }
+.nav-link.active, .nav-link:hover { color: var(--accent-gold); text-shadow: 0 0 10px rgba(212,175,55,0.6); }
 .gold-link { color: var(--accent-gold) !important; font-weight: 700; }
 .portal-btn { background: linear-gradient(135deg, var(--accent-gold) 0%, #997a15 100%); color: #000; padding: 0.4rem 1rem; border-radius: 3px; font-weight: 700; border: none; cursor: pointer; font-size: 0.72rem; text-transform: uppercase; }
 
-/* ULTRA-SLOW, LUXURIOUS 2.4s ARCHITECTURAL REVEAL */
-.page-section { 
-  display: none; 
-  min-height: calc(100vh - 65px); 
-  padding-top: 75px; 
-  position: relative; 
-  z-index: 10; 
-  opacity: 0; 
+/* PROFESSIONAL BLUE SAVE BUTTON */
+.admin-save-global-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: #fff;
+  padding: 0.5rem 1.4rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
-.page-section.active { 
-  display: block; 
-  animation: archRevealUltraSlow 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
-}
-
-@keyframes archRevealUltraSlow {
-  0% { opacity: 0; transform: translateY(60px) scale(0.95); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-/* Staggered card animation sequence for graceful drafting flow */
-.page-section.active .portfolio-card, 
-.page-section.active .service-card, 
-.page-section.active .glass-card {
-  animation: cardStaggerUltraSlow 2.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+.admin-save-global-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
 }
 
-.page-section.active .portfolio-card:nth-child(1), .page-section.active .service-card:nth-child(1) { animation-delay: 0.2s; }
-.page-section.active .portfolio-card:nth-child(2), .page-section.active .service-card:nth-child(2) { animation-delay: 0.4s; }
-.page-section.active .portfolio-card:nth-child(3), .page-section.active .service-card:nth-child(3) { animation-delay: 0.6s; }
-.page-section.active .portfolio-card:nth-child(4), .page-section.active .service-card:nth-child(4) { animation-delay: 0.8s; }
-.page-section.active .portfolio-card:nth-child(5), .page-section.active .service-card:nth-child(5) { animation-delay: 1.0s; }
-.page-section.active .portfolio-card:nth-child(6), .page-section.active .service-card:nth-child(6) { animation-delay: 1.2s; }
-
-@keyframes cardStaggerUltraSlow {
-  0% { opacity: 0; transform: translateY(70px); }
-  100% { opacity: 1; transform: translateY(0); }
+/* OVERRIDE AUTOFILL BACKGROUND TO KEEP IT PERMANENTLY DARK */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #fff !important;
+  -webkit-box-shadow: 0 0 0px 1000px rgba(0,0,0,0.7) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
-/* CINEMATIC HERO VIEWPORT */
+/* ULTRA-SLOW 3.2s LUXURIOUS ANIMATIONS */
+.page-section { display: none; min-height: calc(100vh - 65px); padding-top: 75px; position: relative; z-index: 10; opacity: 0; }
+.page-section.active { display: block; animation: archRevealUltraSlow 3.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes archRevealUltraSlow { 
+  0% { opacity: 0; transform: translateY(80px) scale(0.95); } 
+  100% { opacity: 1; transform: translateY(0) scale(1); } 
+}
+
 .hero-viewport { min-height: calc(100vh - 65px); display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.2rem 5% 1.5rem; }
 .hero-center-box { text-align: center; width: 100%; max-width: 900px; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; margin: auto 0; }
-
 .brand-logo-wrapper { width: 100%; max-width: 320px; display: flex; justify-content: center; align-items: center; }
-
-/* STATIONARY REALISTIC METALLIC PLAQUE LOOK (Grounded, crisp, with subtle initial light sheen) */
-.master-hero-logo { 
-  width: 100%; height: auto; display: block; 
-  background: transparent; 
-  mix-blend-mode: normal; 
-  filter: drop-shadow(0 20px 45px rgba(0,0,0,0.98)) drop-shadow(0 0 10px rgba(255,255,255,0.12)); 
-}
-
-.real-logo-plaque {
-  animation: logoPlaqueEntrance 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes logoPlaqueEntrance {
-  0% { opacity: 0; transform: scale(0.85) translateY(20px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-.hero-tagline { max-width: 720px; color: var(--text-muted); font-size: 0.78rem; letter-spacing: 1.3px; text-align: center; line-height: 1.4; }
+.master-hero-logo { width: 100%; height: auto; display: block; filter: drop-shadow(0 20px 45px rgba(0,0,0,0.98)); }
+.hero-tagline { max-width: 720px; color: var(--text-muted); font-size: 0.78rem; letter-spacing: 1.3px; text-align: center; }
 .trust-metrics-strip { display: flex; justify-content: center; align-items: center; gap: 1.5rem; padding: 0.5rem 1.4rem; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 20px; width: 100%; max-width: 580px; }
 .trust-badge { text-align: center; }
-.trust-val { display: block; font-weight: 800; font-size: 0.78rem; color: var(--accent-gold); letter-spacing: 1px; }
+.trust-val { display: block; font-weight: 800; font-size: 0.78rem; color: var(--accent-gold); }
 .trust-lbl { display: block; font-size: 0.62rem; color: var(--text-muted); }
 .trust-divider { width: 1px; height: 18px; background: var(--border-chrome); }
 .hero-actions { display: flex; gap: 1rem; justify-content: center; margin-top: 0.2rem; flex-wrap: wrap; }
@@ -355,10 +531,25 @@ body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1
 .glass-card { background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 8px; padding: 1.5rem; }
 .gold-text { color: var(--accent-gold); margin-bottom: 1rem; font-family: 'Cinzel', serif; }
 
-.floating-feedback-btn { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, var(--accent-gold) 0%, #997a15 100%); color: #000; padding: 0.6rem 1.1rem; border-radius: 30px; font-weight: 800; font-size: 0.75rem; border: none; cursor: pointer; box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35); z-index: 1500; }
+/* CLICKABLE FLOATING ACTION BUTTONS */
+.floating-contact-bubble { 
+  position: fixed; bottom: 25px; right: 25px; 
+  background: linear-gradient(135deg, var(--accent-gold) 0%, #997a15 100%); 
+  color: #000; padding: 0.75rem 1.25rem; border-radius: 30px; 
+  font-weight: 800; font-size: 0.8rem; cursor: pointer; 
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4); z-index: 99999; pointer-events: auto; 
+}
+.feedback-badge-btn { 
+  position: fixed; bottom: 25px; left: 25px; 
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); 
+  color: #fff; padding: 0.6rem 1rem; border-radius: 20px; font-size: 0.75rem; 
+  cursor: pointer; z-index: 99999; backdrop-filter: blur(10px); pointer-events: auto; 
+}
 
-.services-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-.service-card { background: var(--bg-card); border: 1px solid var(--glass-border); padding: 1.5rem; border-radius: 8px; }
+.services-wrapper, .gallery-grid, .employee-layout, .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.service-card, .portfolio-card, .team-member-card { background: var(--bg-card); border: 1px solid var(--glass-border); padding: 1.5rem; border-radius: 8px; transition: transform 0.3s ease; }
+.service-card:hover, .portfolio-card:hover, .team-member-card:hover { transform: translateY(-4px); border-color: rgba(212,175,55,0.3); }
+
 .service-icon-head { display: flex; align-items: center; gap: 12px; margin-bottom: 0.8rem; }
 .service-icon-badge { width: 36px; height: 36px; border-radius: 50%; background: rgba(212, 175, 55, 0.12); border: 1px solid var(--accent-gold); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent-gold); font-size: 0.9rem; }
 .service-short-summary { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem; }
@@ -369,10 +560,18 @@ body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1
 .deliverables-grid { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
 .deliverable-item { background: rgba(0,0,0,0.4); padding: 0.45rem 0.7rem; border-radius: 4px; border-left: 3px solid var(--accent-gold); font-size: 0.78rem; color: var(--metallic-silver); }
 
-.gallery-grid, .employee-layout, .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-.portfolio-card { background: var(--bg-card); border: 1px solid var(--glass-border); padding: 1.5rem; border-radius: 6px; }
 .wonder-card-img { width: 100%; height: 180px; object-fit: cover; border-radius: 4px; margin-bottom: 1rem; border: 1px solid var(--glass-border); background: #0b0f17; }
 .wonder-link-btn { margin-top: 1rem; padding: 0.5rem 1rem; font-size: 0.72rem; width: 100%; text-align: center; }
+
+.crm-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.8rem; }
+.crm-table th, .crm-table td { padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.crm-table th { color: var(--accent-gold); font-family: 'Cinzel', serif; }
+
+.form-control { width: 100%; padding: 0.65rem; background: rgba(0,0,0,0.5); border: 1px solid var(--border-chrome); color: #fff; border-radius: 4px; font-size: 0.85rem; margin-top: 0.3rem; }
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); z-index: 20000; align-items: center; justify-content: center; }
+.modal-card { width: 92%; max-width: 500px; text-align: center; padding: 1.5rem; max-height: 90vh; overflow-y: auto; position: relative; }
+.modal-actions { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.2rem 0; }
+.close-modal-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.78rem; }
 
 .project-modal-wide { max-width: 900px; width: 95%; text-align: left; }
 .modal-spec-box { display: grid; grid-template-columns: 1fr; gap: 1.2rem; margin-top: 1rem; }
@@ -382,44 +581,10 @@ body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1
 .project-render-img { width: 100%; height: auto; display: block; object-fit: cover; }
 .zoom-badge { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.75); color: var(--accent-gold); padding: 4px 8px; border-radius: 3px; font-size: 0.7rem; font-weight: 600; pointer-events: none; }
 
-.zoom-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.93); z-index: 3000; align-items: center; justify-content: center; cursor: zoom-out; }
-.zoomed-image { max-width: 92vw; max-height: 92vh; object-fit: contain; border-radius: 6px; border: 1px solid var(--accent-gold); }
+/* ZOOM LIGHTBOX OVERLAY */
+.zoom-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.95); z-index: 30000; align-items: center; justify-content: center; cursor: zoom-out; }
+.zoomed-image { max-width: 92vw; max-height: 92vh; object-fit: contain; border-radius: 6px; border: 1px solid var(--accent-gold); box-shadow: 0 0 40px rgba(0,0,0,0.9); }
 .zoom-close-hint { position: absolute; bottom: 20px; color: var(--text-muted); font-size: 0.8rem; }
-
-.search-box { display: flex; gap: 0.8rem; margin-top: 1rem; flex-wrap: wrap; }
-.search-box input, .form-control { flex: 1; min-width: 200px; padding: 0.65rem; background: rgba(0,0,0,0.5); border: 1px solid var(--border-chrome); color: #fff; border-radius: 4px; font-size: 0.85rem; }
-.stage-timeline { margin-top: 1rem; border-left: 2px solid var(--accent-gold); padding-left: 1rem; }
-.stage-item { margin-bottom: 0.8rem; font-size: 0.82rem; }
-
-.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; margin-top: 1rem; }
-.cal-day { padding: 0.5rem 0; background: rgba(255,255,255,0.03); border-radius: 3px; font-size: 0.75rem; }
-.cal-day.head { font-weight: 700; color: var(--accent-gold); background: transparent; }
-.cal-day.sunday { color: #f87171; }
-.cal-day.site-work { background: rgba(212, 175, 55, 0.3); border: 1px solid var(--accent-gold); font-weight: 700; }
-.cal-day.leave { background: rgba(239, 68, 68, 0.3); border: 1px solid #ef4444; }
-.calendar-legend { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; font-size: 0.75rem; color: var(--text-muted); }
-.legend-box { display: inline-block; width: 10px; height: 10px; margin-right: 4px; border-radius: 2px; }
-
-.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); z-index: 2000; align-items: center; justify-content: center; }
-.modal-card { width: 92%; max-width: 500px; text-align: center; position: relative; max-height: 90vh; overflow-y: auto; padding: 1.5rem; }
-.modal-actions { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.2rem 0; }
-.close-modal-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.78rem; }
-
-/* MOBILE RESPONSIVE MEDIA QUERY */
-@media (max-width: 768px) {
-  .mobile-menu-toggle { display: block; }
-  .nav-links { display: none; flex-direction: column; position: absolute; top: 65px; left: 0; width: 100%; background: rgba(7, 9, 14, 0.98); backdrop-filter: blur(25px); border-bottom: 1px solid var(--border-chrome); padding: 1.5rem 0; gap: 1rem; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 2000; }
-  .nav-links.active { display: flex; }
-  .hero-viewport { padding: 1rem 4%; justify-content: space-around; }
-  .brand-logo-wrapper { max-width: 240px; }
-  .trust-metrics-strip { gap: 0.5rem; padding: 0.4rem 0.8rem; }
-  .trust-val { font-size: 0.7rem; }
-  .trust-lbl { font-size: 0.55rem; }
-}
-
-.video-modal-container { max-width: 850px; width: 90%; text-align: center; }
-.video-responsive-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 6px; border: 1px solid var(--glass-border); margin-top: 1rem; }
-.video-responsive-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 `;
 
 // 3. public/app.js
@@ -428,148 +593,611 @@ const appJs = `document.addEventListener('DOMContentLoaded', () => {
   renderDetailedServices();
   fetchProjects();
   renderArchitecturalWonders();
+  renderTeamMembers();
+  checkCustomerAuthState();
+  loadAdminLeads();
+  loadAdminTeamTable();
 });
 
-let currentRole = 'public';
-const storedFeedbackList = [];
+let storedLeadsList = JSON.parse(localStorage.getItem('idhika_crm_leads')) || [
+  { id: 1, name: "Aarav Mehta", phone: "+91 9811122233", email: "idhikiatest@yopmail.com", location: "Hazratganj, Lucknow", service: "Architectural Design", assignedTo: "Unassigned", status: "NEW", comment: "Initial inquiry submitted." }
+];
+
+let teamMembersData = JSON.parse(localStorage.getItem('idhika_team_members')) || [
+  { id: 1, type: 'director', name: "Ar. ANKUR SRIVASTAVA", role: "Principal Director", details: "M.ARCH., AIIID, AIIA (10+ Yr Exp.)", bio: "Principal Director heading major township, group housing, and commercial architectural divisions with over 10 years of professional expertise.", imgUrl: "", email: "ankur@idhika.com", joining: "2015-01-01", current: true, endDate: "", visible: true, imgText: "AS" },
+  { id: 2, type: 'director', name: "Ar. PRATEEK SRIVASTAVA", role: "Co-Principal Architect", details: "B.ARCH, AIIID, AIIA (6+ Yr Exp.)", bio: "Co-Principal Architect specializing in contemporary urban design, interior architecture, and housing projects with 6+ years of experience.", imgUrl: "", email: "prateek@idhika.com", joining: "2018-06-01", current: true, endDate: "", visible: true, imgText: "PS" },
+  { id: 3, type: 'member', name: "Ar. PRATIMA PANDEY", role: "Urban Design Consultant", details: "10+ Yr Experience", email: "pratima@idhika.com", joining: "2020-03-15", current: true, endDate: "", visible: true },
+  { id: 4, type: 'member', name: "Ar. SOUMAYA SAXENA", role: "Senior Architect", details: "9+ Yr Experience", email: "soumaya@idhika.com", joining: "2021-02-10", current: true, endDate: "", visible: true },
+  { id: 5, type: 'member', name: "Ar. MALVIKA SRIVASTAVA", role: "Senior Interior Designer", details: "5+ yr Experience", email: "malvika@idhika.com", joining: "2022-05-01", current: true, endDate: "", visible: true },
+  { id: 6, type: 'member', name: "Ar. ANANYA MAURYA", role: "Junior Architect", details: "Architectural Planning & Drafting", email: "ananya@idhika.com", joining: "2023-01-10", current: true, endDate: "", visible: true },
+  { id: 7, type: 'member', name: "Mr. VIVEK SRIVASTAVA", role: "Senior Draftsman", details: "15+ Yr Exp. (Drafting & Detailing)", email: "vivek@idhika.com", joining: "2012-04-01", current: true, endDate: "", visible: true },
+  { id: 8, type: 'member', name: "Er. RABISH KUMAR", role: "Civil Engineer", details: "5+ yr Exp. (Civil Execution)", email: "rabish@idhika.com", joining: "2021-08-12", current: true, endDate: "", visible: true },
+  { id: 9, type: 'member', name: "Mr. ANUPAM KATIYAR", role: "Project Manager", details: "20+ Yr Exp. (Site Management)", email: "anupam@idhika.com", joining: "2019-11-20", current: true, endDate: "", visible: true },
+  { id: 10, type: 'member', name: "Mr. RAMBABU", role: "Draftsman", details: "10+ Yr Experience", email: "rambabu@idhika.com", joining: "2016-05-14", current: true, endDate: "", visible: true },
+  { id: 11, type: 'member', name: "Mr. VIKRAM VERMA", role: "Draftsman", details: "7+ Yr Experience", email: "vikram@idhika.com", joining: "2018-09-01", current: true, endDate: "", visible: true },
+  { id: 12, type: 'member', name: "Miss. AARTI PANDEY", role: "Intern", details: "Architectural Intern", email: "aarti@idhika.com", joining: "2024-01-05", current: true, endDate: "", visible: true },
+  { id: 13, type: 'member', name: "Miss. KRITIKA PANDEY", role: "Intern", details: "Architectural Intern", email: "kritika@idhika.com", joining: "2024-01-05", current: true, endDate: "", visible: true },
+  { id: 14, type: 'member', name: "Mr. SHIV KUMAR", role: "Site Supervisor", details: "20+ yr Exp. (Site Supervision)", email: "shiv@idhika.com", joining: "2014-07-19", current: true, endDate: "", visible: true },
+  { id: 15, type: 'member', name: "ATS STRUCTURAL CONSULTANTS — Er. AKHILESK KUMAR SINGH", role: "Structural Consultant", details: "B.Tech, M.Tech. (IIT BHU) With 18+ Years' Experience", email: "akhilesk@idhika.com", joining: "2011-01-01", current: true, endDate: "", visible: true },
+  { id: 16, type: 'member', name: "Er. RAGHVENDRA VERMA", role: "Estimation Consultant", details: "AMICE (Civil)", email: "raghvendra@idhika.com", joining: "2017-03-10", current: true, endDate: "", visible: true },
+  { id: 17, type: 'member', name: "Er. ANKUR BAIPAI", role: "MEP Consultant", details: "Mechanical, Electrical & Plumbing", email: "ankurb@idhika.com", joining: "2019-08-15", current: true, endDate: "", visible: true },
+  { id: 18, type: 'member', name: "ASTRE DESIGN STUDIO LLP / PLATINUM ARCHITECTS", role: "Associate Architect", details: "Associated Design Studios", email: "astre@idhika.com", joining: "2015-01-01", current: true, endDate: "", visible: true }
+];
 
 function showPage(pageId) {
+  // If leaving admin CRM tab without saving, revert draft edits
+  if (document.getElementById('page-admin-portal').classList.contains('active') && pageId !== 'admin-portal') {
+    loadAdminLeads();
+  }
+
   document.querySelectorAll('.page-section').forEach(page => page.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-  
   const activePage = document.getElementById('page-' + pageId);
   const activeNav = document.getElementById('nav-' + pageId);
-  
-  if (activePage) { 
-    activePage.classList.add('active'); 
-    window.scrollTo({ top: 0, behavior: 'smooth' }); 
-  }
-  if (activeNav) {
-    activeNav.classList.add('active');
-  }
+  if (activePage) { activePage.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  if (activeNav) activeNav.classList.add('active');
 }
 
 function toggleMobileMenu() {
   const menu = document.getElementById('nav-links-menu');
-  if (menu) {
-    menu.classList.toggle('active');
-  }
+  if (menu) menu.classList.toggle('active');
 }
 
 function closeMobileMenu() {
   const menu = document.getElementById('nav-links-menu');
-  if (menu) {
-    menu.classList.remove('active');
-  }
+  if (menu) menu.classList.remove('active');
 }
 
+function openLeadModal() {
+  document.getElementById('lead-name').value = '';
+  document.getElementById('lead-phone').value = '';
+  document.getElementById('lead-email').value = '';
+  document.getElementById('lead-location').value = '';
+  document.getElementById('name-error-msg').style.display = 'none';
+  document.getElementById('phone-error-msg').style.display = 'none';
+  document.getElementById('email-error-msg').style.display = 'none';
+  document.getElementById('lead-modal').style.display = 'flex';
+  validateFormGlobally();
+}
+
+function closeLeadModal() { document.getElementById('lead-modal').style.display = 'none'; }
+function openFeedbackModal() { document.getElementById('feedback-modal').style.display = 'flex'; }
+function closeFeedbackModal() { document.getElementById('feedback-modal').style.display = 'none'; }
+function openCustomerLoginModal() { document.getElementById('customer-login-modal').style.display = 'flex'; }
+function closeCustomerLoginModal() { document.getElementById('customer-login-modal').style.display = 'none'; }
 function openRoleModal() { document.getElementById('role-modal').style.display = 'flex'; }
 function closeRoleModal() { document.getElementById('role-modal').style.display = 'none'; }
 function closeProjectModal() { document.getElementById('project-detail-modal').style.display = 'none'; }
-function openFeedbackModal() { document.getElementById('feedback-modal').style.display = 'flex'; }
-function closeFeedbackModal() { document.getElementById('feedback-modal').style.display = 'none'; }
 
-// YouTube Video Modal Controllers
-function openVideoModal() {
-  const modal = document.getElementById('youtube-video-modal');
-  const iframe = document.getElementById('youtube-iframe');
-  if (modal && iframe) {
-    iframe.src = "https://www.youtube.com/embed/ECLLSN3Nqkc?autoplay=1&rel=0";
-    modal.style.display = 'flex';
+function openManualLeadModal() { document.getElementById('manual-lead-modal').style.display = 'flex'; }
+function closeManualLeadModal() { document.getElementById('manual-lead-modal').style.display = 'none'; }
+
+function openStaffModal() { 
+  document.getElementById('staff-edit-id').value = ''; 
+  document.getElementById('staff-type').value = 'member';
+  document.getElementById('staff-name').value = ''; 
+  document.getElementById('staff-role').value = ''; 
+  document.getElementById('staff-details').value = ''; 
+  document.getElementById('staff-email').value = ''; 
+  document.getElementById('staff-joining').value = ''; 
+  document.getElementById('staff-current').checked = true; 
+  document.getElementById('staff-end-date-wrapper').style.display = 'none'; 
+  document.getElementById('director-extra-fields').style.display = 'none';
+  document.getElementById('staff-imgurl').value = '';
+  document.getElementById('image-preview-box').innerText = '';
+  document.getElementById('staff-bio').value = '';
+  document.getElementById('staff-modal').style.display = 'flex'; 
+}
+function closeStaffModal() { document.getElementById('staff-modal').style.display = 'none'; }
+
+function toggleDirectorFields(val) {
+  document.getElementById('director-extra-fields').style.display = val === 'director' ? 'block' : 'none';
+}
+
+function toggleStaffEndDate(isChecked) {
+  document.getElementById('staff-end-date-wrapper').style.display = isChecked ? 'none' : 'block';
+}
+
+function previewLocalImage(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('staff-imgurl').value = e.target.result;
+      document.getElementById('image-preview-box').innerText = '✓ Local image loaded successfully!';
+    };
+    reader.readAsDataURL(file);
   }
 }
 
-function closeVideoModal() {
-  const modal = document.getElementById('youtube-video-modal');
-  const iframe = document.getElementById('youtube-iframe');
-  if (modal && iframe) {
-    iframe.src = "";
-    modal.style.display = 'none';
-  }
+function switchAdminTab(tab) {
+  document.getElementById('admin-view-crm').style.display = tab === 'crm' ? 'block' : 'none';
+  document.getElementById('admin-view-team').style.display = tab === 'team' ? 'block' : 'none';
+  document.getElementById('admin-tab-btn-crm').className = tab === 'crm' ? 'btn btn-primary' : 'btn btn-secondary';
+  document.getElementById('admin-tab-btn-team').className = tab === 'team' ? 'btn btn-primary' : 'btn btn-secondary';
 }
 
-function submitClientFeedback() {
-  const category = document.getElementById('feedback-category').value;
-  const text = document.getElementById('feedback-text').value;
+function handleStaffFormSubmit(e) {
+  e.preventDefault();
+  const id = document.getElementById('staff-edit-id').value;
+  const type = document.getElementById('staff-type').value;
+  const name = document.getElementById('staff-name').value;
+  const role = document.getElementById('staff-role').value;
+  const details = document.getElementById('staff-details').value;
+  const email = document.getElementById('staff-email').value;
+  const joining = document.getElementById('staff-joining').value;
+  const current = document.getElementById('staff-current').checked;
+  const endDate = current ? '' : document.getElementById('staff-end').value;
+  const visible = document.getElementById('staff-visible').value === 'true';
+  const imgUrl = type === 'director' ? document.getElementById('staff-imgurl').value : '';
+  const bio = type === 'director' ? document.getElementById('staff-bio').value : '';
 
-  if (!text.trim()) { alert('Please type your feedback before submitting.'); return; }
+  if (id) {
+    const member = teamMembersData.find(m => m.id == id);
+    if (member) {
+      member.type = type; member.name = name; member.role = role; member.details = details; member.email = email; member.joining = joining; member.current = current; member.endDate = endDate; member.visible = visible; member.imgUrl = imgUrl; member.bio = bio;
+    }
+  } else {
+    const newMember = {
+      id: Date.now(),
+      type,
+      name, role, details, email, joining, current, endDate, visible, imgUrl, bio,
+      imgText: name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase()
+    };
+    teamMembersData.push(newMember);
+  }
 
-  const newFeedback = {
-    id: Date.now(),
-    category: category,
-    text: text,
-    date: new Date().toLocaleDateString()
+  localStorage.setItem('idhika_team_members', JSON.stringify(teamMembersData));
+  closeStaffModal();
+  renderTeamMembers();
+  loadAdminTeamTable();
+  showAdminBanner('Staff record saved successfully!');
+}
+
+function editStaff(id) {
+  const m = teamMembersData.find(item => item.id == id);
+  if (!m) return;
+  document.getElementById('staff-edit-id').value = m.id;
+  document.getElementById('staff-type').value = m.type || 'member';
+  toggleDirectorFields(m.type || 'member');
+  document.getElementById('staff-name').value = m.name;
+  document.getElementById('staff-role').value = m.role;
+  document.getElementById('staff-details').value = m.details;
+  document.getElementById('staff-email').value = m.email || '';
+  document.getElementById('staff-joining').value = m.joining || '';
+  document.getElementById('staff-current').checked = m.current !== false;
+  toggleStaffEndDate(m.current !== false);
+  if(m.current === false) document.getElementById('staff-end').value = m.endDate || '';
+  document.getElementById('staff-visible').value = m.visible !== false ? 'true' : 'false';
+  document.getElementById('staff-imgurl').value = m.imgUrl || '';
+  document.getElementById('image-preview-box').innerText = m.imgUrl ? '✓ Current image loaded' : '';
+  document.getElementById('staff-bio').value = m.bio || '';
+  document.getElementById('staff-modal').style.display = 'flex';
+}
+
+// CUSTOM IN-PAGE DELETE CONFIRMATION MODAL LOGIC
+let pendingDeleteId = null;
+
+function deleteStaff(id) {
+  pendingDeleteId = id;
+  document.getElementById('custom-confirm-modal').style.display = 'flex';
+  document.getElementById('confirm-delete-yes-btn').onclick = function() {
+    teamMembersData = teamMembersData.filter(m => m.id != pendingDeleteId);
+    localStorage.setItem('idhika_team_members', JSON.stringify(teamMembersData));
+    renderTeamMembers();
+    loadAdminTeamTable();
+    closeCustomConfirm();
+    showAdminBanner('Staff member deleted successfully!');
   };
-  storedFeedbackList.push(newFeedback);
-  renderAdminFeedback();
-
-  document.getElementById('feedback-text').value = '';
-  closeFeedbackModal();
-  alert('Thank you! Your feedback has been submitted to the Directors.');
 }
 
-function renderAdminFeedback() {
-  const container = document.getElementById('admin-feedback-list');
-  if (container) {
-    if (storedFeedbackList.length === 0) {
-      container.innerHTML = '<p style="color:var(--text-muted); font-size:0.85rem;">No client feedback submitted yet.</p>';
+function deleteLead(id) {
+  pendingDeleteId = id;
+  document.getElementById('custom-confirm-modal').style.display = 'flex';
+  document.getElementById('confirm-delete-yes-btn').onclick = function() {
+    storedLeadsList = storedLeadsList.filter(l => l.id != pendingDeleteId);
+    saveAndSyncCRM();
+    closeCustomConfirm();
+    showAdminBanner('Lead entry deleted successfully!');
+  };
+}
+
+function closeCustomConfirm() {
+  document.getElementById('custom-confirm-modal').style.display = 'none';
+  pendingDeleteId = null;
+}
+
+function showAdminBanner(msg, isError = false) {
+  const banner = document.getElementById('admin-inpage-banner');
+  if (!banner) return;
+  banner.innerText = msg;
+  banner.style.background = isError ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.2)';
+  banner.style.borderColor = isError ? '#ef4444' : '#34d399';
+  banner.style.color = isError ? '#f87171' : '#34d399';
+  banner.style.display = 'block';
+  setTimeout(() => { banner.style.display = 'none'; }, 4000);
+}
+
+// ==========================================
+// FORM VALIDATION (Full Name Allows Single & Multiple Spaces Properly)
+// ==========================================
+function validateFormGlobally() {
+  const nameInput = document.getElementById('lead-name');
+  const phoneInput = document.getElementById('lead-phone');
+  const emailInput = document.getElementById('lead-email');
+
+  const nameVal = nameInput.value;
+  const phoneVal = phoneInput.value.trim();
+  const emailVal = emailInput.value.trim().toLowerCase();
+
+  const nameErr = document.getElementById('name-error-msg');
+  const phoneErr = document.getElementById('phone-error-msg');
+  const emailErr = document.getElementById('email-error-msg');
+  const submitBtn = document.getElementById('submit-inquiry-btn');
+
+  let isFormValid = true;
+
+  // 1. Name: Fixed to strictly allow alphabets, dots, and spaces (single or multiple)
+  const nameRegex = /^[A-Za-z\s.]+$/;
+  if (nameVal && !nameRegex.test(nameVal)) {
+    nameErr.style.display = 'block';
+    isFormValid = false;
+  } else {
+    nameErr.style.display = 'none';
+  }
+
+  // 2. Phone: Numbers only
+  const phoneRegex = /^[0-9]+$/;
+  if (phoneVal && !phoneRegex.test(phoneVal)) {
+    phoneErr.style.display = 'block';
+    isFormValid = false;
+  } else {
+    phoneErr.style.display = 'none';
+  }
+
+  // 3. Email: Gmail, Yahoo, Outlook, Yopmail + duplicate check
+  const allowedDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'yopmail.com'];
+  if (emailVal) {
+    const parts = emailVal.split('@');
+    let emailOk = true;
+    if (parts.length !== 2 || !allowedDomains.includes(parts[1])) {
+      emailOk = false;
     } else {
-      container.innerHTML = storedFeedbackList.map(f => \`
-        <div style="margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.1); text-align:left;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
-            <span style="font-weight:700; color:var(--accent-gold); font-size:0.85rem;">[\${f.category}]</span>
-            <span style="font-size:0.75rem; color:var(--text-muted);">\${f.date}</span>
-          </div>
-          <p style="font-size:0.85rem; color:var(--text-main);">"\${f.text}"</p>
-        </div>
-      \`).join('');
+      const username = parts[0];
+      const usernameRegex = /^[a-z0-9.]+$/;
+      if (!usernameRegex.test(username)) emailOk = false;
     }
+
+    const isDuplicate = storedLeadsList.some(l => l.email.toLowerCase() === emailVal);
+    if (!emailOk || isDuplicate) {
+      emailErr.innerText = isDuplicate ? 'This email address already exists in our inquiry database.' : 'Allowed domains: Gmail, Yahoo, Outlook, Yopmail.';
+      emailErr.style.display = 'block';
+      isFormValid = false;
+    } else {
+      emailErr.style.display = 'none';
+    }
+  } else {
+    emailErr.style.display = 'none';
+  }
+
+  if (!nameVal.trim() || !phoneVal || !emailVal || !isFormValid) {
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = '0.5';
+  } else {
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = '1';
   }
 }
 
-function openZoomModal(imgSrc) {
-  const overlay = document.getElementById('image-zoom-overlay');
-  const imgTarget = document.getElementById('zoomed-image-target');
-  if (overlay && imgTarget) { imgTarget.src = imgSrc; overlay.style.display = 'flex'; }
-}
-function closeZoomModal() {
-  const overlay = document.getElementById('image-zoom-overlay');
-  if (overlay) overlay.style.display = 'none';
+function handleCustomerLeadSubmit(event) {
+  event.preventDefault();
+  const countryCode = document.getElementById('lead-country-code').value;
+  const rawPhone = document.getElementById('lead-phone').value.trim();
+  const name = document.getElementById('lead-name').value.trim();
+  const phone = countryCode + ' ' + rawPhone;
+  const email = document.getElementById('lead-email').value.trim().toLowerCase();
+  const location = document.getElementById('lead-location').value.trim();
+  const service = document.getElementById('lead-service').value;
+
+  if (storedLeadsList.some(l => l.email.toLowerCase() === email)) {
+    alert('An inquiry with this email address already exists.');
+    return;
+  }
+
+  const newLead = { id: Date.now(), name, phone, email, location, service, assignedTo: 'Unassigned', status: 'NEW', comment: 'Inquiry captured via bubble.' };
+  storedLeadsList.push(newLead);
+  saveAndSyncCRM();
+  closeLeadModal();
+
+  const popupContent = 
+    '<p><strong>To:</strong> ' + email + '</p>' +
+    '<p><strong>Subject:</strong> Inquiry Received — Ídhika Group</p>' +
+    '<hr style="border:0; border-top:1px solid rgba(212,175,55,0.3); margin:10px 0;">' +
+    '<p>Dear <strong>' + name + '</strong>,</p>' +
+    '<p style="margin-top:6px;">Thank you for contacting <strong>ÍDHIKA GROUP</strong> regarding your architectural requirement for <em>' + service + '</em> at <em>' + location + '</em>.</p>' +
+    '<p style="margin-top:6px;">We have successfully received your inquiry. Our professional advisory team will review your project parameters and connect with you shortly.</p>' +
+    '<p style="margin-top:10px; font-style:italic; color:var(--accent-gold);">Warm regards,<br>Client Relations Desk, Ídhika Group</p>';
+
+  document.getElementById('popup-title-text').innerText = 'Inquiry Successfully Submitted';
+  document.getElementById('success-popup-content').innerHTML = popupContent;
+  document.getElementById('success-popup-modal').style.display = 'flex';
 }
 
-function toggleServiceDrawer(index) {
-  const drawer = document.getElementById('service-drawer-' + index);
-  const btn = document.getElementById('service-btn-' + index);
-  if (drawer && btn) {
-    if (drawer.classList.contains('active')) {
-      drawer.classList.remove('active');
-      btn.innerText = 'Explore Deliverables & Scope ↓';
-    } else {
-      drawer.classList.add('active');
-      btn.innerText = 'Hide Details ↑';
+function handleManualLeadSubmit(e) {
+  e.preventDefault();
+  const name = document.getElementById('manual-name').value.trim();
+  const phone = document.getElementById('manual-phone').value.trim();
+  const email = document.getElementById('manual-email').value.trim().toLowerCase();
+  const location = document.getElementById('manual-location').value.trim();
+  const service = document.getElementById('manual-service').value;
+
+  const newLead = { id: Date.now(), name, phone, email, location, service, assignedTo: 'Unassigned', status: 'NEW', comment: 'Manually added by Director/Admin.' };
+  storedLeadsList.push(newLead);
+  saveAndSyncCRM();
+  closeManualLeadModal();
+  showAdminBanner('Manual lead entry created successfully!');
+  document.getElementById('manual-name').value = '';
+  document.getElementById('manual-phone').value = '';
+  document.getElementById('manual-email').value = '';
+  document.getElementById('manual-location').value = '';
+}
+
+function closeSuccessPopup() {
+  document.getElementById('success-popup-modal').style.display = 'none';
+}
+
+function handleFeedbackSubmit(event) {
+  event.preventDefault();
+  alert('Customer feedback submitted successfully!');
+  document.getElementById('fb-name').value = '';
+  document.getElementById('fb-msg').value = '';
+  closeFeedbackModal();
+}
+
+function saveAndSyncCRM() {
+  localStorage.setItem('idhika_crm_leads', JSON.stringify(storedLeadsList));
+  loadAdminLeads();
+}
+
+function filterCrmTable() {
+  const query = document.getElementById('crm-search-input').value.toLowerCase();
+  loadAdminLeads(query);
+}
+
+function loadAdminLeads(filterQuery = '') {
+  const tbody = document.getElementById('admin-leads-tbody');
+  if (!tbody) return;
+
+  let filteredList = storedLeadsList;
+  if (filterQuery) {
+    filteredList = storedLeadsList.filter(l => 
+      l.name.toLowerCase().includes(filterQuery) || 
+      l.phone.toLowerCase().includes(filterQuery) || 
+      l.location.toLowerCase().includes(filterQuery) ||
+      l.assignedTo.toLowerCase().includes(filterQuery)
+    );
+  }
+
+  if (filteredList.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">No matching inquiries found.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = filteredList.map(function(l) {
+    let badgeClass = 'badge-new';
+    if (l.status === 'ALLOCATED') badgeClass = 'badge-allocated';
+    if (l.status === 'PROCEED') badgeClass = 'badge-proceed';
+    if (l.status === 'COMPLETED') badgeClass = 'badge-completed';
+    if (l.status === 'CANCEL') badgeClass = 'badge-cancel';
+    if (l.status === 'BLACKLISTED') badgeClass = 'badge-blacklist';
+
+    return '<tr>' +
+      '<td><strong>' + l.name + '</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">' + l.phone + ' | ' + l.email + '</span></td>' +
+      '<td>' + l.location + '</td>' +
+      '<td>' + l.service + '</td>' +
+      '<td>' +
+        '<select id="assignee-sel-' + l.id + '" class="form-control" style="padding:0.3rem; font-size:0.75rem; margin-top:0;">' +
+          '<option value="Unassigned"' + (l.assignedTo === 'Unassigned' ? ' selected' : '') + '>Unassigned</option>' +
+          '<option value="Karan Negi (Manager)"' + (l.assignedTo === 'Karan Negi (Manager)' ? ' selected' : '') + '>Karan Negi</option>' +
+          '<option value="Amit Sharma (Admin)"' + (l.assignedTo === 'Amit Sharma (Admin)' ? ' selected' : '') + '>Amit Sharma</option>' +
+        '</select>' +
+      '</td>' +
+      '<td>' +
+        '<select id="status-sel-' + l.id + '" class="form-control" style="padding:0.3rem; font-size:0.75rem; margin-top:0;">' +
+          '<option value="NEW"' + (l.status === 'NEW' ? ' selected' : '') + '>NEW</option>' +
+          '<option value="ALLOCATED"' + (l.status === 'ALLOCATED' ? ' selected' : '') + '>ALLOCATED</option>' +
+          '<option value="PROCEED"' + (l.status === 'PROCEED' ? ' selected' : '') + '>PROCEED</option>' +
+          '<option value="COMPLETED"' + (l.status === 'COMPLETED' ? ' selected' : '') + '>COMPLETED</option>' +
+          '<option value="CANCEL"' + (l.status === 'CANCEL' ? ' selected' : '') + '>CANCEL</option>' +
+          '<option value="BLACKLISTED"' + (l.status === 'BLACKLISTED' ? ' selected' : '') + '>BLACKLISTED</option>' +
+        '</select>' +
+      '</td>' +
+      '<td><input type="text" id="comment-inp-' + l.id + '" class="form-control" style="padding:0.3rem; font-size:0.75rem; margin-top:0;" value="' + (l.comment || '') + '"></td>' +
+      '<td>' +
+        '<div style="display:flex; gap:4px; flex-wrap:wrap;">' +
+          '<button onclick="cloneLead(' + l.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem;" title="Clone entry">Clone</button>' +
+          '<button onclick="deleteLead(' + l.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; border-color:#ef4444; color:#f87171;">Delete</button>' +
+        '</div>' +
+      '</td>' +
+    '</tr>';
+  }).join('');
+}
+
+// PAGE-LEVEL SAVE ALL CHANGES BUTTON (Commits draft edits and checks for PROCEED welcome email)
+function saveAllCrmChanges() {
+  let newlyProceededLead = null;
+
+  storedLeadsList.forEach(function(lead) {
+    const assigneeEl = document.getElementById('assignee-sel-' + lead.id);
+    const statusEl = document.getElementById('status-sel-' + lead.id);
+    const commentEl = document.getElementById('comment-inp-' + lead.id);
+
+    if (assigneeEl && statusEl && commentEl) {
+      const oldStatus = lead.status;
+      lead.assignedTo = assigneeEl.value;
+      lead.status = statusEl.value;
+      lead.comment = commentEl.value;
+
+      if (lead.status === 'PROCEED' && oldStatus !== 'PROCEED') {
+        lead.tempPassword = 'idhika123';
+        newlyProceededLead = lead;
+      }
     }
+  });
+
+  saveAndSyncCRM();
+  showAdminBanner('All CRM changes saved successfully!');
+
+  if (newlyProceededLead) {
+    const welcomeHtml = 
+      '<p>Dear <strong>' + newlyProceededLead.name + '</strong>,</p>' +
+      '<p style="margin-top:6px; color:#34d399; font-weight:600;">🎉 Congratulations! Your project contract has been officially approved and set to PROCEED.</p>' +
+      '<p style="margin-top:6px;">We are thrilled to welcome you to the <strong>ÍDHIKA GROUP</strong> family. Your dedicated Customer Dashboard has been provisioned securely.</p>' +
+      '<p style="margin-top:8px;"><strong>Secure Access Credentials:</strong><br>' +
+      '• Portal Login URL: <a href="http://localhost:3000" target="_blank" style="color:var(--accent-gold);">Access Client Portal</a><br>' +
+      '• Registered Email: ' + newlyProceededLead.email + '<br>' +
+      '• Temporary Secure Password: <em>idhika123</em> (Please update upon first login)</p>' +
+      '<p style="margin-top:10px; font-style:italic; color:var(--accent-gold);">Warmest regards & best wishes,<br>Executive Director Office, Ídhika Group</p>';
+
+    document.getElementById('popup-title-text').innerText = 'Official Welcome Email Sent';
+    document.getElementById('success-popup-content').innerHTML = welcomeHtml;
+    document.getElementById('success-popup-modal').style.display = 'flex';
+  }
+}
+
+// CLONE LEAD ENTRY
+function cloneLead(id) {
+  const lead = storedLeadsList.find(l => l.id === id);
+  if (!lead) return;
+
+  const cloned = {
+    ...lead,
+    id: Date.now(),
+    assignedTo: 'Unassigned',
+    status: 'NEW',
+    comment: 'Cloned from entry #' + id,
+    tempPassword: ''
+  };
+
+  storedLeadsList.push(cloned);
+  saveAndSyncCRM();
+  showAdminBanner('Entry successfully cloned as Unassigned/New!');
+}
+
+function loadAdminTeamTable() {
+  const tbody = document.getElementById('admin-team-table-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = teamMembersData.map(function(t) {
+    const isVisible = t.visible !== false;
+    const workingStatus = t.current !== false ? '<span style="color:#34d399; font-weight:700;">Currently Working</span>' : '<span style="color:#f87171;">End Date: ' + t.endDate + '</span>';
+    return '<tr>' +
+      '<td><strong>' + t.name + '</strong><br><span style="font-size:0.75rem; color:var(--accent-gold);">' + t.role + ' (' + t.type.toUpperCase() + ')</span></td>' +
+      '<td>' + (isVisible ? '<span style="color:#34d399; font-weight:700;">Visible on Website</span>' : '<span style="color:#f87171; font-weight:700;">Hidden from Website</span>') + '</td>' +
+      '<td><span style="font-size:0.78rem;">Joined: ' + (t.joining || 'N/A') + '</span><br>' + workingStatus + '</td>' +
+      '<td><span style="font-size:0.78rem; color:var(--text-muted);">' + t.details + '</span></td>' +
+      '<td>' +
+        '<button onclick="editStaff(' + t.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; margin-right:4px;">Edit</button>' +
+        '<button onclick="deleteStaff(' + t.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; border-color:#ef4444; color:#f87171;">Delete</button>' +
+      '</td>' +
+    '</tr>';
+  }).join('');
+}
+
+function handlePortalLoginSubmit(event) {
+  event.preventDefault();
+  const email = document.getElementById('portal-login-email').value.trim().toLowerCase();
+  const pass = document.getElementById('portal-login-pass').value.trim();
+
+  const matchedLead = storedLeadsList.find(l => l.email === email && l.status === 'PROCEED');
+  if (matchedLead && (pass === matchedLead.tempPassword || pass === 'idhika123')) {
+    localStorage.setItem('idhika_logged_customer', JSON.stringify(matchedLead));
+    closeCustomerLoginModal();
+    checkCustomerAuthState();
+    showPage('client-portal');
+    alert('Logged into Customer Dashboard!');
+    return;
+  }
+
+  const matchedEmp = teamMembersData.find(m => m.email && m.email.toLowerCase() === email);
+  if (matchedEmp) {
+    localStorage.setItem('idhika_logged_employee', JSON.stringify(matchedEmp));
+    closeCustomerLoginModal();
+    checkCustomerAuthState();
+    showPage('employee-portal');
+    alert('Logged into Employee Internal Space!');
+    return;
+  }
+
+  alert('Authentication failed. Check your credentials or ensure your contract is set to PROCEED.');
+}
+
+function checkCustomerAuthState() {
+  const loggedCust = localStorage.getItem('idhika_logged_customer');
+  const loggedEmp = localStorage.getItem('idhika_logged_employee');
+  const bubble = document.getElementById('persistent-contact-bubble');
+  const clientNavLink = document.getElementById('nav-client-link');
+  const empNavLink = document.getElementById('nav-employee-link');
+
+  if (loggedCust) {
+    const cust = JSON.parse(loggedCust);
+    if (bubble) bubble.style.display = 'none';
+    if (clientNavLink) clientNavLink.style.display = 'block';
+    loadCustomerDashboard(cust);
+  } else if (loggedEmp) {
+    const emp = JSON.parse(loggedEmp);
+    if (bubble) bubble.style.display = 'none';
+    if (empNavLink) empNavLink.style.display = 'block';
+    loadEmployeeDashboard(emp);
+  } else {
+    if (bubble) bubble.style.display = 'block';
+    if (clientNavLink) clientNavLink.style.display = 'none';
+    if (empNavLink) empNavLink.style.display = 'none';
+  }
+}
+
+function loadCustomerDashboard(cust) {
+  document.getElementById('cust-welcome-title').innerText = 'Welcome, ' + cust.name;
+  document.getElementById('cust-details-text').innerHTML = 'Site: ' + cust.location + ' | Service: ' + cust.service + ' | Manager: ' + cust.assignedTo;
+  document.getElementById('client-project-display').innerHTML = '<div class="glass-card"><h3 class="gold-text">' + cust.service + ' — Active Tracker</h3><p style="margin:0.5rem 0; color:var(--text-muted);">Status: Work in Progress</p><button onclick="closeCustomerProject(' + cust.id + ')" class="btn btn-primary" style="margin-top:1rem;">Mark Project as Closed / Completed</button></div>';
+}
+
+function loadEmployeeDashboard(emp) {
+  const workingTxt = emp.current !== false ? 'Currently Working' : 'Tenure Ended: ' + emp.endDate;
+  document.getElementById('employee-profile-card').innerHTML = 
+    '<h3 class="gold-text">' + emp.name + '</h3>' +
+    '<p style="font-size:0.85rem; color:var(--accent-gold); margin-bottom:0.5rem;"><strong>Role:</strong> ' + emp.role + '</p>' +
+    '<p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.3rem;"><strong>Experience Details:</strong> ' + emp.details + '</p>' +
+    '<p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.3rem;"><strong>Joining Date:</strong> ' + (emp.joining || 'N/A') + '</p>' +
+    '<p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1rem;"><strong>Employment Status:</strong> ' + workingTxt + '</p>' +
+    '<button onclick="logoutEmployee()" class="btn btn-secondary" style="font-size:0.7rem;">Log Out Employee Space</button>';
+}
+
+function logoutEmployee() {
+  localStorage.removeItem('idhika_logged_employee');
+  showPage('home');
+  checkCustomerAuthState();
+}
+
+function closeCustomerProject(id) {
+  const lead = storedLeadsList.find(l => l.id === id);
+  if (lead) {
+    lead.status = 'COMPLETED';
+    saveAndSyncCRM();
+    localStorage.removeItem('idhika_logged_customer');
+    alert('Project closed and synced to COMPLETED!');
+    showPage('home');
+    checkCustomerAuthState();
   }
 }
 
 function switchRole(role) {
-  currentRole = role;
   closeRoleModal();
   const clientLink = document.getElementById('nav-client-link');
-  const empLink = document.getElementById('nav-employee-link');
   const adminLink = document.getElementById('nav-admin-link');
-  const loginBtn = document.getElementById('login-nav-btn');
-
-  clientLink.style.display = 'none'; empLink.style.display = 'none'; adminLink.style.display = 'none';
-
-  if (role === 'client') {
-    clientLink.style.display = 'block'; loginBtn.innerText = 'Log Out (Client)'; showPage('client-portal');
-  } else if (role === 'employee') {
-    empLink.style.display = 'block'; loginBtn.innerText = 'Log Out (Employee)'; showPage('employee-portal');
-  } else if (role === 'admin') {
-    clientLink.style.display = 'block'; empLink.style.display = 'block'; adminLink.style.display = 'block'; loginBtn.innerText = 'Log Out (Director)'; showPage('admin-portal');
-  } else {
-    loginBtn.innerText = 'Portal Login'; showPage('home');
-  }
+  if(clientLink) clientLink.style.display = 'none'; 
+  if(adminLink) adminLink.style.display = 'none';
+  if (role === 'admin') { if(adminLink) adminLink.style.display = 'block'; showPage('admin-portal'); loadAdminLeads(); loadAdminTeamTable(); }
+  else { showPage('home'); checkCustomerAuthState(); }
 }
 
 function initSubtleArchitecturalBackground() {
@@ -598,21 +1226,69 @@ const detailedServicesData = [
   { num: "5", title: "LANDSCAPE ARCHITECTURE", clientSummary: "Vibrant exterior environments. We design outdoor gardens, pathways, lighting, and screening elements tailored to local soil conditions.", description: "Enhances aesthetics and functionality of exterior environments—from pathways and streetscapes to exterior lighting and native plants.", deliverables: ["Exterior Environmental & Garden Master Plans", "Pathway, Courtyard & Streetscape Engineering", "Screening, Buffering & Privacy Boundaries", "Exterior Lighting & Water Feature Components", "Eco-Native Plant Selection for Local Soil Conditions"] }
 ];
 
+function toggleServiceDrawer(index) {
+  const drawer = document.getElementById('service-drawer-' + index);
+  const btn = document.getElementById('service-btn-' + index);
+  if (drawer && btn) {
+    if (drawer.classList.contains('active')) {
+      drawer.classList.remove('active');
+      btn.innerText = 'Explore Deliverables & Scope ↓';
+    } else {
+      drawer.classList.add('active');
+      btn.innerText = 'Hide Details ↑';
+    }
+  }
+}
+
 function renderDetailedServices() {
   const container = document.getElementById('services-container');
   if (container) {
-    container.innerHTML = detailedServicesData.map((s, idx) => \`
-      <div class="service-card">
-        <div class="service-icon-head"><div class="service-icon-badge">\${s.num}</div><h3 class="gold-text" style="font-size:1.2rem; margin-bottom:0;">\${s.title}</h3></div>
-        <p class="service-short-summary">\${s.clientSummary}</p>
-        <button id="service-btn-\${idx}" onclick="toggleServiceDrawer(\${idx})" class="expand-details-btn">Explore Deliverables & Scope ↓</button>
-        <div id="service-drawer-\${idx}" class="service-drawer-content">
-          <p class="drawer-tech-desc">\${s.description}</p>
-          <h4 style="font-size:0.8rem; color:var(--accent-gold); margin-bottom:0.5rem; text-transform:uppercase;">Included Technical Deliverables:</h4>
-          <div class="deliverables-grid">\${s.deliverables.map(item => \`<div class="deliverable-item">✓ \${item}</div>\`).join('')}</div>
-        </div>
-      </div>
-    \`).join('');
+    container.innerHTML = detailedServicesData.map((s, idx) => 
+      '<div class="service-card">' +
+        '<div class="service-icon-head"><div class="service-icon-badge">' + s.num + '</div><h3 class="gold-text" style="font-size:1.1rem; margin-bottom:0;">' + s.title + '</h3></div>' +
+        '<p class="service-short-summary">' + s.clientSummary + '</p>' +
+        '<button id="service-btn-' + idx + '" onclick="toggleServiceDrawer(' + idx + ')" class="expand-details-btn">Explore Deliverables & Scope ↓</button>' +
+        '<div id="service-drawer-' + idx + '" class="service-drawer-content">' +
+          '<p class="drawer-tech-desc">' + s.description + '</p>' +
+          '<h4 style="font-size:0.8rem; color:var(--accent-gold); margin-bottom:0.5rem; text-transform:uppercase;">Included Technical Deliverables:</h4>' +
+          '<div class="deliverables-grid">' + s.deliverables.map(item => '<div class="deliverable-item">✓ ' + item + '</div>').join('') + '</div>' +
+        '</div>' +
+      '</div>'
+    ).join('');
+  }
+}
+
+function renderTeamMembers() {
+  const dirContainer = document.getElementById('directors-container');
+  const memContainer = document.getElementById('team-members-container');
+  
+  const visibleStaff = teamMembersData.filter(t => t.visible !== false);
+
+  if (dirContainer) {
+    const directors = visibleStaff.filter(t => t.type === 'director');
+    dirContainer.innerHTML = directors.map(d => {
+      const picHtml = d.imgUrl ? 
+        '<img src="' + d.imgUrl + '" alt="' + d.name + '" style="width:110px; height:110px; margin:0 auto 1rem; border-radius:50%; object-fit:cover; border:2px solid var(--accent-gold); box-shadow:0 0 20px rgba(212,175,55,0.3); display:block;" onerror="this.style.display=\\'none\\';">' :
+        '<div style="width:110px; height:110px; margin:0 auto 1rem; border-radius:50%; background:linear-gradient(135deg, var(--accent-gold), #33270a); display:flex; align-items:center; justify-content:center; font-size:2.2rem; font-family:\\'Cinzel\\',serif; color:#000; font-weight:800; border:2px solid var(--accent-gold); box-shadow:0 0 20px rgba(212,175,55,0.3);">' + (d.imgText || 'DG') + '</div>';
+
+      return '<div class="glass-card director-card" style="text-align:center;">' +
+        picHtml +
+        '<h4 class="gold-text" style="font-size:1.1rem; margin-bottom:0.2rem;">' + d.name + '</h4>' +
+        '<span style="font-size:0.75rem; color:var(--accent-gold); display:block; margin-bottom:0.5rem; font-weight:600;">' + d.role + ' — ' + d.details + '</span>' +
+        '<p style="font-size:0.8rem; color:var(--text-muted); line-height:1.5;">' + (d.bio || 'Principal Director heading major architectural and housing divisions.') + '</p>' +
+      '</div>';
+    }).join('');
+  }
+
+  if (memContainer) {
+    const members = visibleStaff.filter(t => t.type === 'member');
+    memContainer.innerHTML = members.map(m => 
+      '<div class="team-member-card glass-card">' +
+        '<span style="font-size:0.7rem; color:var(--accent-gold); text-transform:uppercase; font-weight:700; display:block; margin-bottom:0.3rem;">' + m.role + '</span>' +
+        '<h4 style="font-size:0.95rem; font-family:\\'Cinzel\\',serif; color:#fff; margin-bottom:0.3rem;">' + m.name + '</h4>' +
+        '<p style="font-size:0.78rem; color:var(--text-muted);">' + m.details + '</p>' +
+      '</div>'
+    ).join('');
   }
 }
 
@@ -628,15 +1304,15 @@ const architecturalWonders = [
 function renderArchitecturalWonders() {
   const container = document.getElementById('wonders-grid');
   if (container) {
-    container.innerHTML = architecturalWonders.map(w => \`
-      <div class="portfolio-card">
-        <img src="\${w.image}" alt="\${w.name}" class="wonder-card-img" onerror="this.style.display='none';">
-        <h3 class="gold-text" style="font-size:1.1rem; margin-bottom:0.2rem;">\${w.name}</h3>
-        <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:0.5rem;"><strong>\${w.location}</strong> — \${w.archetype}</p>
-        <p style="font-size:0.8rem; line-height:1.5; margin-bottom:0.8rem;">\${w.description}</p>
-        <a href="\${w.googleUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary wonder-link-btn">Explore on Google Search ↗</a>
-      </div>
-    \`).join('');
+    container.innerHTML = architecturalWonders.map(w => 
+      '<div class="portfolio-card">' +
+        '<img src="' + w.image + '" alt="' + w.name + '" class="wonder-card-img" onerror="this.style.display=\\'none\\';">' +
+        '<h3 class="gold-text" style="font-size:1.1rem; margin-bottom:0.2rem;">' + w.name + '</h3>' +
+        '<p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:0.5rem;"><strong>' + w.location + '</strong> — ' + w.archetype + '</p>' +
+        '<p style="font-size:0.8rem; line-height:1.5; margin-bottom:0.8rem;">' + w.description + '</p>' +
+        '<a href="' + w.googleUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-secondary wonder-link-btn">Explore on Google Search ↗</a>' +
+      '</div>'
+    ).join('');
   }
 }
 
@@ -652,20 +1328,19 @@ const signatureProjects = [
 function fetchProjects() {
   renderPortfolio(signatureProjects);
   renderEmployeeSpace(signatureProjects);
-  renderAdminControls(signatureProjects);
 }
 
 function renderPortfolio(projects) {
   const container = document.getElementById('portfolio-grid');
   if (container) {
-    container.innerHTML = projects.map(p => \`
-      <div class="portfolio-card">
-        <h3 style="color:var(--accent-gold);margin-bottom:0.4rem;">\${p.name}</h3>
-        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.5rem;"><strong>\${p.type}</strong> — \${p.location}</p>
-        <p style="font-size:0.82rem; margin-bottom:1rem;">\${p.description}</p>
-        <button onclick="viewProjectDetails(\${p.id})" class="btn btn-primary" style="padding:0.5rem 1rem; font-size:0.72rem; width:100%;">View Architectural Floor Plans & Renders</button>
-      </div>
-    \`).join('');
+    container.innerHTML = projects.map(p => 
+      '<div class="portfolio-card">' +
+        '<h3 style="color:var(--accent-gold);margin-bottom:0.4rem;">' + p.name + '</h3>' +
+        '<p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.5rem;"><strong>' + p.type + '</strong> — ' + p.location + '</p>' +
+        '<p style="font-size:0.82rem; margin-bottom:1rem;">' + p.description + '</p>' +
+        '<button onclick="viewProjectDetails(' + p.id + ')" class="btn btn-primary" style="padding:0.5rem 1rem; font-size:0.72rem; width:100%;">View Floor Plans & Renders</button>' +
+      '</div>'
+    ).join('');
   }
 }
 
@@ -673,78 +1348,39 @@ function viewProjectDetails(id) {
   const p = signatureProjects.find(proj => proj.id === id);
   if (!p) return;
   document.getElementById('modal-proj-name').innerText = p.name + " — Architectural Overview";
-  
   let imagesHtml = '';
-  if (p.image) {
-    imagesHtml += \`<div class="project-render-wrapper" onclick="openZoomModal('\${p.image}')" title="Click to Expand Full Screen"><img src="\${p.image}" alt="\${p.name} Render" class="project-render-img" onerror="this.parentElement.style.display='none';"><div class="zoom-badge">🔍 Click to Expand</div></div>\`;
-  }
-  if (p.planImage) {
-    imagesHtml += \`<div class="project-render-wrapper" onclick="openZoomModal('\${p.planImage}')" title="Click to Expand Full Screen" style="margin-top:0.8rem;"><img src="\${p.planImage}" alt="\${p.name} Floor Plan" class="project-render-img" onerror="this.parentElement.style.display='none';"><div class="zoom-badge">🔍 Expand Floor Plan</div></div>\`;
-  }
+  if (p.image) imagesHtml += '<div class="project-render-wrapper" onclick="openZoomModal(\\'' + p.image + '\\')"><img src="' + p.image + '" class="project-render-img"><div class="zoom-badge">🔍 Click to Expand</div></div>';
+  if (p.planImage) imagesHtml += '<div class="project-render-wrapper" onclick="openZoomModal(\\'' + p.planImage + '\\')" style="margin-top:0.8rem;"><img src="' + p.planImage + '" class="project-render-img"><div class="zoom-badge">🔍 Expand Plan</div></div>';
 
-  document.getElementById('modal-proj-content').innerHTML = \`
-    <p><strong>Project Type:</strong> \${p.type}</p>
-    <p><strong>Location:</strong> \${p.location}</p>
-    <p style="margin-top:0.4rem; color:var(--text-muted);">\${p.description}</p>
-    <div class="modal-spec-box">
-      <div>
-        <h4 class="gold-text" style="font-size:0.95rem; margin-bottom:0.4rem;">Architectural Specifications</h4>
-        <ul>\${p.specs.map(s => \`<li style="font-size:0.82rem; margin-bottom:0.25rem;">\${s}</li>\`).join('')}</ul>
-      </div>
-      <div>
-        <h4 class="gold-text" style="font-size:0.95rem; margin-bottom:0.4rem;">Renders & Floor Layouts (Click to Zoom)</h4>
-        <div class="modal-image-container">\${imagesHtml}</div>
-      </div>
-    </div>
-  \`;
+  document.getElementById('modal-proj-content').innerHTML = 
+    '<p><strong>Type:</strong> ' + p.type + ' | <strong>Location:</strong> ' + p.location + '</p>' +
+    '<p style="margin-top:0.4rem; color:var(--text-muted);">' + p.description + '</p>' +
+    '<div class="modal-spec-box">' +
+      '<div><h4 class="gold-text" style="font-size:0.95rem;">Specs</h4><ul>' + p.specs.map(s => '<li style="font-size:0.8rem;">' + s + '</li>').join('') + '</ul></div>' +
+      '<div><h4 class="gold-text" style="font-size:0.95rem;">Renders (Click to Zoom)</h4><div class="modal-image-container">' + imagesHtml + '</div></div>' +
+    '</div>';
   document.getElementById('project-detail-modal').style.display = 'flex';
 }
 
-function searchClientProject() {
-  const projId = document.getElementById('client-project-id').value;
-  const container = document.getElementById('client-project-display');
-  const proj = signatureProjects.find(p => p.id === parseInt(projId));
-  if (proj && container) {
-    container.innerHTML = \`
-      <div class="client-card glass-card">
-        <h3 class="gold-text">\${proj.name} (Project ID: #\${proj.id})</h3>
-        <p><strong>Location:</strong> \${proj.location}</p>
-        <p><strong>Project Type:</strong> \${proj.type}</p>
-        <h4 style="margin-top:1.2rem;" class="gold-text">Signed-off Architectural Stages</h4>
-        <div class="stage-timeline">
-          <div class="stage-item">✓ Stage 1: Masterplan & Programming (100%)</div>
-          <div class="stage-item">✓ Stage 2: Structural Engineering & Foundations (100%)</div>
-          <div class="stage-item">⟳ Stage 3: Interior Fitouts & Handover (In Progress)</div>
-        </div>
-      </div>
-    \`;
-  }
+function openZoomModal(imgSrc) {
+  const overlay = document.getElementById('image-zoom-overlay');
+  const imgTarget = document.getElementById('zoomed-image-target');
+  if (overlay && imgTarget) { imgTarget.src = imgSrc; overlay.style.display = 'flex'; }
+}
+
+function closeZoomModal() {
+  const overlay = document.getElementById('image-zoom-overlay');
+  if (overlay) overlay.style.display = 'none';
 }
 
 function renderEmployeeSpace(projects) {
   const container = document.getElementById('employee-assigned-projects');
   if (container) {
-    container.innerHTML = projects.map(p => \`
-      <div style="margin-bottom:0.8rem; padding-bottom:0.8rem; border-bottom:1px solid rgba(255,255,255,0.1);">
-        <h4>\${p.name}</h4>
-        <p style="font-size:0.82rem;">\${p.type}</p>
-      </div>
-    \`).join('');
-  }
-}
-
-function renderAdminControls(projects) {
-  const container = document.getElementById('admin-project-controls');
-  if (container) {
-    container.innerHTML = projects.map(p => \`
-      <div style="margin-bottom:0.8rem; padding-bottom:0.8rem; border-bottom:1px solid rgba(255,255,255,0.1);">
-        <p><strong>\${p.name}</strong> (\${p.type})</p>
-        <div style="display:flex; gap:0.8rem; margin-top:0.4rem;">
-          <input type="text" class="form-control" value="Stage 3 In Progress">
-          <button onclick="alert('Progress updated!')" class="btn btn-primary">Save</button>
-        </div>
-      </div>
-    \`).join('');
+    container.innerHTML = projects.map(p => 
+      '<div style="margin-bottom:0.8rem; padding-bottom:0.8rem; border-bottom:1px solid rgba(255,255,255,0.1);">' +
+        '<h4>' + p.name + '</h4><p style="font-size:0.82rem;">' + p.type + '</p>' +
+      '</div>'
+    ).join('');
   }
 }
 `;
@@ -754,4 +1390,4 @@ fs.writeFileSync(path.join(publicDir, 'index.html'), indexHtml);
 fs.writeFileSync(path.join(publicDir, 'styles.css'), stylesCss);
 fs.writeFileSync(path.join(publicDir, 'app.js'), appJs);
 
-console.log('IDHIKA GROUP Stationary Realistic Plaque & 2.4s Slow Reveal Deployed!');
+console.log('IDHIKA GROUP Portal Deployed Successfully with in-page notifications, strict draft-state CRM protection, and fully corrected full-name spacing validation.');
