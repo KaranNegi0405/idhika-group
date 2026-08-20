@@ -654,8 +654,12 @@ select:-webkit-autofill {
 }
 `;
 
-// 3. public/app.js (Complete script with loadAdminProjectsTable() and loadAdminTeamTable() fully wired)
-const appJs = `document.addEventListener('DOMContentLoaded', () => {
+// 3. public/app.js (Connected with Render Backend URL)
+const appJs = `// Replace with your actual Render backend URL once live
+const BACKEND_URL = 'https://idhika-group.onrender.com';
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await fetchPortalDataFromBackend();
   initSubtleArchitecturalBackground();
   renderDetailedServices();
   fetchProjects();
@@ -700,6 +704,34 @@ let signatureProjects = JSON.parse(localStorage.getItem('idhika_signature_projec
   { id: 105, name: "TOWNSHIP AT BPCL, KOCHI", type: "GRIHA 5-Star Rated Township", location: "BPCL Township, Kochi, Kerala", description: "Sustainable 35,000 sq.m. industrial township development featuring 67 residential flats, M.P. Hall, Club House, and transit residential quarters.", image: "bpcl-kochi.jpg", planImage: "", specs: ["Plot Area: 35,000 Sq.M.", "GRIHA 5-Star Rating Target", "F.A.R. Achieved: 0.5%", "Facilities: Club House, M.P. Hall"] },
   { id: 106, name: "KUTUMBH SIGNATURE", type: "Affordable Housing Apartment Project", location: "Urban Growth Corridor", description: "Modern low-cost apartment project comprising 16 thoughtfully designed flats delivering a future vision of accessible quality homes.", image: "kutumbh-signature.jpg", planImage: "", specs: ["Capacity: 16 Apartment Units", "Modular Kitchen & Interior Renders", "Low-Cost Efficient Floor Plan"] }
 ];
+
+async function fetchPortalDataFromBackend() {
+  try {
+    const response = await fetch(\`\${BACKEND_URL}/api/portal-data\`);
+    const data = await response.json();
+    if (data.projects && data.projects.length > 0) signatureProjects = data.projects;
+    if (data.team && data.team.length > 0) teamMembersData = data.team;
+    if (data.leads && data.leads.length > 0) storedLeadsList = data.leads;
+  } catch (e) {
+    console.log('Using local fallback data.');
+  }
+}
+
+async function syncDataToBackend() {
+  try {
+    await fetch(\`\${BACKEND_URL}/api/portal-data\`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        leads: storedLeadsList,
+        team: teamMembersData,
+        projects: signatureProjects
+      })
+    });
+  } catch (e) {
+    console.error('Failed to sync data to server', e);
+  }
+}
 
 function showPage(pageId) {
   if (document.getElementById('page-admin-portal').classList.contains('active') && pageId !== 'admin-portal') {
@@ -824,6 +856,7 @@ function handleProjectFormSubmit(e) {
   }
 
   localStorage.setItem('idhika_signature_projects', JSON.stringify(signatureProjects));
+  syncDataToBackend();
   closeProjectModalAdmin();
   fetchProjects();
   loadAdminProjectsTable();
@@ -854,6 +887,7 @@ function deleteProject(id) {
   document.getElementById('confirm-delete-yes-btn').onclick = function() {
     signatureProjects = signatureProjects.filter(p => p.id != pendingDeleteId);
     localStorage.setItem('idhika_signature_projects', JSON.stringify(signatureProjects));
+    syncDataToBackend();
     fetchProjects();
     loadAdminProjectsTable();
     closeCustomConfirm();
@@ -964,6 +998,7 @@ function handleStaffFormSubmit(e) {
   }
 
   localStorage.setItem('idhika_team_members', JSON.stringify(teamMembersData));
+  syncDataToBackend();
   closeStaffModal();
   renderTeamMembers();
   loadAdminTeamTable();
@@ -999,6 +1034,7 @@ function deleteStaff(id) {
   document.getElementById('confirm-delete-yes-btn').onclick = function() {
     teamMembersData = teamMembersData.filter(m => m.id != pendingDeleteId);
     localStorage.setItem('idhika_team_members', JSON.stringify(teamMembersData));
+    syncDataToBackend();
     renderTeamMembers();
     loadAdminTeamTable();
     closeCustomConfirm();
@@ -1007,23 +1043,25 @@ function deleteStaff(id) {
 }
 window.deleteStaff = deleteStaff;
 
-function deleteLead(id) {
-  pendingDeleteId = id;
-  document.getElementById('custom-confirm-modal').style.display = 'flex';
-  document.getElementById('confirm-delete-yes-btn').onclick = function() {
-    storedLeadsList = storedLeadsList.filter(l => l.id != pendingDeleteId);
-    saveAndSyncCRM();
-    closeCustomConfirm();
-    showAdminBanner('Lead entry deleted successfully!');
-  };
+function loadAdminTeamTable() {
+  const tbody = document.getElementById('admin-team-table-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = teamMembersData.map(function(t) {
+    const isVisible = t.visible !== false;
+    const workingStatus = t.current !== false ? '<span style="color:#34d399; font-weight:700;">Currently Working</span>' : '<span style="color:#f87171;">End Date: ' + t.endDate + '</span>';
+    return '<tr>' +
+      '<td><strong>' + t.name + '</strong><br><span style="font-size:0.75rem; color:var(--accent-gold);">' + t.role + ' (' + t.type.toUpperCase() + ')</span></td>' +
+      '<td>' + (isVisible ? '<span style="color:#34d399; font-weight:700;">Visible on Website</span>' : '<span style="color:#f87171; font-weight:700;">Hidden from Website</span>') + '</td>' +
+      '<td><span style="font-size:0.78rem;">Joined: ' + (t.joining || 'N/A') + '</span><br>' + workingStatus + '</td>' +
+      '<td><span style="font-size:0.78rem; color:var(--text-muted);">' + t.details + '</span></td>' +
+      '<td>' +
+        '<button onclick="window.editStaff(' + t.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; margin-right:4px;">Edit</button>' +
+        '<button onclick="window.deleteStaff(' + t.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; border-color:#ef4444; color:#f87171;">Delete</button>' +
+      '</td>' +
+    '</tr>';
+  }).join('');
 }
-window.deleteLead = deleteLead;
-
-function closeCustomConfirm() {
-  document.getElementById('custom-confirm-modal').style.display = 'none';
-  pendingDeleteId = null;
-}
-window.closeCustomConfirm = closeCustomConfirm;
+window.loadAdminTeamTable = loadAdminTeamTable;
 
 function showAdminBanner(msg, isError = false) {
   const banner = document.getElementById('admin-inpage-banner');
@@ -1174,6 +1212,7 @@ window.handleFeedbackSubmit = handleFeedbackSubmit;
 
 function saveAndSyncCRM() {
   localStorage.setItem('idhika_crm_leads', JSON.stringify(storedLeadsList));
+  syncDataToBackend();
   loadAdminLeads();
 }
 window.saveAndSyncCRM = saveAndSyncCRM;
@@ -1204,13 +1243,6 @@ function loadAdminLeads(filterQuery = '') {
   }
 
   tbody.innerHTML = filteredList.map(function(l) {
-    let badgeClass = 'badge-new';
-    if (l.status === 'ALLOCATED') badgeClass = 'badge-allocated';
-    if (l.status === 'PROCEED') badgeClass = 'badge-proceed';
-    if (l.status === 'COMPLETED') badgeClass = 'badge-completed';
-    if (l.status === 'CANCEL') badgeClass = 'badge-cancel';
-    if (l.status === 'BLACKLISTED') badgeClass = 'badge-blacklist';
-
     return '<tr>' +
       '<td><strong>' + l.name + '</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">' + l.phone + ' | ' + l.email + '</span></td>' +
       '<td>' + l.location + '</td>' +
@@ -1316,26 +1348,6 @@ function deleteLead(id) {
   };
 }
 window.deleteLead = deleteLead;
-
-function loadAdminTeamTable() {
-  const tbody = document.getElementById('admin-team-table-tbody');
-  if (!tbody) return;
-  tbody.innerHTML = teamMembersData.map(function(t) {
-    const isVisible = t.visible !== false;
-    const workingStatus = t.current !== false ? '<span style="color:#34d399; font-weight:700;">Currently Working</span>' : '<span style="color:#f87171;">End Date: ' + t.endDate + '</span>';
-    return '<tr>' +
-      '<td><strong>' + t.name + '</strong><br><span style="font-size:0.75rem; color:var(--accent-gold);">' + t.role + ' (' + t.type.toUpperCase() + ')</span></td>' +
-      '<td>' + (isVisible ? '<span style="color:#34d399; font-weight:700;">Visible on Website</span>' : '<span style="color:#f87171; font-weight:700;">Hidden from Website</span>') + '</td>' +
-      '<td><span style="font-size:0.78rem;">Joined: ' + (t.joining || 'N/A') + '</span><br>' + workingStatus + '</td>' +
-      '<td><span style="font-size:0.78rem; color:var(--text-muted);">' + t.details + '</span></td>' +
-      '<td>' +
-        '<button onclick="window.editStaff(' + t.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; margin-right:4px;">Edit</button>' +
-        '<button onclick="window.deleteStaff(' + t.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; border-color:#ef4444; color:#f87171;">Delete</button>' +
-      '</td>' +
-    '</tr>';
-  }).join('');
-}
-window.loadAdminTeamTable = loadAdminTeamTable;
 
 function handlePortalLoginSubmit(event) {
   event.preventDefault();
@@ -1633,4 +1645,4 @@ fs.writeFileSync(path.join(publicDir, 'index.html'), indexHtml);
 fs.writeFileSync(path.join(publicDir, 'styles.css'), stylesCss);
 fs.writeFileSync(path.join(publicDir, 'app.js'), appJs);
 
-console.log('IDHIKA GROUP Portal Deployed Successfully with Staff & Project tables fully populated.');
+console.log('IDHIKA GROUP Portal Deployed Successfully with Render Backend URL integration.');
