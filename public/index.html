@@ -8,13 +8,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,800;1,300&family=Cinzel:wght@600;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
+
+  <!-- Ambient Architectural Blueprint Canvas -->
   <canvas id="architecture-canvas"></canvas>
+
+  <!-- Navigation Bar -->
   <nav class="navbar">
     <div class="logo-container" onclick="window.showPage('home')">
-      <div class="nav-brand-mark"><img src="logo-master.png" alt="IDHIKA GROUP" class="nav-master-logo" onerror="this.style.display='none'"></div>
-      <div class="nav-brand-text"><span class="brand-main">ÍDHIKA</span><span class="brand-sub">GROUP</span></div>
+      <div class="nav-brand-mark">
+        <img src="logo-master.png" alt="IDHIKA GROUP" class="nav-master-logo" onerror="this.style.display='none'">
+      </div>
+      <div class="nav-brand-text">
+        <span class="brand-main">ÍDHIKA</span>
+        <span class="brand-sub">GROUP</span>
+      </div>
     </div>
+
+    <!-- Mobile Hamburger Toggle Button -->
     <button class="mobile-menu-toggle" onclick="window.toggleMobileMenu()">☰</button>
+
     <ul class="nav-links" id="nav-links-menu">
       <li><a href="javascript:void(0)" onclick="window.showPage('home'); window.closeMobileMenu();" class="nav-link active" id="nav-home">Home</a></li>
       <li><a href="javascript:void(0)" onclick="window.showPage('portfolio'); window.closeMobileMenu();" class="nav-link" id="nav-portfolio">Portfolio</a></li>
@@ -28,86 +40,463 @@
     </ul>
   </nav>
 
+  <!-- PAGE 1: HOME -->
   <div id="page-home" class="page-section active">
     <div class="hero-viewport">
       <div class="hero-center-box">
-        <div class="brand-logo-wrapper real-logo-plaque"><img src="logo-master.png" alt="IDHIKA GROUP Master Logo" class="master-hero-logo" onerror="this.style.display='none';"></div>
+        <div class="brand-logo-wrapper real-logo-plaque">
+          <img src="logo-master.png" alt="IDHIKA GROUP Master Logo" class="master-hero-logo" onerror="this.style.display='none';">
+        </div>
         <p class="hero-tagline">EXPERTISE IN TOWNSHIP, GROUP HOUSING, APARTMENTS & COMMERCIAL TOWERS ACROSS INDIA</p>
+        <div class="trust-metrics-strip">
+          <div class="trust-badge"><span class="trust-val">10+ YRS</span><span class="trust-lbl">Architectural Excellence</span></div>
+          <div class="trust-divider"></div>
+          <div class="trust-badge"><span class="trust-val">M.ARCH / AIIA</span><span class="trust-lbl">Certified Directors</span></div>
+          <div class="trust-divider"></div>
+          <div class="trust-badge"><span class="trust-val">100% SAFE</span><span class="trust-lbl">Structural Guarantee</span></div>
+        </div>
         <div class="hero-actions">
           <button onclick="window.showPage('portfolio')" class="btn btn-primary">Portfolio Showcase</button>
           <button onclick="window.showPage('team')" class="btn btn-secondary">Meet Our Leadership</button>
         </div>
       </div>
+<!-- GROUP SISTER CONCERNS & ASSOCIATED DIVISIONS -->
+      <div class="container" style="margin: 2rem auto; max-width:1150px;">
+        <h3 class="gold-text" style="text-align:center; font-size:1.1rem; margin-bottom:0.2rem; letter-spacing:1px; font-family:'Cinzel',serif;">Group Sister Concerns & Associated Divisions</h3>
+        <p style="text-align:center; color:var(--text-muted); font-size:0.75rem; margin-bottom:1.2rem;">Delivering specialized architectural and engineering excellence.</p>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem;">
+          <div class="sub-company-card">
+            <div class="sub-company-logo-wrap"><img src="astre-logo.png" alt="ASTRE Design Studio" class="sub-company-logo" onerror="this.src='logo-master.png'"></div>
+            <div>
+              <h4 class="gold-text" style="font-size:0.95rem; margin-bottom:0.1rem; font-family:'Cinzel',serif;">ASTRE Design Studio</h4>
+              <span style="font-size:0.68rem; color:var(--accent-gold); display:block; margin-bottom:0.25rem; font-weight:600; text-transform:uppercase;">Associate Architectural Design Studio</span>
+              <p style="font-size:0.75rem; color:var(--text-muted); line-height:1.4;">Collaborative design studio specializing in contemporary urban aesthetics, styling, and master planning.</p>
+            </div>
+          </div>
+          <div class="sub-company-card">
+            <div class="sub-company-logo-wrap"><img src="idhika-trade-logo.png" alt="IDHIKA Trade and Constructions" class="sub-company-logo" onerror="this.src='logo-master.png'"></div>
+            <div>
+              <h4 class="gold-text" style="font-size:0.95rem; margin-bottom:0.1rem; font-family:'Cinzel',serif;">IDHIKA Trade & Constructions</h4>
+              <span style="font-size:0.68rem; color:var(--accent-gold); display:block; margin-bottom:0.25rem; font-weight:600; text-transform:uppercase;">Specialized Engineering & Execution</span>
+              <p style="font-size:0.75rem; color:var(--text-muted); line-height:1.4;">Expert structural execution, high-grade material procurement, and premium architectural project delivery.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="compact-philosophy-bar glass-card">
+        <h3>OUR PHILOSOPHY</h3>
+        <p>"We believe that quality of our surroundings—their design and construction—deeply influence the way we work, relax and live."</p>
+      </div>
     </div>
   </div>
 
+ <!-- PAGE 2: PORTFOLIO -->
   <div id="page-portfolio" class="page-section">
     <div class="container section-padding">
       <h2 class="section-title">Architectural Achievements & Signature Projects</h2>
+      <p style="text-align:center; color:var(--text-muted); margin-bottom:1.5rem;">Click on any project to view detailed architectural floor plans and 3D renders.</p>
+      
+      <!-- LIVE PORTFOLIO SEARCH BAR -->
+      <div style="display:flex; justify-content:center; margin-bottom:2.5rem;">
+        <input type="text" id="portfolio-search-input" class="form-control" placeholder="Type to search project by name or type..." oninput="window.executePortfolioSearch()" style="max-width:380px; padding:0.55rem 1rem; margin-top:0;">
+      </div>
+
       <div class="gallery-grid" id="portfolio-grid"></div>
     </div>
   </div>
 
+  <!-- PAGE 3: SERVICES -->
   <div id="page-services" class="page-section">
     <div class="container section-padding">
       <h2 class="section-title">Comprehensive Architecture & Engineering Services</h2>
+      <p style="text-align:center; color:var(--text-muted); max-width:750px; margin:0 auto 2.5rem; line-height:1.6;">Explore our core architectural domains. Click any service card to expand technical scope and included deliverables.</p>
       <div class="services-wrapper" id="services-container"></div>
     </div>
   </div>
 
+  <!-- PAGE 4: LEADERSHIP & TEAM DIRECTORY -->
   <div id="page-team" class="page-section">
     <div class="container section-padding">
       <h2 class="section-title">Leadership & Professional Engineering Team</h2>
+      <p style="text-align:center; color:var(--text-muted); max-width:800px; margin:0 auto 2.5rem; line-height:1.7;">IDHIKA GROUP is a young experienced firm headed by seasoned architects specializing in urban design, housing projects, and advanced structural engineering.</p>
+      
+      <!-- DIRECTORS SECTION -->
       <h3 class="gold-text" style="font-size:1.2rem; margin-bottom:1rem; border-bottom:1px solid rgba(212,175,55,0.2); padding-bottom:0.5rem;">Managing Directors & Principal Architects</h3>
       <div class="directors-grid" id="directors-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem; margin-bottom:2.5rem;"></div>
+
+      <!-- TEAM MEMBERS & CONSULTANTS SECTION -->
       <h3 class="gold-text" style="font-size:1.2rem; margin-bottom:1rem; border-bottom:1px solid rgba(212,175,55,0.2); padding-bottom:0.5rem;">Specialized Consultants & Team Members</h3>
       <div class="team-grid" id="team-members-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1.2rem;"></div>
     </div>
   </div>
 
+  <!-- PAGE 5: WONDERS -->
   <div id="page-wonders" class="page-section">
     <div class="container section-padding">
-      <h2 class="section-title">Wonders of Architecture</h2>
+      <h2 class="section-title">Wonders of Architecture: A Tribute to Human Ingenuity</h2>
+      <p style="text-align:center; color:var(--text-muted); max-width:800px; margin:0 auto 2.5rem; line-height:1.7;">Architecture shapes civilizations and elevates human spirit. At IDHIKA GROUP, we draw endless inspiration from world-renowned masterworks that define structural engineering, aesthetic harmony, and timeless design.</p>
       <div class="gallery-grid" id="wonders-grid"></div>
     </div>
   </div>
 
+  <!-- PAGE 6: CUSTOMER DASHBOARD -->
   <div id="page-client-portal" class="page-section">
     <div class="container section-padding">
       <h2 class="section-title">Customer Work-in-Progress Dashboard</h2>
+      <div id="customer-profile-greeting" class="glass-card" style="margin-bottom: 1.5rem; border-left: 3px solid var(--accent-gold);">
+        <h3 class="gold-text" id="cust-welcome-title">Welcome, Valued Client</h3>
+        <p id="cust-details-text" style="font-size:0.85rem; color:var(--text-muted);">Please log in or submit a project inquiry via the contact bubble.</p>
+      </div>
       <div id="client-project-display"></div>
     </div>
   </div>
 
+  <!-- PAGE 6.5: EMPLOYEE INTERNAL SPACE -->
   <div id="page-employee-portal" class="page-section">
     <div class="container section-padding">
-      <h2 class="section-title">Internal Employee Space</h2>
+      <h2 class="section-title">Internal Employee Profile & Career Tracker</h2>
       <div id="employee-profile-card" class="glass-card" style="max-width:700px; margin:0 auto; border-left:3px solid var(--accent-gold);"></div>
     </div>
   </div>
 
+  <!-- PAGE 7: DIRECTOR / ADMIN CONSOLE -->
   <div id="page-admin-portal" class="page-section">
     <div class="container section-padding">
       <h2 class="section-title">Director / Admin Console</h2>
+      
+      <!-- Admin Tab Switcher -->
       <div style="display:flex; justify-content:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap;">
-        <button onclick="window.switchAdminTab('crm')" id="admin-tab-btn-crm" class="btn btn-primary" style="font-size:0.75rem;">Client CRM</button>
+        <button onclick="window.switchAdminTab('crm')" id="admin-tab-btn-crm" class="btn btn-primary" style="font-size:0.75rem;">Client CRM & Contracts</button>
         <button onclick="window.switchAdminTab('team')" id="admin-tab-btn-team" class="btn btn-secondary" style="font-size:0.75rem;">Staff Directory</button>
-        <button onclick="window.switchAdminTab('projects')" id="admin-tab-btn-projects" class="btn btn-secondary" style="font-size:0.75rem;">Portfolio Projects</button>
+        <button onclick="window.switchAdminTab('projects')" id="admin-tab-btn-projects" class="btn btn-secondary" style="font-size:0.75rem;">Manage Portfolio Projects</button>
       </div>
 
-      <div id="admin-view-crm" class="admin-tab-view"><div class="glass-card"><table class="crm-table" id="admin-leads-table"><thead><tr><th>Client</th><th>Location</th><th>Service</th><th>Manager</th><th>Status</th><th>Actions</th></tr></thead><tbody id="admin-leads-tbody"></tbody></table></div></div>
-      <div id="admin-view-team" class="admin-tab-view" style="display:none;"><div class="glass-card"><table class="crm-table"><thead><tr><th>Staff</th><th>Visibility</th><th>Tenure</th><th>Actions</th></tr></thead><tbody id="admin-team-table-tbody"></tbody></table></div></div>
-      <div id="admin-view-projects" class="admin-tab-view" style="display:none;"><div class="glass-card"><table class="crm-table"><thead><tr><th>Project</th><th>Location</th><th>Actions</th></tr></thead><tbody id="admin-projects-table-tbody"></tbody></table></div></div>
+      <!-- VIEW 1: CLIENT CRM -->
+      <div id="admin-view-crm" class="admin-tab-view">
+        <div class="glass-card" style="margin-bottom: 2rem;">
+          <div id="admin-inpage-banner" style="display:none; padding:0.75rem 1rem; margin-bottom:1rem; border-radius:4px; font-size:0.8rem; background:rgba(16, 185, 129, 0.2); border:1px solid #34d399; color:#34d399;"></div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:12px;">
+            <div style="display:flex; gap:10px; align-items:center;">
+              <h3 class="gold-text" style="margin-bottom:0;">Incoming Leads & Task Allocation Table</h3>
+              <button onclick="window.openManualLeadModal()" class="btn btn-secondary lead-hover-btn" style="padding:0.4rem 0.9rem; font-size:0.7rem; border-color:var(--accent-gold);">+ Manual Add Lead</button>
+            </div>
+            <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+              <input type="text" id="crm-search-input" class="form-control" placeholder="Search name, phone, location, manager..." onkeyup="window.filterCrmTable()" style="padding:0.4rem 0.8rem; font-size:0.8rem; min-width:260px; margin-top:0;">
+              <button onclick="window.saveAllCrmChanges()" class="admin-save-global-btn">SAVE</button>
+            </div>
+          </div>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1rem;">Manage lead lifecycles across the table. Changes remain in draft until you click **SAVE**.</p>
+          <div style="overflow-x: auto;">
+            <table class="crm-table" id="admin-leads-table">
+              <thead>
+                <tr>
+                  <th>Client Name & Contact</th>
+                  <th>Site Location</th>
+                  <th>Requested Service</th>
+                  <th>Assigned Manager</th>
+                  <th>Status</th>
+                  <th>Comments / Notes</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-leads-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: STAFF & DIRECTOR CMS EDITOR -->
+      <div id="admin-view-team" class="admin-tab-view" style="display:none;">
+        <div class="glass-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:10px;">
+            <h3 class="gold-text" style="margin-bottom:0;">Staff Directory, Tenure & Public Visibility Control</h3>
+            <button onclick="window.openStaffModal()" class="btn btn-primary" style="font-size:0.7rem; padding:0.4rem 1rem;">+ Add New Employee / Consultant</button>
+          </div>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1.5rem;">Control visibility, upload profile pictures from local drive, manage director biographies, and track tenures.</p>
+          <div style="overflow-x: auto;">
+            <table class="crm-table">
+              <thead>
+                <tr>
+                  <th>Staff Name & Role</th>
+                  <th>Public Visibility</th>
+                  <th>Tenure Tracking</th>
+                  <th>Experience & Details</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-team-table-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 3: PORTFOLIO & PROJECTS MANAGEMENT CMS -->
+      <div id="admin-view-projects" class="admin-tab-view" style="display:none;">
+        <div class="glass-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:10px;">
+            <h3 class="gold-text" style="margin-bottom:0;">Portfolio Projects & Picture Management</h3>
+            <button onclick="window.openProjectModalAdmin()" class="btn btn-primary" style="font-size:0.7rem; padding:0.4rem 1rem;">+ Add New Project</button>
+          </div>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1.5rem;">Modify existing signature projects, upload new pictures from local device, or delete projects from public view.</p>
+          <div style="overflow-x: auto;">
+            <table class="crm-table">
+              <thead>
+                <tr>
+                  <th>Project Name & Type</th>
+                  <th>Location</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-projects-table-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <div id="persistent-contact-bubble" class="floating-contact-bubble" onclick="window.openLeadModal()">💬 Quick Inquiry</div>
+  <!-- GUARANTEED CLICKABLE FLOATING ACTION BUTTONS -->
+  <div id="persistent-contact-bubble" class="floating-contact-bubble" onclick="window.openLeadModal()">
+    💬 Quick Inquiry
+  </div>
+  <button class="feedback-badge-btn" onclick="window.openFeedbackModal()">
+    ● Customer Feedback
+  </button>
 
   <!-- MODALS -->
-  <div id="lead-modal" class="modal-overlay"><div class="modal-card glass-card"><h3>Customer Inquiry</h3><form onsubmit="window.handleCustomerLeadSubmit(event)"><input type="text" id="lead-name" class="form-control" placeholder="Name" required><input type="tel" id="lead-phone" class="form-control" placeholder="Phone" required><input type="email" id="lead-email" class="form-control" placeholder="Email" required><input type="text" id="lead-location" class="form-control" placeholder="Location" required><select id="lead-service" class="form-control"><option value="Architectural Design">Architectural Design</option></select><button type="submit" class="btn btn-primary" style="width:100%;">Submit</button></form></div></div>
-  <div id="project-admin-modal" class="modal-overlay"><div class="modal-card glass-card"><h3>Edit Project</h3><form onsubmit="window.handleProjectFormSubmit(event)"><input type="hidden" id="proj-edit-id"><input type="text" id="proj-name" class="form-control" placeholder="Project Name" required><input type="file" id="proj-file-input" class="form-control" accept="image/*" onchange="window.previewProjectImage(event)"><input type="hidden" id="proj-img"><button type="submit" class="btn btn-primary">Save</button></form></div></div>
-  <div id="staff-modal" class="modal-overlay"><div class="modal-card glass-card"><h3>Edit Staff</h3><form onsubmit="window.handleStaffFormSubmit(event)"><input type="hidden" id="staff-edit-id"><input type="text" id="staff-name" class="form-control" placeholder="Name" required><input type="file" id="staff-file-input" class="form-control" accept="image/*" onchange="window.previewLocalImage(event)"><input type="hidden" id="staff-imgurl"><button type="submit" class="btn btn-primary">Save</button></form></div></div>
-  <div id="role-modal" class="modal-overlay"><div class="modal-card glass-card"><h3>Auth</h3><div class="modal-actions"><button onclick="window.switchRole('admin')" class="btn btn-primary">Director Mode</button><button onclick="window.switchRole('public')" class="btn btn-secondary">Public</button></div></div></div>
+  <div id="lead-modal" class="modal-overlay">
+    <div class="modal-card glass-card">
+      <h3 class="gold-text">Customer Inquiry & Consultation</h3>
+      <form onsubmit="window.handleCustomerLeadSubmit(event)">
+        <div style="text-align:left; margin-bottom:0.75rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Full Name (Letters and dots only):</label>
+          <input type="text" id="lead-name" class="form-control" required placeholder="e.g. A K Sharma" oninput="window.validateFormGlobally()">
+          <span id="name-error-msg" style="font-size:0.7rem; color:#f87171; display:none; margin-top:2px;">Numbers and special symbols are not allowed in names.</span>
+        </div>
+
+        <div style="text-align:left; margin-bottom:0.75rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Phone Number (Numbers only):</label>
+          <div style="display:flex; gap:6px; margin-top:0.3rem;">
+            <select id="lead-country-code" class="form-control" style="width:110px; margin-top:0;">
+              <option value="+91" selected>India (+91)</option>
+              <option value="+1">USA/Canada (+1)</option>
+              <option value="+44">UK (+44)</option>
+              <option value="+971">UAE (+971)</option>
+              <option value="+61">Australia (+61)</option>
+              <option value="+65">Singapore (+65)</option>
+            </select>
+            <input type="tel" id="lead-phone" class="form-control" required placeholder="9876543210" oninput="window.validateFormGlobally()" style="margin-top:0; flex:1;">
+          </div>
+          <span id="phone-error-msg" style="font-size:0.7rem; color:#f87171; display:none; margin-top:2px;">Only numbers are permitted in phone numbers.</span>
+        </div>
+
+        <div style="text-align:left; margin-bottom:0.75rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Email Address (Gmail, Yahoo, Outlook, Yopmail):</label>
+          <input type="email" id="lead-email" class="form-control" placeholder="idhikiatest@yopmail.com" required oninput="window.validateFormGlobally()">
+          <span id="email-error-msg" style="font-size:0.7rem; color:#f87171; display:none; margin-top:2px;">Allowed domains: Gmail, Yahoo, Outlook, Yopmail.</span>
+        </div>
+
+        <div style="text-align:left; margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Site Location:</label><input type="text" id="lead-location" class="form-control" required oninput="window.validateFormGlobally()"></div>
+        <div style="text-align:left; margin-bottom:0.9rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Select Service:</label>
+          <select id="lead-service" class="form-control" required>
+            <option value="Architectural Design">Architectural Design & Master Blueprints</option>
+            <option value="Structural Engineering">Structural Engineering & Safety Analysis</option>
+            <option value="Master & Land Planning">Master & Land Planning / Feasibility</option>
+            <option value="Interior Architecture">Interior Architecture & Space Planning</option>
+            <option value="Landscape Architecture">Landscape Architecture & Site Greenery</option>
+          </select>
+        </div>
+        <button type="submit" id="submit-inquiry-btn" class="btn btn-primary" style="width:100%;">Submit Inquiry</button>
+      </form>
+      <button onclick="window.closeLeadModal()" class="close-modal-btn" style="margin-top:1rem;">✕ Close</button>
+    </div>
+  </div>
+
+  <!-- DIRECTOR MANUAL LEAD ADDITION MODAL -->
+  <div id="manual-lead-modal" class="modal-overlay">
+    <div class="modal-card glass-card" style="text-align:left;">
+      <h3 class="gold-text" style="text-align:center;">Director Manual Lead Entry</h3>
+      <form onsubmit="window.handleManualLeadSubmit(event)">
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Client Full Name:</label><input type="text" id="manual-name" class="form-control" required></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Phone Number:</label><input type="text" id="manual-phone" class="form-control" required></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Email Address:</label><input type="email" id="manual-email" class="form-control" required></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">New Site Location:</label><input type="text" id="manual-location" class="form-control" required></div>
+        <div style="margin-bottom:0.9rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Select Service:</label>
+          <select id="manual-service" class="form-control" required>
+            <option value="Architectural Design">Architectural Design</option>
+            <option value="Structural Engineering">Structural Engineering</option>
+            <option value="Master & Land Planning">Master & Land Planning</option>
+            <option value="Interior Architecture">Interior Architecture</option>
+            <option value="Landscape Architecture">Landscape Architecture</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Create Manual Entry</button>
+      </form>
+      <button onclick="window.closeManualLeadModal()" class="close-modal-btn" style="margin-top:1rem; display:block; margin-left:auto; margin-right:auto;">✕ Close</button>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT PROJECT ADMIN MODAL -->
+  <div id="project-admin-modal" class="modal-overlay">
+    <div class="modal-card glass-card" style="text-align:left;">
+      <h3 class="gold-text" id="project-modal-title" style="text-align:center;">Signature Project Record</h3>
+      <form onsubmit="window.handleProjectFormSubmit(event)">
+        <input type="hidden" id="proj-edit-id">
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Project Name:</label><input type="text" id="proj-name" class="form-control" required placeholder="e.g. DREAM GALAXY"></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Project Type / Category:</label><input type="text" id="proj-type" class="form-control" required placeholder="e.g. Housing & Commercial Mall Complex"></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Location:</label><input type="text" id="proj-location" class="form-control" required placeholder="e.g. Lucknow"></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Description:</label><textarea id="proj-desc" class="form-control" rows="3" required placeholder="Enter project overview..."></textarea></div>
+        
+        <div style="margin-bottom:0.75rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Upload Main Image from Local Machine or Enter Path:</label>
+          <input type="file" id="proj-file-input" class="form-control" accept="image/*" onchange="window.previewProjectImage(event)" style="padding:0.4rem; margin-bottom:6px;">
+          <input type="text" id="proj-img" class="form-control" placeholder="dream-galaxy.jpg or local path">
+          <div id="proj-img-preview-box" style="margin-top:4px; font-size:0.75rem; color:#34d399;"></div>
+        </div>
+
+        <div style="margin-bottom:0.9rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Floor Plan Image File Name / URL:</label>
+          <input type="text" id="proj-planimg" class="form-control" placeholder="dream-galaxy-plan.jpg">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Save Project Record</button>
+      </form>
+      <button onclick="window.closeProjectModalAdmin()" class="close-modal-btn" style="margin-top:1rem; display:block; margin-left:auto; margin-right:auto;">✕ Close</button>
+    </div>
+  </div>
+
+  <!-- CUSTOM POPUP MODAL -->
+  <div id="success-popup-modal" class="modal-overlay">
+    <div class="modal-card glass-card" style="text-align:center; max-width:480px;">
+      <div id="popup-company-icon" style="font-size:2.2rem; margin-bottom:0.5rem;"><img src="logo-master.png" alt="IDHIKA" style="height:38px; width:auto; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.9);"></div>
+      <h3 class="gold-text" id="popup-title-text">Notification</h3>
+      <div id="success-popup-content" style="font-size:0.85rem; color:var(--text-muted); margin:1rem 0; line-height:1.6; text-align:left; background:rgba(0,0,0,0.3); padding:1rem; border-radius:6px; border:1px solid rgba(212,175,55,0.2);"></div>
+      <button onclick="window.closeSuccessPopup()" class="btn btn-primary" style="width:100%;">Okay / Continue</button>
+    </div>
+  </div>
+
+  <!-- CUSTOM IN-PAGE DELETE CONFIRMATION MODAL -->
+  <div id="custom-confirm-modal" class="modal-overlay">
+    <div class="modal-card glass-card" style="text-align:center; max-width:400px;">
+      <h3 class="gold-text">Confirm Deletion</h3>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin:1rem 0;">Are you sure you want to delete this record?</p>
+      <div style="display:flex; gap:10px; justify-content:center;">
+        <button id="confirm-delete-yes-btn" class="btn btn-primary" style="background:#ef4444; color:#fff; padding:0.5rem 1.2rem;">Yes, Delete</button>
+        <button onclick="window.closeCustomConfirm()" class="btn btn-secondary" style="padding:0.5rem 1.2rem;">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT STAFF MODAL -->
+  <div id="staff-modal" class="modal-overlay">
+    <div class="modal-card glass-card" style="text-align:left;">
+      <h3 class="gold-text" id="staff-modal-title" style="text-align:center;">Staff / Director Record</h3>
+      <form onsubmit="window.handleStaffFormSubmit(event)">
+        <input type="hidden" id="staff-edit-id">
+        <div style="margin-bottom:0.75rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Staff Type:</label>
+          <select id="staff-type" class="form-control" onchange="window.toggleDirectorFields(this.value)">
+            <option value="member">Team Member / Consultant</option>
+            <option value="director">Managing Director (Enables Picture & Bio Section)</option>
+          </select>
+        </div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Full Name:</label><input type="text" id="staff-name" class="form-control" required></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Role / Title:</label><input type="text" id="staff-role" class="form-control" required></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Experience / Details:</label><input type="text" id="staff-details" class="form-control" placeholder="e.g. 10+ Yr Experience" required></div>
+        
+        <div id="director-extra-fields" style="display:none; border-top:1px dashed rgba(212,175,55,0.3); padding-top:0.75rem; margin-top:0.75rem;">
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:0.78rem; color:var(--accent-gold);">Upload Profile Picture from Local Drive:</label>
+            <input type="file" id="staff-file-input" class="form-control" accept="image/*" onchange="window.previewLocalImage(event)" style="padding:0.4rem;">
+            <input type="hidden" id="staff-imgurl">
+            <div id="image-preview-box" style="margin-top:8px; font-size:0.75rem; color:#34d399;"></div>
+          </div>
+          <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Detailed Information & Bio (Director Only):</label><textarea id="staff-bio" class="form-control" rows="3" placeholder="Enter professional director background and accomplishments..."></textarea></div>
+        </div>
+
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Email (For Employee Login):</label><input type="email" id="staff-email" class="form-control" placeholder="staff@idhika.com"></div>
+        <div style="margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Joining Date:</label><input type="date" id="staff-joining" class="form-control"></div>
+        <div style="margin-bottom:0.75rem; display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="staff-current" onchange="window.toggleStaffEndDate(this.checked)" checked style="cursor:pointer;">
+          <label for="staff-current" style="font-size:0.75rem; color:var(--text-muted); cursor:pointer;">Currently Working Here</label>
+        </div>
+        <div style="margin-bottom:0.75rem;" id="staff-end-date-wrapper" style="display:none;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">End Date:</label><input type="date" id="staff-end" class="form-control">
+        </div>
+        <div style="margin-bottom:0.9rem;">
+          <label style="font-size:0.78rem; color:var(--accent-gold);">Public Website Visibility:</label>
+          <select id="staff-visible" class="form-control">
+            <option value="true">Show on Website</option>
+            <option value="false">Hide from Website (Experience Tracking Only)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Save Record</button>
+      </form>
+      <button onclick="window.closeStaffModal()" class="close-modal-btn" style="margin-top:1rem; display:block; margin-left:auto; margin-right:auto;">✕ Close</button>
+    </div>
+  </div>
+
+  <div id="feedback-modal" class="modal-overlay">
+    <div class="modal-card glass-card">
+      <h3 class="gold-text">Pre-Finalization Customer Feedback</h3>
+      <form onsubmit="window.handleFeedbackSubmit(event)">
+        <div style="text-align:left; margin-bottom:0.75rem;"><input type="text" id="fb-name" class="form-control" placeholder="Your Name" required></div>
+        <div style="text-align:left; margin-bottom:0.75rem;"><textarea id="fb-msg" class="form-control" placeholder="Describe feedback..." rows="4" required></textarea></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Send Feedback</button>
+      </form>
+      <button onclick="window.closeFeedbackModal()" class="close-modal-btn" style="margin-top:1rem;">✕ Close</button>
+    </div>
+  </div>
+
+  <div id="customer-login-modal" class="modal-overlay">
+    <div class="modal-card glass-card">
+      <h3 class="gold-text">Portal Login</h3>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Enter your registered Client or Employee email & password:</p>
+      <form onsubmit="window.handlePortalLoginSubmit(event)">
+        <div style="text-align:left; margin-bottom:0.75rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Email ID:</label><input type="email" id="portal-login-email" class="form-control" required></div>
+        <div style="text-align:left; margin-bottom:0.9rem;"><label style="font-size:0.78rem; color:var(--accent-gold);">Password:</label><input type="password" id="portal-login-pass" class="form-control" required></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Log In</button>
+      </form>
+      <button onclick="window.closeCustomerLoginModal()" class="close-modal-btn" style="margin-top:1rem;">✕ Close</button>
+    </div>
+  </div>
+
+  <div id="role-modal" class="modal-overlay">
+    <div class="modal-card glass-card">
+      <h3 class="gold-text">Portal Authentication</h3>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Log in to view restricted company environments:</p>
+      <div class="modal-actions" style="display:flex; flex-direction:column; gap:0.8rem;">
+        <button onclick="window.openCustomerLoginModal(); window.closeRoleModal();" class="btn btn-secondary">Client Access Portal / Employee Login</button>
+        <button onclick="window.switchRole('admin')" class="btn btn-primary">Director / Admin Console</button>
+        <button onclick="window.switchRole('public')" class="btn btn-secondary" style="border-color:rgba(255,255,255,0.2);">Log Out / Public Mode</button>
+      </div>
+      <button onclick="window.closeRoleModal()" class="close-modal-btn" style="margin-top:1rem;">✕ Close</button>
+    </div>
+  </div>
+
+  <div id="project-detail-modal" class="modal-overlay">
+    <div class="modal-card glass-card project-modal-wide">
+      <h3 id="modal-proj-name" class="gold-text">Project</h3>
+      <div id="modal-proj-content"></div>
+      <button onclick="window.closeProjectModal()" class="close-modal-btn" style="margin-top:1rem;">✕ Close</button>
+    </div>
+  </div>
+
+  <div id="youtube-video-modal" class="modal-overlay" onclick="window.closeVideoModal()">
+    <div class="modal-card glass-card video-modal-container" onclick="event.stopPropagation()">
+      <h3 class="gold-text">IDHIKA GROUP Brand Experience</h3>
+      <div class="video-responsive-wrapper"><iframe id="youtube-iframe" src="" frameborder="0" allowfullscreen></iframe></div>
+      <button onclick="window.closeVideoModal()" class="close-modal-btn" style="margin-top:1rem;">✕ Close</button>
+    </div>
+  </div>
+
+  <div id="image-zoom-overlay" class="zoom-modal-overlay" onclick="window.closeZoomModal()">
+    <img id="zoomed-image-target" class="zoomed-image" src="" alt="Zoom">
+    <div class="zoom-close-hint">Click anywhere to exit zoom</div>
+  </div>
 
   <script src="app.js"></script>
 </body>
