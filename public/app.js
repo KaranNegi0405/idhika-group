@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   checkCustomerAuthState();
   loadAdminLeads();
   loadAdminTeamTable();
+  loadAdminProjectsTable();
 });
 
 let storedLeadsList = JSON.parse(localStorage.getItem('idhika_crm_leads')) || [
@@ -34,8 +35,16 @@ let teamMembersData = JSON.parse(localStorage.getItem('idhika_team_members')) ||
   { id: 18, type: 'member', name: "ASTRE DESIGN STUDIO LLP / PLATINUM ARCHITECTS", role: "Associate Architect", details: "Associated Design Studios", email: "astre@idhika.com", joining: "2015-01-01", current: true, endDate: "", visible: true }
 ];
 
+let signatureProjects = JSON.parse(localStorage.getItem('idhika_signature_projects')) || [
+  { id: 101, name: "DREAM GALAXY", type: "Housing & Commercial Mall Complex", location: "Near New Amity Campus Malhor, Lucknow", description: "A premier housing project featuring 216 luxury flats and an integrated commercial shopping mall, designed on a sprawling 1.7-acre prime urban site.", image: "dream-galaxy.jpg", planImage: "dream-galaxy-plan.jpg", specs: ["Site Area: 1.7 Acres", "Flats: 216 Residential Units", "Commercial Mall Integrated", "Location: Lucknow"] },
+  { id: 102, name: "GOPAL CRYSTAL TOWER", type: "Luxury Group Housing Tower", location: "Raebareli Central City Area", description: "Luxury group housing development offering over 100 premium flats over a site area of 65,000 sq.ft., combining contemporary comfort with architectural luxury.", image: "gopal-crystal.jpg", planImage: "", specs: ["Site Area: 65,000 Sq.Ft.", "Capacity: Over 100 Flats", "Urban Central Location", "Vastu Compliant Design"] },
+  { id: 103, name: "KAMYA VILLAS & GREENS", type: "Township & Villa Extension", location: "Main Highway to Dewa", description: "Extensive township project with over 1,000 flats and luxury villas situated along the main Dewa Highway corridor.", image: "kamya-villas.jpg", planImage: "", specs: ["Capacity: 1000+ Units & Villas", "Highway Corridor Frontage", "Gated Township Amenities"] },
+  { id: 104, name: "SPRING MEADOWS", type: "Luxury Farmhouse Township", location: "Peaceful Suburban Zone", description: "An exclusive, tranquil township consisting of 63 luxury farm estates surrounded by lush green landscapes, offering absolute privacy.", image: "spring-meadows.jpg", planImage: "", specs: ["Unit Count: 63 Exclusive Farms", "High Security Perimeter", "Private Villa & Garden Renders"] },
+  { id: 105, name: "TOWNSHIP AT BPCL, KOCHI", type: "GRIHA 5-Star Rated Township", location: "BPCL Township, Kochi, Kerala", description: "Sustainable 35,000 sq.m. industrial township development featuring 67 residential flats, M.P. Hall, Club House, and transit residential quarters.", image: "bpcl-kochi.jpg", planImage: "", specs: ["Plot Area: 35,000 Sq.M.", "GRIHA 5-Star Rating Target", "F.A.R. Achieved: 0.5%", "Facilities: Club House, M.P. Hall"] },
+  { id: 106, name: "KUTUMBH SIGNATURE", type: "Affordable Housing Apartment Project", location: "Urban Growth Corridor", description: "Modern low-cost apartment project comprising 16 thoughtfully designed flats delivering a future vision of accessible quality homes.", image: "kutumbh-signature.jpg", planImage: "", specs: ["Capacity: 16 Apartment Units", "Modular Kitchen & Interior Renders", "Low-Cost Efficient Floor Plan"] }
+];
+
 function showPage(pageId) {
-  // If leaving admin CRM tab without saving, revert draft edits
   if (document.getElementById('page-admin-portal').classList.contains('active') && pageId !== 'admin-portal') {
     loadAdminLeads();
   }
@@ -47,16 +56,19 @@ function showPage(pageId) {
   if (activePage) { activePage.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
   if (activeNav) activeNav.classList.add('active');
 }
+window.showPage = showPage;
 
 function toggleMobileMenu() {
   const menu = document.getElementById('nav-links-menu');
   if (menu) menu.classList.toggle('active');
 }
+window.toggleMobileMenu = toggleMobileMenu;
 
 function closeMobileMenu() {
   const menu = document.getElementById('nav-links-menu');
   if (menu) menu.classList.remove('active');
 }
+window.closeMobileMenu = closeMobileMenu;
 
 function openLeadModal() {
   document.getElementById('lead-name').value = '';
@@ -69,18 +81,146 @@ function openLeadModal() {
   document.getElementById('lead-modal').style.display = 'flex';
   validateFormGlobally();
 }
+window.openLeadModal = openLeadModal;
 
 function closeLeadModal() { document.getElementById('lead-modal').style.display = 'none'; }
+window.closeLeadModal = closeLeadModal;
+
 function openFeedbackModal() { document.getElementById('feedback-modal').style.display = 'flex'; }
+window.openFeedbackModal = openFeedbackModal;
+
 function closeFeedbackModal() { document.getElementById('feedback-modal').style.display = 'none'; }
+window.closeFeedbackModal = closeFeedbackModal;
+
 function openCustomerLoginModal() { document.getElementById('customer-login-modal').style.display = 'flex'; }
+window.openCustomerLoginModal = openCustomerLoginModal;
+
 function closeCustomerLoginModal() { document.getElementById('customer-login-modal').style.display = 'none'; }
+window.closeCustomerLoginModal = closeCustomerLoginModal;
+
 function openRoleModal() { document.getElementById('role-modal').style.display = 'flex'; }
+window.openRoleModal = openRoleModal;
+
 function closeRoleModal() { document.getElementById('role-modal').style.display = 'none'; }
+window.closeRoleModal = closeRoleModal;
+
 function closeProjectModal() { document.getElementById('project-detail-modal').style.display = 'none'; }
+window.closeProjectModal = closeProjectModal;
 
 function openManualLeadModal() { document.getElementById('manual-lead-modal').style.display = 'flex'; }
+window.openManualLeadModal = openManualLeadModal;
+
 function closeManualLeadModal() { document.getElementById('manual-lead-modal').style.display = 'none'; }
+window.closeManualLeadModal = closeManualLeadModal;
+
+function openProjectModalAdmin() {
+  document.getElementById('proj-edit-id').value = '';
+  document.getElementById('proj-name').value = '';
+  document.getElementById('proj-type').value = '';
+  document.getElementById('proj-location').value = '';
+  document.getElementById('proj-desc').value = '';
+  document.getElementById('proj-img').value = '';
+  document.getElementById('proj-planimg').value = '';
+  document.getElementById('proj-img-preview-box').innerText = '';
+  document.getElementById('project-admin-modal').style.display = 'flex';
+}
+window.openProjectModalAdmin = openProjectModalAdmin;
+
+function closeProjectModalAdmin() { document.getElementById('project-admin-modal').style.display = 'none'; }
+window.closeProjectModalAdmin = closeProjectModalAdmin;
+
+function previewProjectImage(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('proj-img').value = e.target.result;
+      document.getElementById('proj-img-preview-box').innerText = '✓ Local machine image loaded successfully!';
+    };
+    reader.readAsDataURL(file);
+  }
+}
+window.previewProjectImage = previewProjectImage;
+
+function handleProjectFormSubmit(e) {
+  e.preventDefault();
+  const id = document.getElementById('proj-edit-id').value;
+  const name = document.getElementById('proj-name').value;
+  const type = document.getElementById('proj-type').value;
+  const location = document.getElementById('proj-location').value;
+  const description = document.getElementById('proj-desc').value;
+  const image = document.getElementById('proj-img').value;
+  const planImage = document.getElementById('proj-planimg').value;
+
+  if (id) {
+    const p = signatureProjects.find(item => item.id == id);
+    if (p) {
+      p.name = name; p.type = type; p.location = location; p.description = description; p.image = image; p.planImage = planImage;
+    }
+  } else {
+    const newProj = {
+      id: Date.now(),
+      name, type, location, description, image, planImage,
+      specs: ["Custom Managed Project", "Location: " + location]
+    };
+    signatureProjects.push(newProj);
+  }
+
+  localStorage.setItem('idhika_signature_projects', JSON.stringify(signatureProjects));
+  closeProjectModalAdmin();
+  fetchProjects();
+  loadAdminProjectsTable();
+  showAdminBanner('Project record and pictures saved successfully!');
+}
+window.handleProjectFormSubmit = handleProjectFormSubmit;
+
+function editProject(id) {
+  const p = signatureProjects.find(item => item.id == id);
+  if (!p) return;
+  document.getElementById('proj-edit-id').value = p.id;
+  document.getElementById('proj-name').value = p.name;
+  document.getElementById('proj-type').value = p.type;
+  document.getElementById('proj-location').value = p.location;
+  document.getElementById('proj-desc').value = p.description;
+  document.getElementById('proj-img').value = p.image || '';
+  document.getElementById('proj-planimg').value = p.planImage || '';
+  document.getElementById('proj-img-preview-box').innerText = p.image ? '✓ Current image loaded' : '';
+  document.getElementById('project-admin-modal').style.display = 'flex';
+}
+window.editProject = editProject;
+
+let pendingDeleteId = null;
+
+function deleteProject(id) {
+  pendingDeleteId = id;
+  document.getElementById('custom-confirm-modal').style.display = 'flex';
+  document.getElementById('confirm-delete-yes-btn').onclick = function() {
+    signatureProjects = signatureProjects.filter(p => p.id != pendingDeleteId);
+    localStorage.setItem('idhika_signature_projects', JSON.stringify(signatureProjects));
+    fetchProjects();
+    loadAdminProjectsTable();
+    closeCustomConfirm();
+    showAdminBanner('Project record deleted successfully!');
+  };
+}
+window.deleteProject = deleteProject;
+
+function loadAdminProjectsTable() {
+  const tbody = document.getElementById('admin-projects-table-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = signatureProjects.map(function(p) {
+    return '<tr>' +
+      '<td><strong>' + p.name + '</strong><br><span style="font-size:0.75rem; color:var(--accent-gold);">' + p.type + '</span></td>' +
+      '<td>' + p.location + '</td>' +
+      '<td><span style="font-size:0.78rem; color:var(--text-muted);">' + p.description + '</span></td>' +
+      '<td>' +
+        '<button onclick="window.editProject(' + p.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; margin-right:4px;">Edit</button>' +
+        '<button onclick="window.deleteProject(' + p.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; border-color:#ef4444; color:#f87171;">Delete</button>' +
+      '</td>' +
+    '</tr>';
+  }).join('');
+}
+window.loadAdminProjectsTable = loadAdminProjectsTable;
 
 function openStaffModal() { 
   document.getElementById('staff-edit-id').value = ''; 
@@ -98,15 +238,20 @@ function openStaffModal() {
   document.getElementById('staff-bio').value = '';
   document.getElementById('staff-modal').style.display = 'flex'; 
 }
+window.openStaffModal = openStaffModal;
+
 function closeStaffModal() { document.getElementById('staff-modal').style.display = 'none'; }
+window.closeStaffModal = closeStaffModal;
 
 function toggleDirectorFields(val) {
   document.getElementById('director-extra-fields').style.display = val === 'director' ? 'block' : 'none';
 }
+window.toggleDirectorFields = toggleDirectorFields;
 
 function toggleStaffEndDate(isChecked) {
   document.getElementById('staff-end-date-wrapper').style.display = isChecked ? 'none' : 'block';
 }
+window.toggleStaffEndDate = toggleStaffEndDate;
 
 function previewLocalImage(event) {
   const file = event.target.files[0];
@@ -119,13 +264,17 @@ function previewLocalImage(event) {
     reader.readAsDataURL(file);
   }
 }
+window.previewLocalImage = previewLocalImage;
 
 function switchAdminTab(tab) {
   document.getElementById('admin-view-crm').style.display = tab === 'crm' ? 'block' : 'none';
   document.getElementById('admin-view-team').style.display = tab === 'team' ? 'block' : 'none';
+  document.getElementById('admin-view-projects').style.display = tab === 'projects' ? 'block' : 'none';
   document.getElementById('admin-tab-btn-crm').className = tab === 'crm' ? 'btn btn-primary' : 'btn btn-secondary';
   document.getElementById('admin-tab-btn-team').className = tab === 'team' ? 'btn btn-primary' : 'btn btn-secondary';
+  document.getElementById('admin-tab-btn-projects').className = tab === 'projects' ? 'btn btn-primary' : 'btn btn-secondary';
 }
+window.switchAdminTab = switchAdminTab;
 
 function handleStaffFormSubmit(e) {
   e.preventDefault();
@@ -163,6 +312,7 @@ function handleStaffFormSubmit(e) {
   loadAdminTeamTable();
   showAdminBanner('Staff record saved successfully!');
 }
+window.handleStaffFormSubmit = handleStaffFormSubmit;
 
 function editStaff(id) {
   const m = teamMembersData.find(item => item.id == id);
@@ -184,9 +334,7 @@ function editStaff(id) {
   document.getElementById('staff-bio').value = m.bio || '';
   document.getElementById('staff-modal').style.display = 'flex';
 }
-
-// CUSTOM IN-PAGE DELETE CONFIRMATION MODAL LOGIC
-let pendingDeleteId = null;
+window.editStaff = editStaff;
 
 function deleteStaff(id) {
   pendingDeleteId = id;
@@ -200,6 +348,7 @@ function deleteStaff(id) {
     showAdminBanner('Staff member deleted successfully!');
   };
 }
+window.deleteStaff = deleteStaff;
 
 function deleteLead(id) {
   pendingDeleteId = id;
@@ -211,11 +360,13 @@ function deleteLead(id) {
     showAdminBanner('Lead entry deleted successfully!');
   };
 }
+window.deleteLead = deleteLead;
 
 function closeCustomConfirm() {
   document.getElementById('custom-confirm-modal').style.display = 'none';
   pendingDeleteId = null;
 }
+window.closeCustomConfirm = closeCustomConfirm;
 
 function showAdminBanner(msg, isError = false) {
   const banner = document.getElementById('admin-inpage-banner');
@@ -227,10 +378,8 @@ function showAdminBanner(msg, isError = false) {
   banner.style.display = 'block';
   setTimeout(() => { banner.style.display = 'none'; }, 4000);
 }
+window.showAdminBanner = showAdminBanner;
 
-// ==========================================
-// FORM VALIDATION (Full Name Allows Single & Multiple Spaces Properly)
-// ==========================================
 function validateFormGlobally() {
   const nameInput = document.getElementById('lead-name');
   const phoneInput = document.getElementById('lead-phone');
@@ -247,8 +396,7 @@ function validateFormGlobally() {
 
   let isFormValid = true;
 
-  // 1. Name: Fixed to strictly allow alphabets, dots, and spaces (single or multiple)
-  const nameRegex = /^[A-Za-zs.]+$/;
+  const nameRegex = /^[A-Za-z. ]+$/;
   if (nameVal && !nameRegex.test(nameVal)) {
     nameErr.style.display = 'block';
     isFormValid = false;
@@ -256,7 +404,6 @@ function validateFormGlobally() {
     nameErr.style.display = 'none';
   }
 
-  // 2. Phone: Numbers only
   const phoneRegex = /^[0-9]+$/;
   if (phoneVal && !phoneRegex.test(phoneVal)) {
     phoneErr.style.display = 'block';
@@ -265,7 +412,6 @@ function validateFormGlobally() {
     phoneErr.style.display = 'none';
   }
 
-  // 3. Email: Gmail, Yahoo, Outlook, Yopmail + duplicate check
   const allowedDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'yopmail.com'];
   if (emailVal) {
     const parts = emailVal.split('@');
@@ -298,6 +444,7 @@ function validateFormGlobally() {
     submitBtn.style.opacity = '1';
   }
 }
+window.validateFormGlobally = validateFormGlobally;
 
 function handleCustomerLeadSubmit(event) {
   event.preventDefault();
@@ -332,6 +479,7 @@ function handleCustomerLeadSubmit(event) {
   document.getElementById('success-popup-content').innerHTML = popupContent;
   document.getElementById('success-popup-modal').style.display = 'flex';
 }
+window.handleCustomerLeadSubmit = handleCustomerLeadSubmit;
 
 function handleManualLeadSubmit(e) {
   e.preventDefault();
@@ -351,10 +499,12 @@ function handleManualLeadSubmit(e) {
   document.getElementById('manual-email').value = '';
   document.getElementById('manual-location').value = '';
 }
+window.handleManualLeadSubmit = handleManualLeadSubmit;
 
 function closeSuccessPopup() {
   document.getElementById('success-popup-modal').style.display = 'none';
 }
+window.closeSuccessPopup = closeSuccessPopup;
 
 function handleFeedbackSubmit(event) {
   event.preventDefault();
@@ -363,16 +513,19 @@ function handleFeedbackSubmit(event) {
   document.getElementById('fb-msg').value = '';
   closeFeedbackModal();
 }
+window.handleFeedbackSubmit = handleFeedbackSubmit;
 
 function saveAndSyncCRM() {
   localStorage.setItem('idhika_crm_leads', JSON.stringify(storedLeadsList));
   loadAdminLeads();
 }
+window.saveAndSyncCRM = saveAndSyncCRM;
 
 function filterCrmTable() {
   const query = document.getElementById('crm-search-input').value.toLowerCase();
   loadAdminLeads(query);
 }
+window.filterCrmTable = filterCrmTable;
 
 function loadAdminLeads(filterQuery = '') {
   const tbody = document.getElementById('admin-leads-tbody');
@@ -425,15 +578,15 @@ function loadAdminLeads(filterQuery = '') {
       '<td><input type="text" id="comment-inp-' + l.id + '" class="form-control" style="padding:0.3rem; font-size:0.75rem; margin-top:0;" value="' + (l.comment || '') + '"></td>' +
       '<td>' +
         '<div style="display:flex; gap:4px; flex-wrap:wrap;">' +
-          '<button onclick="cloneLead(' + l.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem;" title="Clone entry">Clone</button>' +
-          '<button onclick="deleteLead(' + l.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; border-color:#ef4444; color:#f87171;">Delete</button>' +
+          '<button onclick="window.cloneLead(' + l.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem;" title="Clone entry">Clone</button>' +
+          '<button onclick="window.deleteLead(' + l.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; border-color:#ef4444; color:#f87171;">Delete</button>' +
         '</div>' +
       '</td>' +
     '</tr>';
   }).join('');
 }
+window.loadAdminLeads = loadAdminLeads;
 
-// PAGE-LEVEL SAVE ALL CHANGES BUTTON (Commits draft edits and checks for PROCEED welcome email)
 function saveAllCrmChanges() {
   let newlyProceededLead = null;
 
@@ -474,8 +627,8 @@ function saveAllCrmChanges() {
     document.getElementById('success-popup-modal').style.display = 'flex';
   }
 }
+window.saveAllCrmChanges = saveAllCrmChanges;
 
-// CLONE LEAD ENTRY
 function cloneLead(id) {
   const lead = storedLeadsList.find(l => l.id === id);
   if (!lead) return;
@@ -493,6 +646,19 @@ function cloneLead(id) {
   saveAndSyncCRM();
   showAdminBanner('Entry successfully cloned as Unassigned/New!');
 }
+window.cloneLead = cloneLead;
+
+function deleteLead(id) {
+  pendingDeleteId = id;
+  document.getElementById('custom-confirm-modal').style.display = 'flex';
+  document.getElementById('confirm-delete-yes-btn').onclick = function() {
+    storedLeadsList = storedLeadsList.filter(l => l.id != pendingDeleteId);
+    saveAndSyncCRM();
+    closeCustomConfirm();
+    showAdminBanner('Lead entry deleted successfully!');
+  };
+}
+window.deleteLead = deleteLead;
 
 function loadAdminTeamTable() {
   const tbody = document.getElementById('admin-team-table-tbody');
@@ -506,12 +672,13 @@ function loadAdminTeamTable() {
       '<td><span style="font-size:0.78rem;">Joined: ' + (t.joining || 'N/A') + '</span><br>' + workingStatus + '</td>' +
       '<td><span style="font-size:0.78rem; color:var(--text-muted);">' + t.details + '</span></td>' +
       '<td>' +
-        '<button onclick="editStaff(' + t.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; margin-right:4px;">Edit</button>' +
-        '<button onclick="deleteStaff(' + t.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; border-color:#ef4444; color:#f87171;">Delete</button>' +
+        '<button onclick="window.editStaff(' + t.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; margin-right:4px;">Edit</button>' +
+        '<button onclick="window.deleteStaff(' + t.id + ')" class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.65rem; border-color:#ef4444; color:#f87171;">Delete</button>' +
       '</td>' +
     '</tr>';
   }).join('');
 }
+window.loadAdminTeamTable = loadAdminTeamTable;
 
 function handlePortalLoginSubmit(event) {
   event.preventDefault();
@@ -540,6 +707,7 @@ function handlePortalLoginSubmit(event) {
 
   alert('Authentication failed. Check your credentials or ensure your contract is set to PROCEED.');
 }
+window.handlePortalLoginSubmit = handlePortalLoginSubmit;
 
 function checkCustomerAuthState() {
   const loggedCust = localStorage.getItem('idhika_logged_customer');
@@ -564,12 +732,14 @@ function checkCustomerAuthState() {
     if (empNavLink) empNavLink.style.display = 'none';
   }
 }
+window.checkCustomerAuthState = checkCustomerAuthState;
 
 function loadCustomerDashboard(cust) {
   document.getElementById('cust-welcome-title').innerText = 'Welcome, ' + cust.name;
   document.getElementById('cust-details-text').innerHTML = 'Site: ' + cust.location + ' | Service: ' + cust.service + ' | Manager: ' + cust.assignedTo;
-  document.getElementById('client-project-display').innerHTML = '<div class="glass-card"><h3 class="gold-text">' + cust.service + ' — Active Tracker</h3><p style="margin:0.5rem 0; color:var(--text-muted);">Status: Work in Progress</p><button onclick="closeCustomerProject(' + cust.id + ')" class="btn btn-primary" style="margin-top:1rem;">Mark Project as Closed / Completed</button></div>';
+  document.getElementById('client-project-display').innerHTML = '<div class="glass-card"><h3 class="gold-text">' + cust.service + ' — Active Tracker</h3><p style="margin:0.5rem 0; color:var(--text-muted);">Status: Work in Progress</p><button onclick="window.closeCustomerProject(' + cust.id + ')" class="btn btn-primary" style="margin-top:1rem;">Mark Project as Closed / Completed</button></div>';
 }
+window.loadCustomerDashboard = loadCustomerDashboard;
 
 function loadEmployeeDashboard(emp) {
   const workingTxt = emp.current !== false ? 'Currently Working' : 'Tenure Ended: ' + emp.endDate;
@@ -579,14 +749,16 @@ function loadEmployeeDashboard(emp) {
     '<p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.3rem;"><strong>Experience Details:</strong> ' + emp.details + '</p>' +
     '<p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.3rem;"><strong>Joining Date:</strong> ' + (emp.joining || 'N/A') + '</p>' +
     '<p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1rem;"><strong>Employment Status:</strong> ' + workingTxt + '</p>' +
-    '<button onclick="logoutEmployee()" class="btn btn-secondary" style="font-size:0.7rem;">Log Out Employee Space</button>';
+    '<button onclick="window.logoutEmployee()" class="btn btn-secondary" style="font-size:0.7rem;">Log Out Employee Space</button>';
 }
+window.loadEmployeeDashboard = loadEmployeeDashboard;
 
 function logoutEmployee() {
   localStorage.removeItem('idhika_logged_employee');
   showPage('home');
   checkCustomerAuthState();
 }
+window.logoutEmployee = logoutEmployee;
 
 function closeCustomerProject(id) {
   const lead = storedLeadsList.find(l => l.id === id);
@@ -599,6 +771,7 @@ function closeCustomerProject(id) {
     checkCustomerAuthState();
   }
 }
+window.closeCustomerProject = closeCustomerProject;
 
 function switchRole(role) {
   closeRoleModal();
@@ -606,9 +779,10 @@ function switchRole(role) {
   const adminLink = document.getElementById('nav-admin-link');
   if(clientLink) clientLink.style.display = 'none'; 
   if(adminLink) adminLink.style.display = 'none';
-  if (role === 'admin') { if(adminLink) adminLink.style.display = 'block'; showPage('admin-portal'); loadAdminLeads(); loadAdminTeamTable(); }
+  if (role === 'admin') { if(adminLink) adminLink.style.display = 'block'; showPage('admin-portal'); loadAdminLeads(); loadAdminTeamTable(); loadAdminProjectsTable(); }
   else { showPage('home'); checkCustomerAuthState(); }
 }
+window.switchRole = switchRole;
 
 function initSubtleArchitecturalBackground() {
   const canvas = document.getElementById('architecture-canvas');
@@ -627,6 +801,7 @@ function initSubtleArchitecturalBackground() {
   }
   render();
 }
+window.initSubtleArchitecturalBackground = initSubtleArchitecturalBackground;
 
 const detailedServicesData = [
   { num: "1", title: "ARCHITECTURAL DESIGN", clientSummary: "We turn your spatial needs and site conditions into functional, high-value blueprints tailored precisely to your budget and municipal guidelines.", description: "Great Architectural Design emerges from a careful analysis of project requirements, client goals, and budgetary constraints through all development phases.", deliverables: ["Programming & Spatial Requirements Analysis", "Preliminary Conceptual Design Schematics", "Comprehensive Budget Development", "Advanced Design Development & Specifications", "Detailed Estimates & Material Schedules", "3-D Presentations, Photorealistic Renders & Physical Models", "Computer-Aided Drafting and Design (CADD / BIM)", "Post-Construction Quality Inspections & Support"] },
@@ -649,6 +824,7 @@ function toggleServiceDrawer(index) {
     }
   }
 }
+window.toggleServiceDrawer = toggleServiceDrawer;
 
 function renderDetailedServices() {
   const container = document.getElementById('services-container');
@@ -657,7 +833,7 @@ function renderDetailedServices() {
       '<div class="service-card">' +
         '<div class="service-icon-head"><div class="service-icon-badge">' + s.num + '</div><h3 class="gold-text" style="font-size:1.1rem; margin-bottom:0;">' + s.title + '</h3></div>' +
         '<p class="service-short-summary">' + s.clientSummary + '</p>' +
-        '<button id="service-btn-' + idx + '" onclick="toggleServiceDrawer(' + idx + ')" class="expand-details-btn">Explore Deliverables & Scope ↓</button>' +
+        '<button id="service-btn-' + idx + '" onclick="window.toggleServiceDrawer(' + idx + ')" class="expand-details-btn">Explore Deliverables & Scope ↓</button>' +
         '<div id="service-drawer-' + idx + '" class="service-drawer-content">' +
           '<p class="drawer-tech-desc">' + s.description + '</p>' +
           '<h4 style="font-size:0.8rem; color:var(--accent-gold); margin-bottom:0.5rem; text-transform:uppercase;">Included Technical Deliverables:</h4>' +
@@ -667,6 +843,7 @@ function renderDetailedServices() {
     ).join('');
   }
 }
+window.renderDetailedServices = renderDetailedServices;
 
 function renderTeamMembers() {
   const dirContainer = document.getElementById('directors-container');
@@ -701,6 +878,7 @@ function renderTeamMembers() {
     ).join('');
   }
 }
+window.renderTeamMembers = renderTeamMembers;
 
 const architecturalWonders = [
   { name: "TAJ MAHAL", location: "Agra, India", archetype: "Symmetrical Marble Perfection", description: "The supreme masterpiece of Mughal architecture, world-renowned for absolute bilateral symmetry, translucent white marble, and optical balance.", image: "wonder-taj.jpg", googleUrl: "https://www.google.com/search?q=Taj+Mahal+Architecture" },
@@ -725,42 +903,36 @@ function renderArchitecturalWonders() {
     ).join('');
   }
 }
-
-const signatureProjects = [
-  { id: 101, name: "DREAM GALAXY", type: "Housing & Commercial Mall Complex", location: "Near New Amity Campus Malhor, Lucknow", description: "A premier housing project featuring 216 luxury flats and an integrated commercial shopping mall, designed on a sprawling 1.7-acre prime urban site.", image: "dream-galaxy.jpg", planImage: "dream-galaxy-plan.jpg", specs: ["Site Area: 1.7 Acres", "Flats: 216 Residential Units", "Commercial Mall Integrated", "Location: Lucknow"] },
-  { id: 102, name: "GOPAL CRYSTAL TOWER", type: "Luxury Group Housing Tower", location: "Raebareli Central City Area", description: "Luxury group housing development offering over 100 premium flats over a site area of 65,000 sq.ft., combining contemporary comfort with architectural luxury.", image: "gopal-crystal.jpg", planImage: "", specs: ["Site Area: 65,000 Sq.Ft.", "Capacity: Over 100 Flats", "Urban Central Location", "Vastu Compliant Design"] },
-  { id: 103, name: "KAMYA VILLAS & GREENS", type: "Township & Villa Extension", location: "Main Highway to Dewa", description: "Extensive township project with over 1,000 flats and luxury villas situated along the main Dewa Highway corridor.", image: "kamya-villas.jpg", planImage: "", specs: ["Capacity: 1000+ Units & Villas", "Highway Corridor Frontage", "Gated Township Amenities"] },
-  { id: 104, name: "SPRING MEADOWS", type: "Luxury Farmhouse Township", location: "Peaceful Suburban Zone", description: "An exclusive, tranquil township consisting of 63 luxury farm estates surrounded by lush green landscapes, offering absolute privacy.", image: "spring-meadows.jpg", planImage: "", specs: ["Unit Count: 63 Exclusive Farms", "High Security Perimeter", "Private Villa & Garden Renders"] },
-  { id: 105, name: "TOWNSHIP AT BPCL, KOCHI", type: "GRIHA 5-Star Rated Township", location: "BPCL Township, Kochi, Kerala", description: "Sustainable 35,000 sq.m. industrial township development featuring 67 residential flats, M.P. Hall, Club House, and transit residential quarters.", image: "bpcl-kochi.jpg", planImage: "", specs: ["Plot Area: 35,000 Sq.M.", "GRIHA 5-Star Rating Target", "F.A.R. Achieved: 0.5%", "Facilities: Club House, M.P. Hall"] },
-  { id: 106, name: "KUTUMBH SIGNATURE", type: "Affordable Housing Apartment Project", location: "Urban Growth Corridor", description: "Modern low-cost apartment project comprising 16 thoughtfully designed flats delivering a future vision of accessible quality homes.", image: "kutumbh-signature.jpg", planImage: "", specs: ["Capacity: 16 Apartment Units", "Modular Kitchen & Interior Renders", "Low-Cost Efficient Floor Plan"] }
-];
+window.renderArchitecturalWonders = renderArchitecturalWonders;
 
 function fetchProjects() {
   renderPortfolio(signatureProjects);
   renderEmployeeSpace(signatureProjects);
 }
+window.fetchProjects = fetchProjects;
 
 function renderPortfolio(projects) {
   const container = document.getElementById('portfolio-grid');
   if (container) {
-    container.innerHTML = projects.map(p => 
+    container.innerHTML = signatureProjects.map(p => 
       '<div class="portfolio-card">' +
         '<h3 style="color:var(--accent-gold);margin-bottom:0.4rem;">' + p.name + '</h3>' +
         '<p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.5rem;"><strong>' + p.type + '</strong> — ' + p.location + '</p>' +
         '<p style="font-size:0.82rem; margin-bottom:1rem;">' + p.description + '</p>' +
-        '<button onclick="viewProjectDetails(' + p.id + ')" class="btn btn-primary" style="padding:0.5rem 1rem; font-size:0.72rem; width:100%;">View Floor Plans & Renders</button>' +
+        '<button onclick="window.viewProjectDetails(' + p.id + ')" class="btn btn-primary" style="padding:0.5rem 1rem; font-size:0.72rem; width:100%;">View Floor Plans & Renders</button>' +
       '</div>'
     ).join('');
   }
 }
+window.renderPortfolio = renderPortfolio;
 
 function viewProjectDetails(id) {
   const p = signatureProjects.find(proj => proj.id === id);
   if (!p) return;
   document.getElementById('modal-proj-name').innerText = p.name + " — Architectural Overview";
   let imagesHtml = '';
-  if (p.image) imagesHtml += '<div class="project-render-wrapper" onclick="openZoomModal(\'' + p.image + '\')"><img src="' + p.image + '" class="project-render-img"><div class="zoom-badge">🔍 Click to Expand</div></div>';
-  if (p.planImage) imagesHtml += '<div class="project-render-wrapper" onclick="openZoomModal(\'' + p.planImage + '\')" style="margin-top:0.8rem;"><img src="' + p.planImage + '" class="project-render-img"><div class="zoom-badge">🔍 Expand Plan</div></div>';
+  if (p.image) imagesHtml += '<div class="project-render-wrapper" onclick="window.openZoomModal(\'' + p.image + '\')"><img src="' + p.image + '" class="project-render-img"><div class="zoom-badge">🔍 Click to Expand</div></div>';
+  if (p.planImage) imagesHtml += '<div class="project-render-wrapper" onclick="window.openZoomModal(\'' + p.planImage + '\')" style="margin-top:0.8rem;"><img src="' + p.planImage + '" class="project-render-img"><div class="zoom-badge">🔍 Expand Plan</div></div>';
 
   document.getElementById('modal-proj-content').innerHTML = 
     '<p><strong>Type:</strong> ' + p.type + ' | <strong>Location:</strong> ' + p.location + '</p>' +
@@ -771,25 +943,29 @@ function viewProjectDetails(id) {
     '</div>';
   document.getElementById('project-detail-modal').style.display = 'flex';
 }
+window.viewProjectDetails = viewProjectDetails;
 
 function openZoomModal(imgSrc) {
   const overlay = document.getElementById('image-zoom-overlay');
   const imgTarget = document.getElementById('zoomed-image-target');
   if (overlay && imgTarget) { imgTarget.src = imgSrc; overlay.style.display = 'flex'; }
 }
+window.openZoomModal = openZoomModal;
 
 function closeZoomModal() {
   const overlay = document.getElementById('image-zoom-overlay');
   if (overlay) overlay.style.display = 'none';
 }
+window.closeZoomModal = closeZoomModal;
 
 function renderEmployeeSpace(projects) {
   const container = document.getElementById('employee-assigned-projects');
   if (container) {
-    container.innerHTML = projects.map(p => 
+    container.innerHTML = signatureProjects.map(p => 
       '<div style="margin-bottom:0.8rem; padding-bottom:0.8rem; border-bottom:1px solid rgba(255,255,255,0.1);">' +
         '<h4>' + p.name + '</h4><p style="font-size:0.82rem;">' + p.type + '</p>' +
       '</div>'
     ).join('');
   }
 }
+window.renderEmployeeSpace = renderEmployeeSpace;
