@@ -1,49 +1,49 @@
-const express = require('express');
 const fs = require('fs');
 const path = require('path');
-
+const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
+app.use(express.json({ limit: '50mb' })); // Allow large Base64 image payloads
 app.use(express.static(path.join(__dirname, 'public')));
 
-let projectTracker = [
-  { id: 101, name: "Township Phase 1", status: "In Progress", progress: 65, employee: "Mr. ANUPAM KATIYAR", client: "Lucknow Dev Corp" },
-  { id: 102, name: "Commercial Tower A", status: "Design Phase", progress: 30, employee: "Ar. SOUMAYA SAXENA", client: "Apex Heights" },
-  { id: 103, name: "Group Housing Complex", status: "Completed", progress: 100, employee: "Er. RABISH KUMAR", client: "Royal Residency" }
-];
+const DATA_FILE = path.join(__dirname, 'database.json');
 
-let userDatabase = [
-  { id: 1, name: "Ar. ANKUR SRIVASTAVA", role: "Employer / Director", email: "ankur@idhikagroup.com" },
-  { id: 2, name: "Ar. PRATEEK SRIVASTAVA", role: "Employer / Director", email: "prateek@idhikagroup.com" },
-  { id: 3, name: "Mr. ANUPAM KATIYAR", role: "Employee (Project Manager)", email: "anupam@idhikagroup.com" },
-  { id: 4, name: "Client User", role: "Client", email: "client@external.com" }
-];
-
-app.get('/api/content', (req, res) => {
-  const contentPath = path.join(__dirname, 'data', 'content.json');
-  fs.readFile(contentPath, 'utf8', (err, data) => {
-    if (err) return res.status(500).json({ error: "Failed to read content file" });
-    res.json(JSON.parse(data));
-  });
-});
-
-app.get('/api/projects', (req, res) => { res.json(projectTracker); });
-
-app.post('/api/projects/update', (req, res) => {
-  const { id, progress, status } = req.body;
-  const proj = projectTracker.find(p => p.id === parseInt(id));
-  if (proj) {
-    if (progress !== undefined) proj.progress = parseInt(progress);
-    if (status) proj.status = status;
-    return res.json({ success: true, project: proj });
+// Helper to load data
+function loadDb() {
+  if (!fs.existsSync(DATA_FILE)) {
+    const initialData = {
+      leads: [],
+      team: [],
+      projects: []
+    };
+    fs.writeFileSync(DATA_FILE, JSON.stringify(initialData, null, 2));
   }
-  res.status(404).json({ error: "Project not found" });
+  return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+}
+
+// Helper to save data
+function saveDb(data) {
+  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+}
+
+// API: Get all portal data (Projects, Team, Leads)
+app.get('/api/portal-data', (req, res) => {
+  const db = loadDb();
+  res.json(db);
 });
 
-app.get('/api/users', (req, res) => { res.json(userDatabase); });
+// API: Save/Update portal data globally
+app.post('/api/portal-data', (req, res) => {
+  const { leads, team, projects } = req.body;
+  const db = loadDb();
+  if (leads) db.leads = leads;
+  if (team) db.team = team;
+  if (projects) db.projects = projects;
+  saveDb(db);
+  res.json({ success: true, message: 'Data saved successfully for all users!' });
+});
 
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`IDHIKA GROUP Server running on http://localhost:${PORT}`);
+  console.log('IDHIKA server running on port ' + PORT);
 });
