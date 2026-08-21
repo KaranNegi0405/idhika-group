@@ -1,0 +1,31 @@
+{
+  "leads": [],
+  "team": [],
+  "projects": [],
+  "homeContent": {
+    "tagline": "EXPERTISE IN TOWNSHIP, GROUP HOUSING, APARTMENTS & COMMERCIAL TOWERS ACROSS INDIA",
+    "metric1Val": "10+ YRS",
+    "metric1Lbl": "Architectural Excellence",
+    "metric2Val": "M.ARCH / AIIA",
+    "metric2Lbl": "Certified Directors",
+    "metric3Val": "100% SAFE",
+    "metric3Lbl": "Structural Guarantee",
+    "philosophy": "We believe that quality of our surroundings—their design and construction—deeply influence the way we work, relax and live."
+  },
+  "subCompanies": [
+    {
+      "id": 1,
+      "name": "ASTRE Design Studio",
+      "subtitle": "Associate Architectural Design Studio",
+      "logo": "astre-logo.png",
+      "desc": "Collaborative design studio specializing in contemporary urban aesthetics and master planning."
+    },
+    {
+      "id": 2,
+      "name": "IDHIKA Trade & Constructions",
+      "subtitle": "Specialized Engineering & Execution",
+      "logo": "idhika-trade-logo.png",
+      "desc": "Expert structural execution, material procurement, and premium architectural delivery."
+    }
+  ]
+}

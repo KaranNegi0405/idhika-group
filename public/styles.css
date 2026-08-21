@@ -92,6 +92,31 @@ select:-webkit-autofill {
   border: 1px solid rgba(212, 175, 55, 0.3); /* Added clean subtle border */
 }
 
+/* ==========================================
+   DIRECTOR / ADMIN ACTIVE TAB
+   ========================================== */
+
+.admin-tab-active {
+  background: var(--accent-gold) !important;
+  color: #000 !important;
+  border: 1px solid var(--accent-gold) !important;
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.35) !important;
+  font-weight: 800 !important;
+}
+
+.admin-tab-inactive {
+  background: rgba(15, 23, 42, 0.85) !important;
+  color: var(--text-main) !important;
+  border: 1px solid rgba(212, 175, 55, 0.35) !important;
+  box-shadow: none !important;
+}
+
+.admin-tab-inactive:hover {
+  background: rgba(212, 175, 55, 0.12) !important;
+  color: var(--accent-gold) !important;
+  border-color: var(--accent-gold) !important;
+}
+
 .btn:hover {
   background: var(--accent-gold); 
   color: #000; 

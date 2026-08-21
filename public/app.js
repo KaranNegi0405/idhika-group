@@ -8,6 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
   loadAdminLeads();
   loadAdminTeamTable();
   loadAdminProjectsTable();
+
+// Default Admin Console tab
+switchAdminTab('crm');
+
+  // Fetch and load home content into the admin form
+  fetch('/api/portal-data')
+    .then(res => res.json())
+    .then(data => {
+      if (data.homeContent) {
+        loadHomeContentIntoAdmin(data.homeContent);
+      }
+    })
+    .catch(err => console.error('Failed to load home content:', err));
 });
 
 let storedLeadsList = JSON.parse(localStorage.getItem('idhika_crm_leads')) || [
@@ -267,14 +280,67 @@ function previewLocalImage(event) {
 window.previewLocalImage = previewLocalImage;
 
 function switchAdminTab(tab) {
-  document.getElementById('admin-view-crm').style.display = tab === 'crm' ? 'block' : 'none';
-  document.getElementById('admin-view-team').style.display = tab === 'team' ? 'block' : 'none';
-  document.getElementById('admin-view-projects').style.display = tab === 'projects' ? 'block' : 'none';
-  document.getElementById('admin-tab-btn-crm').className = tab === 'crm' ? 'btn btn-primary' : 'btn btn-secondary';
-  document.getElementById('admin-tab-btn-team').className = tab === 'team' ? 'btn btn-primary' : 'btn btn-secondary';
-  document.getElementById('admin-tab-btn-projects').className = tab === 'projects' ? 'btn btn-primary' : 'btn btn-secondary';
+
+  // ==========================================
+  // ADMIN CONTENT VIEWS
+  // ==========================================
+
+  const views = {
+    crm: document.getElementById('admin-view-crm'),
+    team: document.getElementById('admin-view-team'),
+    projects: document.getElementById('admin-view-projects'),
+    'home-content': document.getElementById('admin-home-content-section')
+  };
+
+  // Show selected view and hide the others
+  Object.keys(views).forEach(function(key) {
+
+    const view = views[key];
+
+    if (view) {
+      view.style.display =
+        key === tab ? 'block' : 'none';
+    }
+
+  });
+
+
+  // ==========================================
+  // ADMIN TAB BUTTONS
+  // ==========================================
+
+  const buttons = {
+    crm: document.getElementById('admin-tab-btn-crm'),
+    team: document.getElementById('admin-tab-btn-team'),
+    projects: document.getElementById('admin-tab-btn-projects'),
+    'home-content': document.getElementById('admin-tab-btn-home')
+  };
+
+
+  // Reset all buttons first
+  Object.keys(buttons).forEach(function(key) {
+
+    const button = buttons[key];
+
+    if (!button) return;
+
+    button.classList.remove(
+      'admin-tab-active',
+      'admin-tab-inactive'
+    );
+
+    button.classList.add(
+      key === tab
+        ? 'admin-tab-active'
+        : 'admin-tab-inactive'
+    );
+
+  });
+
 }
+
 window.switchAdminTab = switchAdminTab;
+
 
 function handleStaffFormSubmit(e) {
   e.preventDefault();
@@ -1023,3 +1089,180 @@ function renderEmployeeSpace(projects) {
   }
 }
 window.renderEmployeeSpace = renderEmployeeSpace;
+
+function renderEmployeeSpace(projects) {
+  const container = document.getElementById('employee-assigned-projects');
+  if (container) {
+    container.innerHTML = signatureProjects.map(p =>
+      '<div style="margin-bottom:0.8rem; padding-bottom:0.8rem; border-bottom:1px solid rgba(255,255,255,0.1);">' +
+        '<h4>' + p.name + '</h4><p style="font-size:0.82rem;">' + p.type + '</p>' +
+      '</div>'
+    ).join('');
+  }
+}
+window.renderEmployeeSpace = renderEmployeeSpace;
+
+function loadHomeContentIntoAdmin(homeContent) {
+
+  if (!homeContent) return;
+
+  // ==========================================
+  // LOAD VALUES INTO ADMIN EDITOR
+  // ==========================================
+
+  const setValue = function(id, value) {
+
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.value = value || '';
+    }
+
+  };
+
+  setValue(
+    'home-tagline-inp',
+    homeContent.tagline
+  );
+
+  setValue(
+    'home-m1val-inp',
+    homeContent.metric1Val
+  );
+
+  setValue(
+    'home-m1lbl-inp',
+    homeContent.metric1Lbl
+  );
+
+  setValue(
+    'home-m2val-inp',
+    homeContent.metric2Val
+  );
+
+  setValue(
+    'home-m2lbl-inp',
+    homeContent.metric2Lbl
+  );
+
+  setValue(
+    'home-m3val-inp',
+    homeContent.metric3Val
+  );
+
+  setValue(
+    'home-m3lbl-inp',
+    homeContent.metric3Lbl
+  );
+
+  setValue(
+    'home-phil-inp',
+    homeContent.philosophy
+  );
+
+
+  // ==========================================
+  // UPDATE PUBLIC HOME PAGE
+  // ==========================================
+
+  const setText = function(id, value) {
+
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.textContent = value || '';
+    }
+
+  };
+
+  setText(
+    'home-hero-tagline',
+    homeContent.tagline
+  );
+
+  setText(
+    'home-metric1-val',
+    homeContent.metric1Val
+  );
+
+  setText(
+    'home-metric1-lbl',
+    homeContent.metric1Lbl
+  );
+
+  setText(
+    'home-metric2-val',
+    homeContent.metric2Val
+  );
+
+  setText(
+    'home-metric2-lbl',
+    homeContent.metric2Lbl
+  );
+
+  setText(
+    'home-metric3-val',
+    homeContent.metric3Val
+  );
+
+  setText(
+    'home-metric3-lbl',
+    homeContent.metric3Lbl
+  );
+
+
+  const philosophy =
+    document.getElementById('home-philosophy-text');
+
+  if (philosophy) {
+
+    philosophy.textContent =
+      '"' +
+      (homeContent.philosophy || '') +
+      '"';
+
+  }
+
+}
+
+window.loadHomeContentIntoAdmin =
+  loadHomeContentIntoAdmin;
+
+function saveHomeContentChanges() {
+  const updatedHomeContent = {
+    tagline: document.getElementById('home-tagline-inp').value,
+    metric1Val: document.getElementById('home-m1val-inp').value,
+    metric1Lbl: document.getElementById('home-m1lbl-inp').value,
+    metric2Val: document.getElementById('home-m2val-inp').value,
+    metric2Lbl: document.getElementById('home-m2lbl-inp').value,
+    metric3Val: document.getElementById('home-m3val-inp').value,
+    metric3Lbl: document.getElementById('home-m3lbl-inp').value,
+    philosophy: document.getElementById('home-phil-inp').value
+  };
+
+  fetch('/api/portal-data', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ homeContent: updatedHomeContent })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+
+  // Immediately update the public Home page
+  loadHomeContentIntoAdmin(updatedHomeContent);
+
+  showAdminBanner(
+    'Home content updated successfully!'
+  );
+
+} else {
+      showAdminBanner('Failed to update home content.', true);
+    }
+  })
+  .catch(err => {
+    console.error('Error saving home content:', err);
+    showAdminBanner('Server error while saving home content.', true);
+  });
+}
+window.saveHomeContentChanges = saveHomeContentChanges;

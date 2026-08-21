@@ -56,13 +56,13 @@ const indexHtml = `<!DOCTYPE html>
         <div class="brand-logo-wrapper real-logo-plaque">
           <img src="logo-master.png" alt="IDHIKA GROUP Master Logo" class="master-hero-logo" onerror="this.style.display='none';">
         </div>
-        <p class="hero-tagline">EXPERTISE IN TOWNSHIP, GROUP HOUSING, APARTMENTS & COMMERCIAL TOWERS ACROSS INDIA</p>
+        <p class="hero-tagline" id="home-hero-tagline">EXPERTISE IN TOWNSHIP, GROUP HOUSING, APARTMENTS & COMMERCIAL TOWERS ACROSS INDIA</p>
         <div class="trust-metrics-strip">
-          <div class="trust-badge"><span class="trust-val">10+ YRS</span><span class="trust-lbl">Architectural Excellence</span></div>
+          <div class="trust-badge"><span class="trust-val" id="home-metric1-val">10+ YRS</span><span class="trust-lbl" id="home-metric1-lbl">Architectural Excellence</span></div>
           <div class="trust-divider"></div>
-          <div class="trust-badge"><span class="trust-val">M.ARCH / AIIA</span><span class="trust-lbl">Certified Directors</span></div>
+          <div class="trust-badge"><span class="trust-val" id="home-metric2-val">M.ARCH / AIIA</span><span class="trust-lbl" id="home-metric2-lbl">Certified Directors</span></div>
           <div class="trust-divider"></div>
-          <div class="trust-badge"><span class="trust-val">100% SAFE</span><span class="trust-lbl">Structural Guarantee</span></div>
+          <div class="trust-badge"><span class="trust-val" id="home-metric3-val">100% SAFE</span><span class="trust-lbl" id="home-metric3-lbl">Structural Guarantee</span></div>
         </div>
         <div class="hero-actions">
           <button onclick="window.showPage('portfolio')" class="btn btn-primary">Portfolio Showcase</button>
@@ -94,7 +94,7 @@ const indexHtml = `<!DOCTYPE html>
       </div>
       <div class="compact-philosophy-bar glass-card">
         <h3>OUR PHILOSOPHY</h3>
-        <p>"We believe that quality of our surroundings—their design and construction—deeply influence the way we work, relax and live."</p>
+        <p id="home-philosophy-text">"We believe that quality of our surroundings—their design and construction—deeply influence the way we work, relax and live."</p>
       </div>
     </div>
   </div>
@@ -178,6 +178,7 @@ const indexHtml = `<!DOCTYPE html>
         <button onclick="window.switchAdminTab('crm')" id="admin-tab-btn-crm" class="btn btn-primary" style="font-size:0.75rem;">Client CRM & Contracts</button>
         <button onclick="window.switchAdminTab('team')" id="admin-tab-btn-team" class="btn btn-secondary" style="font-size:0.75rem;">Staff Directory</button>
         <button onclick="window.switchAdminTab('projects')" id="admin-tab-btn-projects" class="btn btn-secondary" style="font-size:0.75rem;">Manage Portfolio Projects</button>
+	<button onclick="window.switchAdminTab('home-content')" id="admin-tab-btn-home" class="btn btn-secondary" style="font-size:0.75rem;">Manage Home Content</button>
       </div>
 
       <!-- VIEW 1: CLIENT CRM -->
@@ -263,6 +264,160 @@ const indexHtml = `<!DOCTYPE html>
         </div>
       </div>
 
+
+
+      <!-- VIEW 4: HOME PAGE CONTENT MANAGEMENT -->
+      <div id="admin-home-content-section" class="admin-tab-view" style="display:none;">
+        <div class="glass-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:10px;">
+            <h3 class="gold-text" style="margin-bottom:0;">Edit Home Page Content</h3>
+          </div>
+
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1.5rem;">
+            Update the information displayed on the public Home page. Changes are saved to the company database.
+          </p>
+
+          <div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:8px; border:1px solid rgba(212,175,55,0.2);">
+
+            <!-- MAIN TAGLINE -->
+            <div style="margin-bottom:1.2rem;">
+              <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                Main Tagline
+              </label>
+
+              <textarea
+                id="home-tagline-inp"
+                class="form-control"
+                rows="3"
+                placeholder="Enter the main Home page tagline..."
+              ></textarea>
+            </div>
+
+            <!-- METRIC 1 -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
+
+              <div>
+                <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                  Metric 1 Value
+                </label>
+
+                <input
+                  type="text"
+                  id="home-m1val-inp"
+                  class="form-control"
+                  placeholder="e.g. 10+ YRS"
+                >
+              </div>
+
+              <div>
+                <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                  Metric 1 Label
+                </label>
+
+                <input
+                  type="text"
+                  id="home-m1lbl-inp"
+                  class="form-control"
+                  placeholder="e.g. Architectural Excellence"
+                >
+              </div>
+
+            </div>
+
+            <!-- METRIC 2 -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
+
+              <div>
+                <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                  Metric 2 Value
+                </label>
+
+                <input
+                  type="text"
+                  id="home-m2val-inp"
+                  class="form-control"
+                  placeholder="e.g. M.ARCH / AIIA"
+                >
+              </div>
+
+              <div>
+                <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                  Metric 2 Label
+                </label>
+
+                <input
+                  type="text"
+                  id="home-m2lbl-inp"
+                  class="form-control"
+                  placeholder="e.g. Certified Directors"
+                >
+              </div>
+
+            </div>
+
+            <!-- METRIC 3 -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
+
+              <div>
+                <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                  Metric 3 Value
+                </label>
+
+                <input
+                  type="text"
+                  id="home-m3val-inp"
+                  class="form-control"
+                  placeholder="e.g. 100% SAFE"
+                >
+              </div>
+
+              <div>
+                <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                  Metric 3 Label
+                </label>
+
+                <input
+                  type="text"
+                  id="home-m3lbl-inp"
+                  class="form-control"
+                  placeholder="e.g. Structural Guarantee"
+                >
+              </div>
+
+            </div>
+
+            <!-- PHILOSOPHY -->
+            <div style="margin-top:1.2rem; margin-bottom:1.2rem;">
+
+              <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                Company Philosophy
+              </label>
+
+              <textarea
+                id="home-phil-inp"
+                class="form-control"
+                rows="4"
+                placeholder="Enter company philosophy..."
+              ></textarea>
+
+            </div>
+
+            <!-- SAVE -->
+            <div style="display:flex; justify-content:flex-end;">
+
+              <button
+                onclick="window.saveHomeContentChanges()"
+                class="btn btn-primary"
+                type="button"
+              >
+                Save Home Content
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -606,6 +761,31 @@ select:-webkit-autofill {
   border: 1px solid rgba(212, 175, 55, 0.3); /* Added clean subtle border */
 }
 
+/* ==========================================
+   DIRECTOR / ADMIN ACTIVE TAB
+   ========================================== */
+
+.admin-tab-active {
+  background: var(--accent-gold) !important;
+  color: #000 !important;
+  border: 1px solid var(--accent-gold) !important;
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.35) !important;
+  font-weight: 800 !important;
+}
+
+.admin-tab-inactive {
+  background: rgba(15, 23, 42, 0.85) !important;
+  color: var(--text-main) !important;
+  border: 1px solid rgba(212, 175, 55, 0.35) !important;
+  box-shadow: none !important;
+}
+
+.admin-tab-inactive:hover {
+  background: rgba(212, 175, 55, 0.12) !important;
+  color: var(--accent-gold) !important;
+  border-color: var(--accent-gold) !important;
+}
+
 .btn:hover {
   background: var(--accent-gold); 
   color: #000; 
@@ -747,6 +927,19 @@ const appJs = `document.addEventListener('DOMContentLoaded', () => {
   loadAdminLeads();
   loadAdminTeamTable();
   loadAdminProjectsTable();
+
+// Default Admin Console tab
+switchAdminTab('crm');
+
+  // Fetch and load home content into the admin form
+  fetch('/api/portal-data')
+    .then(res => res.json())
+    .then(data => {
+      if (data.homeContent) {
+        loadHomeContentIntoAdmin(data.homeContent);
+      }
+    })
+    .catch(err => console.error('Failed to load home content:', err));
 });
 
 let storedLeadsList = JSON.parse(localStorage.getItem('idhika_crm_leads')) || [
@@ -1006,14 +1199,67 @@ function previewLocalImage(event) {
 window.previewLocalImage = previewLocalImage;
 
 function switchAdminTab(tab) {
-  document.getElementById('admin-view-crm').style.display = tab === 'crm' ? 'block' : 'none';
-  document.getElementById('admin-view-team').style.display = tab === 'team' ? 'block' : 'none';
-  document.getElementById('admin-view-projects').style.display = tab === 'projects' ? 'block' : 'none';
-  document.getElementById('admin-tab-btn-crm').className = tab === 'crm' ? 'btn btn-primary' : 'btn btn-secondary';
-  document.getElementById('admin-tab-btn-team').className = tab === 'team' ? 'btn btn-primary' : 'btn btn-secondary';
-  document.getElementById('admin-tab-btn-projects').className = tab === 'projects' ? 'btn btn-primary' : 'btn btn-secondary';
+
+  // ==========================================
+  // ADMIN CONTENT VIEWS
+  // ==========================================
+
+  const views = {
+    crm: document.getElementById('admin-view-crm'),
+    team: document.getElementById('admin-view-team'),
+    projects: document.getElementById('admin-view-projects'),
+    'home-content': document.getElementById('admin-home-content-section')
+  };
+
+  // Show selected view and hide the others
+  Object.keys(views).forEach(function(key) {
+
+    const view = views[key];
+
+    if (view) {
+      view.style.display =
+        key === tab ? 'block' : 'none';
+    }
+
+  });
+
+
+  // ==========================================
+  // ADMIN TAB BUTTONS
+  // ==========================================
+
+  const buttons = {
+    crm: document.getElementById('admin-tab-btn-crm'),
+    team: document.getElementById('admin-tab-btn-team'),
+    projects: document.getElementById('admin-tab-btn-projects'),
+    'home-content': document.getElementById('admin-tab-btn-home')
+  };
+
+
+  // Reset all buttons first
+  Object.keys(buttons).forEach(function(key) {
+
+    const button = buttons[key];
+
+    if (!button) return;
+
+    button.classList.remove(
+      'admin-tab-active',
+      'admin-tab-inactive'
+    );
+
+    button.classList.add(
+      key === tab
+        ? 'admin-tab-active'
+        : 'admin-tab-inactive'
+    );
+
+  });
+
 }
+
 window.switchAdminTab = switchAdminTab;
+
 
 function handleStaffFormSubmit(e) {
   e.preventDefault();
@@ -1762,7 +2008,185 @@ function renderEmployeeSpace(projects) {
   }
 }
 window.renderEmployeeSpace = renderEmployeeSpace;
+
+function renderEmployeeSpace(projects) {
+  const container = document.getElementById('employee-assigned-projects');
+  if (container) {
+    container.innerHTML = signatureProjects.map(p =>
+      '<div style="margin-bottom:0.8rem; padding-bottom:0.8rem; border-bottom:1px solid rgba(255,255,255,0.1);">' +
+        '<h4>' + p.name + '</h4><p style="font-size:0.82rem;">' + p.type + '</p>' +
+      '</div>'
+    ).join('');
+  }
+}
+window.renderEmployeeSpace = renderEmployeeSpace;
+
+function loadHomeContentIntoAdmin(homeContent) {
+
+  if (!homeContent) return;
+
+  // ==========================================
+  // LOAD VALUES INTO ADMIN EDITOR
+  // ==========================================
+
+  const setValue = function(id, value) {
+
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.value = value || '';
+    }
+
+  };
+
+  setValue(
+    'home-tagline-inp',
+    homeContent.tagline
+  );
+
+  setValue(
+    'home-m1val-inp',
+    homeContent.metric1Val
+  );
+
+  setValue(
+    'home-m1lbl-inp',
+    homeContent.metric1Lbl
+  );
+
+  setValue(
+    'home-m2val-inp',
+    homeContent.metric2Val
+  );
+
+  setValue(
+    'home-m2lbl-inp',
+    homeContent.metric2Lbl
+  );
+
+  setValue(
+    'home-m3val-inp',
+    homeContent.metric3Val
+  );
+
+  setValue(
+    'home-m3lbl-inp',
+    homeContent.metric3Lbl
+  );
+
+  setValue(
+    'home-phil-inp',
+    homeContent.philosophy
+  );
+
+
+  // ==========================================
+  // UPDATE PUBLIC HOME PAGE
+  // ==========================================
+
+  const setText = function(id, value) {
+
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.textContent = value || '';
+    }
+
+  };
+
+  setText(
+    'home-hero-tagline',
+    homeContent.tagline
+  );
+
+  setText(
+    'home-metric1-val',
+    homeContent.metric1Val
+  );
+
+  setText(
+    'home-metric1-lbl',
+    homeContent.metric1Lbl
+  );
+
+  setText(
+    'home-metric2-val',
+    homeContent.metric2Val
+  );
+
+  setText(
+    'home-metric2-lbl',
+    homeContent.metric2Lbl
+  );
+
+  setText(
+    'home-metric3-val',
+    homeContent.metric3Val
+  );
+
+  setText(
+    'home-metric3-lbl',
+    homeContent.metric3Lbl
+  );
+
+
+  const philosophy =
+    document.getElementById('home-philosophy-text');
+
+  if (philosophy) {
+
+    philosophy.textContent =
+      '"' +
+      (homeContent.philosophy || '') +
+      '"';
+
+  }
+
+}
+
+window.loadHomeContentIntoAdmin =
+  loadHomeContentIntoAdmin;
+
+function saveHomeContentChanges() {
+  const updatedHomeContent = {
+    tagline: document.getElementById('home-tagline-inp').value,
+    metric1Val: document.getElementById('home-m1val-inp').value,
+    metric1Lbl: document.getElementById('home-m1lbl-inp').value,
+    metric2Val: document.getElementById('home-m2val-inp').value,
+    metric2Lbl: document.getElementById('home-m2lbl-inp').value,
+    metric3Val: document.getElementById('home-m3val-inp').value,
+    metric3Lbl: document.getElementById('home-m3lbl-inp').value,
+    philosophy: document.getElementById('home-phil-inp').value
+  };
+
+  fetch('/api/portal-data', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ homeContent: updatedHomeContent })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+
+  // Immediately update the public Home page
+  loadHomeContentIntoAdmin(updatedHomeContent);
+
+  showAdminBanner(
+    'Home content updated successfully!'
+  );
+
+} else {
+      showAdminBanner('Failed to update home content.', true);
+    }
+  })
+  .catch(err => {
+    console.error('Error saving home content:', err);
+    showAdminBanner('Server error while saving home content.', true);
+  });
+}
+window.saveHomeContentChanges = saveHomeContentChanges;
 `;
+
 
 // Write files to public
 fs.writeFileSync(path.join(publicDir, 'index.html'), indexHtml);

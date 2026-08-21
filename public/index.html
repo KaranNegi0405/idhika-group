@@ -47,13 +47,13 @@
         <div class="brand-logo-wrapper real-logo-plaque">
           <img src="logo-master.png" alt="IDHIKA GROUP Master Logo" class="master-hero-logo" onerror="this.style.display='none';">
         </div>
-        <p class="hero-tagline">EXPERTISE IN TOWNSHIP, GROUP HOUSING, APARTMENTS & COMMERCIAL TOWERS ACROSS INDIA</p>
+        <p class="hero-tagline" id="home-hero-tagline">EXPERTISE IN TOWNSHIP, GROUP HOUSING, APARTMENTS & COMMERCIAL TOWERS ACROSS INDIA</p>
         <div class="trust-metrics-strip">
-          <div class="trust-badge"><span class="trust-val">10+ YRS</span><span class="trust-lbl">Architectural Excellence</span></div>
+          <div class="trust-badge"><span class="trust-val" id="home-metric1-val">10+ YRS</span><span class="trust-lbl" id="home-metric1-lbl">Architectural Excellence</span></div>
           <div class="trust-divider"></div>
-          <div class="trust-badge"><span class="trust-val">M.ARCH / AIIA</span><span class="trust-lbl">Certified Directors</span></div>
+          <div class="trust-badge"><span class="trust-val" id="home-metric2-val">M.ARCH / AIIA</span><span class="trust-lbl" id="home-metric2-lbl">Certified Directors</span></div>
           <div class="trust-divider"></div>
-          <div class="trust-badge"><span class="trust-val">100% SAFE</span><span class="trust-lbl">Structural Guarantee</span></div>
+          <div class="trust-badge"><span class="trust-val" id="home-metric3-val">100% SAFE</span><span class="trust-lbl" id="home-metric3-lbl">Structural Guarantee</span></div>
         </div>
         <div class="hero-actions">
           <button onclick="window.showPage('portfolio')" class="btn btn-primary">Portfolio Showcase</button>
@@ -85,7 +85,7 @@
       </div>
       <div class="compact-philosophy-bar glass-card">
         <h3>OUR PHILOSOPHY</h3>
-        <p>"We believe that quality of our surroundings—their design and construction—deeply influence the way we work, relax and live."</p>
+        <p id="home-philosophy-text">"We believe that quality of our surroundings—their design and construction—deeply influence the way we work, relax and live."</p>
       </div>
     </div>
   </div>
@@ -169,6 +169,7 @@
         <button onclick="window.switchAdminTab('crm')" id="admin-tab-btn-crm" class="btn btn-primary" style="font-size:0.75rem;">Client CRM & Contracts</button>
         <button onclick="window.switchAdminTab('team')" id="admin-tab-btn-team" class="btn btn-secondary" style="font-size:0.75rem;">Staff Directory</button>
         <button onclick="window.switchAdminTab('projects')" id="admin-tab-btn-projects" class="btn btn-secondary" style="font-size:0.75rem;">Manage Portfolio Projects</button>
+	<button onclick="window.switchAdminTab('home-content')" id="admin-tab-btn-home" class="btn btn-secondary" style="font-size:0.75rem;">Manage Home Content</button>
       </div>
 
       <!-- VIEW 1: CLIENT CRM -->
@@ -254,6 +255,160 @@
         </div>
       </div>
 
+
+
+      <!-- VIEW 4: HOME PAGE CONTENT MANAGEMENT -->
+      <div id="admin-home-content-section" class="admin-tab-view" style="display:none;">
+        <div class="glass-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:10px;">
+            <h3 class="gold-text" style="margin-bottom:0;">Edit Home Page Content</h3>
+          </div>
+
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1.5rem;">
+            Update the information displayed on the public Home page. Changes are saved to the company database.
+          </p>
+
+          <div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:8px; border:1px solid rgba(212,175,55,0.2);">
+
+            <!-- MAIN TAGLINE -->
+            <div style="margin-bottom:1.2rem;">
+              <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                Main Tagline
+              </label>
+
+              <textarea
+                id="home-tagline-inp"
+                class="form-control"
+                rows="3"
+                placeholder="Enter the main Home page tagline..."
+              ></textarea>
+            </div>
+
+            <!-- METRIC 1 -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
+
+              <div>
+                <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                  Metric 1 Value
+                </label>
+
+                <input
+                  type="text"
+                  id="home-m1val-inp"
+                  class="form-control"
+                  placeholder="e.g. 10+ YRS"
+                >
+              </div>
+
+              <div>
+                <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                  Metric 1 Label
+                </label>
+
+                <input
+                  type="text"
+                  id="home-m1lbl-inp"
+                  class="form-control"
+                  placeholder="e.g. Architectural Excellence"
+                >
+              </div>
+
+            </div>
+
+            <!-- METRIC 2 -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
+
+              <div>
+                <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                  Metric 2 Value
+                </label>
+
+                <input
+                  type="text"
+                  id="home-m2val-inp"
+                  class="form-control"
+                  placeholder="e.g. M.ARCH / AIIA"
+                >
+              </div>
+
+              <div>
+                <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                  Metric 2 Label
+                </label>
+
+                <input
+                  type="text"
+                  id="home-m2lbl-inp"
+                  class="form-control"
+                  placeholder="e.g. Certified Directors"
+                >
+              </div>
+
+            </div>
+
+            <!-- METRIC 3 -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
+
+              <div>
+                <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                  Metric 3 Value
+                </label>
+
+                <input
+                  type="text"
+                  id="home-m3val-inp"
+                  class="form-control"
+                  placeholder="e.g. 100% SAFE"
+                >
+              </div>
+
+              <div>
+                <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                  Metric 3 Label
+                </label>
+
+                <input
+                  type="text"
+                  id="home-m3lbl-inp"
+                  class="form-control"
+                  placeholder="e.g. Structural Guarantee"
+                >
+              </div>
+
+            </div>
+
+            <!-- PHILOSOPHY -->
+            <div style="margin-top:1.2rem; margin-bottom:1.2rem;">
+
+              <label style="display:block; margin-bottom:6px; font-size:0.85rem; color:var(--accent-gold);">
+                Company Philosophy
+              </label>
+
+              <textarea
+                id="home-phil-inp"
+                class="form-control"
+                rows="4"
+                placeholder="Enter company philosophy..."
+              ></textarea>
+
+            </div>
+
+            <!-- SAVE -->
+            <div style="display:flex; justify-content:flex-end;">
+
+              <button
+                onclick="window.saveHomeContentChanges()"
+                class="btn btn-primary"
+                type="button"
+              >
+                Save Home Content
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
